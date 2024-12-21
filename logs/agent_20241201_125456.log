@@ -1,0 +1,721 @@
+2024-12-01 12:55:05,456 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 12:56:29,910 - agent - DEBUG - Current state: {"timestamp": 1733079389.9105613, "active_window": "LLM Vision Agent", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:29,910 - agent - DEBUG - Current state: {"timestamp": 1733079389.9105613, "active_window": "LLM Vision Agent", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:29,911 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:29,911 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:29,911 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:29,911 - agent - DEBUG - Current state: {"timestamp": 1733079389.9115663, "active_window": "LLM Vision Agent", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:29,911 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079389.9115663, "active_window": "LLM Vision Agent", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:29,912 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:30,613 - agent - DEBUG - Current state: {"timestamp": 1733079390.6134048, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:30,613 - agent - DEBUG - Post-execution state: {"timestamp": 1733079390.6134048, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,116 - agent - DEBUG - Current state: {"timestamp": 1733079391.1163273, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,117 - agent - DEBUG - Current state: {"timestamp": 1733079391.1163273, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,117 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:31,117 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:31,117 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:31,117 - agent - DEBUG - Current state: {"timestamp": 1733079391.1178308, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,117 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079391.1178308, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,117 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:31,820 - agent - DEBUG - Current state: {"timestamp": 1733079391.8202238, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:31,820 - agent - DEBUG - Post-execution state: {"timestamp": 1733079391.8202238, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:32,321 - agent - DEBUG - Current state: {"timestamp": 1733079392.3210216, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:32,321 - agent - DEBUG - Current state: {"timestamp": 1733079392.3210216, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:32,321 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:32,321 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:32,321 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:32,321 - agent - DEBUG - Current state: {"timestamp": 1733079392.3210216, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:32,321 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079392.3210216, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:32,321 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:33,024 - agent - DEBUG - Current state: {"timestamp": 1733079393.0240474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,024 - agent - DEBUG - Post-execution state: {"timestamp": 1733079393.0240474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,525 - agent - DEBUG - Current state: {"timestamp": 1733079393.5252743, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,525 - agent - DEBUG - Current state: {"timestamp": 1733079393.5252743, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,525 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:33,525 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:33,526 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:33,526 - agent - DEBUG - Current state: {"timestamp": 1733079393.5262787, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,526 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079393.5262787, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:33,526 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:34,228 - agent - DEBUG - Current state: {"timestamp": 1733079394.228566, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,228 - agent - DEBUG - Post-execution state: {"timestamp": 1733079394.228566, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,729 - agent - DEBUG - Current state: {"timestamp": 1733079394.72979, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,729 - agent - DEBUG - Current state: {"timestamp": 1733079394.72979, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,729 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:34,729 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:34,729 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:34,732 - agent - DEBUG - Current state: {"timestamp": 1733079394.732794, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,732 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079394.732794, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:34,733 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:35,437 - agent - DEBUG - Current state: {"timestamp": 1733079395.4372592, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,437 - agent - DEBUG - Post-execution state: {"timestamp": 1733079395.4372592, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,938 - agent - DEBUG - Current state: {"timestamp": 1733079395.938572, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,938 - agent - DEBUG - Current state: {"timestamp": 1733079395.938572, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,938 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:35,938 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:35,938 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:35,939 - agent - DEBUG - Current state: {"timestamp": 1733079395.939578, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,940 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079395.939578, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:35,940 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:36,642 - agent - DEBUG - Current state: {"timestamp": 1733079396.642966, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:36,642 - agent - DEBUG - Post-execution state: {"timestamp": 1733079396.642966, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,143 - agent - DEBUG - Current state: {"timestamp": 1733079397.1437573, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,143 - agent - DEBUG - Current state: {"timestamp": 1733079397.1437573, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,143 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:37,143 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:37,143 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:37,144 - agent - DEBUG - Current state: {"timestamp": 1733079397.144764, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,144 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079397.144764, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,144 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:37,846 - agent - DEBUG - Current state: {"timestamp": 1733079397.8469386, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:37,848 - agent - DEBUG - Post-execution state: {"timestamp": 1733079397.8469386, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:38,350 - agent - DEBUG - Current state: {"timestamp": 1733079398.3505673, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:38,351 - agent - DEBUG - Current state: {"timestamp": 1733079398.3505673, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:38,351 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:38,351 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:38,351 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:38,351 - agent - DEBUG - Current state: {"timestamp": 1733079398.351072, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:38,351 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079398.351072, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:38,352 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:39,053 - agent - DEBUG - Current state: {"timestamp": 1733079399.0539978, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,053 - agent - DEBUG - Post-execution state: {"timestamp": 1733079399.0539978, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,554 - agent - DEBUG - Current state: {"timestamp": 1733079399.5549166, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,554 - agent - DEBUG - Current state: {"timestamp": 1733079399.5549166, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,554 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:39,554 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:39,555 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:39,555 - agent - DEBUG - Current state: {"timestamp": 1733079399.555922, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,555 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079399.555922, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:39,555 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:40,258 - agent - DEBUG - Current state: {"timestamp": 1733079400.258226, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,258 - agent - DEBUG - Post-execution state: {"timestamp": 1733079400.258226, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,759 - agent - DEBUG - Current state: {"timestamp": 1733079400.759229, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,759 - agent - DEBUG - Current state: {"timestamp": 1733079400.759229, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,759 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:40,759 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:40,760 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:40,760 - agent - DEBUG - Current state: {"timestamp": 1733079400.7602332, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,760 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079400.7602332, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:40,760 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:41,461 - agent - DEBUG - Current state: {"timestamp": 1733079401.4618835, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,461 - agent - DEBUG - Post-execution state: {"timestamp": 1733079401.4618835, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,962 - agent - DEBUG - Current state: {"timestamp": 1733079401.9629421, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,962 - agent - DEBUG - Current state: {"timestamp": 1733079401.9629421, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,962 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:41,962 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:41,962 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:41,965 - agent - DEBUG - Current state: {"timestamp": 1733079401.9659483, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,965 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079401.9659483, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:41,965 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:42,669 - agent - DEBUG - Current state: {"timestamp": 1733079402.669053, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:42,669 - agent - DEBUG - Post-execution state: {"timestamp": 1733079402.669053, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,170 - agent - DEBUG - Current state: {"timestamp": 1733079403.1702206, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,170 - agent - DEBUG - Current state: {"timestamp": 1733079403.1702206, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,170 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:43,170 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:43,170 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:43,170 - agent - DEBUG - Current state: {"timestamp": 1733079403.1702206, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,170 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079403.1702206, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,171 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:43,873 - agent - DEBUG - Current state: {"timestamp": 1733079403.8738585, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:43,873 - agent - DEBUG - Post-execution state: {"timestamp": 1733079403.8738585, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:44,375 - agent - DEBUG - Current state: {"timestamp": 1733079404.3750918, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:44,375 - agent - DEBUG - Current state: {"timestamp": 1733079404.3750918, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:44,375 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:44,375 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:44,375 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:44,375 - agent - DEBUG - Current state: {"timestamp": 1733079404.3755963, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:44,376 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079404.3755963, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:44,376 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:45,078 - agent - DEBUG - Current state: {"timestamp": 1733079405.078851, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,078 - agent - DEBUG - Post-execution state: {"timestamp": 1733079405.078851, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,579 - agent - DEBUG - Current state: {"timestamp": 1733079405.5794952, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,579 - agent - DEBUG - Current state: {"timestamp": 1733079405.5794952, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,579 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:45,579 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:45,580 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:45,580 - agent - DEBUG - Current state: {"timestamp": 1733079405.5805004, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,580 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079405.5805004, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:45,581 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:46,283 - agent - DEBUG - Current state: {"timestamp": 1733079406.283377, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,284 - agent - DEBUG - Post-execution state: {"timestamp": 1733079406.283377, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,785 - agent - DEBUG - Current state: {"timestamp": 1733079406.7852278, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,785 - agent - DEBUG - Current state: {"timestamp": 1733079406.7852278, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,785 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:46,785 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:46,786 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:46,786 - agent - DEBUG - Current state: {"timestamp": 1733079406.7862349, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,786 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079406.7862349, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:46,786 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:47,489 - agent - DEBUG - Current state: {"timestamp": 1733079407.4898603, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,489 - agent - DEBUG - Post-execution state: {"timestamp": 1733079407.4898603, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,991 - agent - DEBUG - Current state: {"timestamp": 1733079407.991324, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,991 - agent - DEBUG - Current state: {"timestamp": 1733079407.991324, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,992 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:47,992 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:47,992 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:47,993 - agent - DEBUG - Current state: {"timestamp": 1733079407.993024, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,993 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079407.993024, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:47,993 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:48,694 - agent - DEBUG - Current state: {"timestamp": 1733079408.694474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:48,694 - agent - DEBUG - Post-execution state: {"timestamp": 1733079408.694474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,195 - agent - DEBUG - Current state: {"timestamp": 1733079409.1953864, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,195 - agent - DEBUG - Current state: {"timestamp": 1733079409.1953864, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,195 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:49,195 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:49,196 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:49,196 - agent - DEBUG - Current state: {"timestamp": 1733079409.1963933, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,196 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079409.1963933, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,196 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:49,901 - agent - DEBUG - Current state: {"timestamp": 1733079409.9017584, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:49,901 - agent - DEBUG - Post-execution state: {"timestamp": 1733079409.9017584, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:50,402 - agent - DEBUG - Current state: {"timestamp": 1733079410.4027658, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:50,403 - agent - DEBUG - Current state: {"timestamp": 1733079410.4027658, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:50,403 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:50,403 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:50,403 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:50,403 - agent - DEBUG - Current state: {"timestamp": 1733079410.4032702, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:50,403 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079410.4032702, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:50,404 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:51,106 - agent - DEBUG - Current state: {"timestamp": 1733079411.106108, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,106 - agent - DEBUG - Post-execution state: {"timestamp": 1733079411.106108, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,607 - agent - DEBUG - Current state: {"timestamp": 1733079411.6070623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,607 - agent - DEBUG - Current state: {"timestamp": 1733079411.6070623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,607 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:51,607 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:51,607 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:51,608 - agent - DEBUG - Current state: {"timestamp": 1733079411.6080668, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,608 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079411.6080668, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:51,608 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:52,310 - agent - DEBUG - Current state: {"timestamp": 1733079412.3101714, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,310 - agent - DEBUG - Post-execution state: {"timestamp": 1733079412.3101714, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,811 - agent - DEBUG - Current state: {"timestamp": 1733079412.811335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,811 - agent - DEBUG - Current state: {"timestamp": 1733079412.811335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,811 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:52,811 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:52,811 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:52,811 - agent - DEBUG - Current state: {"timestamp": 1733079412.811335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,812 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079412.811335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:52,812 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:53,513 - agent - DEBUG - Current state: {"timestamp": 1733079413.5136843, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:53,514 - agent - DEBUG - Post-execution state: {"timestamp": 1733079413.5136843, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,015 - agent - DEBUG - Current state: {"timestamp": 1733079414.015512, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,015 - agent - DEBUG - Current state: {"timestamp": 1733079414.015512, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,015 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:54,015 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:54,015 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:54,016 - agent - DEBUG - Current state: {"timestamp": 1733079414.0165167, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,016 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079414.0165167, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,016 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:54,718 - agent - DEBUG - Current state: {"timestamp": 1733079414.7183971, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:54,718 - agent - DEBUG - Post-execution state: {"timestamp": 1733079414.7183971, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,219 - agent - DEBUG - Current state: {"timestamp": 1733079415.2191525, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,219 - agent - DEBUG - Current state: {"timestamp": 1733079415.2191525, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,219 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:55,219 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:55,220 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:55,220 - agent - DEBUG - Current state: {"timestamp": 1733079415.220159, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,220 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079415.220159, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,220 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:55,922 - agent - DEBUG - Current state: {"timestamp": 1733079415.922845, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:55,922 - agent - DEBUG - Post-execution state: {"timestamp": 1733079415.922845, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:56,423 - agent - DEBUG - Current state: {"timestamp": 1733079416.4236898, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:56,423 - agent - DEBUG - Current state: {"timestamp": 1733079416.4236898, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:56,423 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:56,424 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:56,424 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:56,424 - agent - DEBUG - Current state: {"timestamp": 1733079416.4248917, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:56,424 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079416.4248917, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:56,424 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:57,127 - agent - DEBUG - Current state: {"timestamp": 1733079417.1274745, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,127 - agent - DEBUG - Post-execution state: {"timestamp": 1733079417.1274745, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,628 - agent - DEBUG - Current state: {"timestamp": 1733079417.6284122, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,628 - agent - DEBUG - Current state: {"timestamp": 1733079417.6284122, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,628 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:57,628 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:57,629 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:57,629 - agent - DEBUG - Current state: {"timestamp": 1733079417.6294246, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,629 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079417.6294246, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:57,630 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:58,334 - agent - DEBUG - Current state: {"timestamp": 1733079418.33429, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,334 - agent - DEBUG - Post-execution state: {"timestamp": 1733079418.33429, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,835 - agent - DEBUG - Current state: {"timestamp": 1733079418.8353202, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,835 - agent - DEBUG - Current state: {"timestamp": 1733079418.8353202, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,835 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:56:58,835 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:58,836 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:56:58,836 - agent - DEBUG - Current state: {"timestamp": 1733079418.8363268, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,836 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079418.8363268, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:58,836 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:56:59,538 - agent - DEBUG - Current state: {"timestamp": 1733079419.5389814, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:56:59,538 - agent - DEBUG - Post-execution state: {"timestamp": 1733079419.5389814, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,040 - agent - DEBUG - Current state: {"timestamp": 1733079420.0402384, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,040 - agent - DEBUG - Current state: {"timestamp": 1733079420.0402384, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,040 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:00,040 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:00,040 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:00,041 - agent - DEBUG - Current state: {"timestamp": 1733079420.0402384, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,041 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079420.0402384, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,041 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:00,743 - agent - DEBUG - Current state: {"timestamp": 1733079420.743086, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:00,743 - agent - DEBUG - Post-execution state: {"timestamp": 1733079420.743086, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,244 - agent - DEBUG - Current state: {"timestamp": 1733079421.2444088, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,244 - agent - DEBUG - Current state: {"timestamp": 1733079421.2444088, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,244 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:01,244 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:01,245 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:01,245 - agent - DEBUG - Current state: {"timestamp": 1733079421.2454145, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,245 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079421.2454145, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,245 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:01,949 - agent - DEBUG - Current state: {"timestamp": 1733079421.9494514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:01,949 - agent - DEBUG - Post-execution state: {"timestamp": 1733079421.9494514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:02,450 - agent - DEBUG - Current state: {"timestamp": 1733079422.4509969, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:02,450 - agent - DEBUG - Current state: {"timestamp": 1733079422.4509969, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:02,450 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:02,450 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:02,452 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:02,452 - agent - DEBUG - Current state: {"timestamp": 1733079422.452003, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:02,452 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079422.452003, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:02,452 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:03,154 - agent - DEBUG - Current state: {"timestamp": 1733079423.154528, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,154 - agent - DEBUG - Post-execution state: {"timestamp": 1733079423.154528, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,655 - agent - DEBUG - Current state: {"timestamp": 1733079423.655822, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,655 - agent - DEBUG - Current state: {"timestamp": 1733079423.655822, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,655 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:03,655 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:03,656 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:03,656 - agent - DEBUG - Current state: {"timestamp": 1733079423.6568286, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,656 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079423.6568286, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:03,656 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:04,359 - agent - DEBUG - Current state: {"timestamp": 1733079424.3598294, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,359 - agent - DEBUG - Post-execution state: {"timestamp": 1733079424.3598294, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,860 - agent - DEBUG - Current state: {"timestamp": 1733079424.8608596, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,861 - agent - DEBUG - Current state: {"timestamp": 1733079424.8608596, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,861 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:04,861 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:04,861 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:04,861 - agent - DEBUG - Current state: {"timestamp": 1733079424.8618686, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,861 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079424.8618686, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:04,861 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:05,566 - agent - DEBUG - Current state: {"timestamp": 1733079425.56655, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:05,566 - agent - DEBUG - Post-execution state: {"timestamp": 1733079425.56655, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,067 - agent - DEBUG - Current state: {"timestamp": 1733079426.0677323, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,067 - agent - DEBUG - Current state: {"timestamp": 1733079426.0677323, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,067 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:06,067 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:06,067 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:06,068 - agent - DEBUG - Current state: {"timestamp": 1733079426.0677323, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,068 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079426.0677323, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,068 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:06,770 - agent - DEBUG - Current state: {"timestamp": 1733079426.770879, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:06,770 - agent - DEBUG - Post-execution state: {"timestamp": 1733079426.770879, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,271 - agent - DEBUG - Current state: {"timestamp": 1733079427.271566, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,271 - agent - DEBUG - Current state: {"timestamp": 1733079427.271566, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,271 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:07,271 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:07,271 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:07,272 - agent - DEBUG - Current state: {"timestamp": 1733079427.2725363, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,272 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079427.2725363, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,272 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:07,974 - agent - DEBUG - Current state: {"timestamp": 1733079427.9743423, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:07,974 - agent - DEBUG - Post-execution state: {"timestamp": 1733079427.9743423, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:08,475 - agent - DEBUG - Current state: {"timestamp": 1733079428.4751997, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:08,475 - agent - DEBUG - Current state: {"timestamp": 1733079428.4751997, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:08,475 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:08,475 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:08,475 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:08,476 - agent - DEBUG - Current state: {"timestamp": 1733079428.4762044, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:08,476 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079428.4762044, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:08,476 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:09,177 - agent - DEBUG - Current state: {"timestamp": 1733079429.177864, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,177 - agent - DEBUG - Post-execution state: {"timestamp": 1733079429.177864, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,678 - agent - DEBUG - Current state: {"timestamp": 1733079429.6786695, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,678 - agent - DEBUG - Current state: {"timestamp": 1733079429.6786695, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,678 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:09,678 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:09,679 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:09,679 - agent - DEBUG - Current state: {"timestamp": 1733079429.6796823, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,679 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079429.6796823, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:09,679 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:10,384 - agent - DEBUG - Current state: {"timestamp": 1733079430.3845167, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,385 - agent - DEBUG - Post-execution state: {"timestamp": 1733079430.3845167, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,885 - agent - DEBUG - Current state: {"timestamp": 1733079430.8857095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,885 - agent - DEBUG - Current state: {"timestamp": 1733079430.8857095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,885 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:10,885 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:10,885 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:10,886 - agent - DEBUG - Current state: {"timestamp": 1733079430.8857095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,886 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079430.8857095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:10,886 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:11,588 - agent - DEBUG - Current state: {"timestamp": 1733079431.5884705, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:11,588 - agent - DEBUG - Post-execution state: {"timestamp": 1733079431.5884705, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,089 - agent - DEBUG - Current state: {"timestamp": 1733079432.0893505, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,089 - agent - DEBUG - Current state: {"timestamp": 1733079432.0893505, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,089 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:12,089 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:12,090 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:12,090 - agent - DEBUG - Current state: {"timestamp": 1733079432.0903547, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,090 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079432.0903547, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,090 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:12,792 - agent - DEBUG - Current state: {"timestamp": 1733079432.792208, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:12,792 - agent - DEBUG - Post-execution state: {"timestamp": 1733079432.792208, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,293 - agent - DEBUG - Current state: {"timestamp": 1733079433.2933106, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,293 - agent - DEBUG - Current state: {"timestamp": 1733079433.2933106, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,293 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:13,293 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:13,294 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:13,294 - agent - DEBUG - Current state: {"timestamp": 1733079433.294315, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,294 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079433.294315, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,294 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:13,998 - agent - DEBUG - Current state: {"timestamp": 1733079433.9982488, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:13,999 - agent - DEBUG - Post-execution state: {"timestamp": 1733079433.9982488, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:14,500 - agent - DEBUG - Current state: {"timestamp": 1733079434.5006933, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:14,500 - agent - DEBUG - Current state: {"timestamp": 1733079434.5006933, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:14,501 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:14,501 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:14,501 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:14,501 - agent - DEBUG - Current state: {"timestamp": 1733079434.5016365, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:14,501 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079434.5016365, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:14,501 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:15,204 - agent - DEBUG - Current state: {"timestamp": 1733079435.2047775, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,204 - agent - DEBUG - Post-execution state: {"timestamp": 1733079435.2047775, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,705 - agent - DEBUG - Current state: {"timestamp": 1733079435.7056851, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,705 - agent - DEBUG - Current state: {"timestamp": 1733079435.7056851, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,705 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:15,705 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:15,706 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:15,706 - agent - DEBUG - Current state: {"timestamp": 1733079435.7066927, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,706 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079435.7066927, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:15,706 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:16,408 - agent - DEBUG - Current state: {"timestamp": 1733079436.408692, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,408 - agent - DEBUG - Post-execution state: {"timestamp": 1733079436.408692, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,909 - agent - DEBUG - Current state: {"timestamp": 1733079436.9095387, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,909 - agent - DEBUG - Current state: {"timestamp": 1733079436.9095387, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,909 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:16,909 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:16,910 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:16,910 - agent - DEBUG - Current state: {"timestamp": 1733079436.910544, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,910 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079436.910544, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:16,910 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:17,612 - agent - DEBUG - Current state: {"timestamp": 1733079437.6123881, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:17,612 - agent - DEBUG - Post-execution state: {"timestamp": 1733079437.6123881, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,113 - agent - DEBUG - Current state: {"timestamp": 1733079438.1137228, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,113 - agent - DEBUG - Current state: {"timestamp": 1733079438.1137228, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,114 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:18,114 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:18,114 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:18,114 - agent - DEBUG - Current state: {"timestamp": 1733079438.114728, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,115 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079438.114728, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,115 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:18,817 - agent - DEBUG - Current state: {"timestamp": 1733079438.8172956, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:18,817 - agent - DEBUG - Post-execution state: {"timestamp": 1733079438.8172956, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:19,318 - agent - DEBUG - Current state: {"timestamp": 1733079439.3180623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:19,318 - agent - DEBUG - Current state: {"timestamp": 1733079439.3180623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:19,318 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:19,318 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:19,318 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:19,319 - agent - DEBUG - Current state: {"timestamp": 1733079439.3180623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:19,319 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079439.3180623, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:19,319 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:20,020 - agent - DEBUG - Current state: {"timestamp": 1733079440.0200334, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,020 - agent - DEBUG - Post-execution state: {"timestamp": 1733079440.0200334, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,520 - agent - DEBUG - Current state: {"timestamp": 1733079440.5206628, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,521 - agent - DEBUG - Current state: {"timestamp": 1733079440.5206628, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,521 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:20,521 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:20,521 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:20,521 - agent - DEBUG - Current state: {"timestamp": 1733079440.5216773, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,522 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079440.5216773, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:20,522 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:21,224 - agent - DEBUG - Current state: {"timestamp": 1733079441.2246785, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,224 - agent - DEBUG - Post-execution state: {"timestamp": 1733079441.2246785, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,725 - agent - DEBUG - Current state: {"timestamp": 1733079441.7252676, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,725 - agent - DEBUG - Current state: {"timestamp": 1733079441.7252676, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,725 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:21,725 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:21,725 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:21,726 - agent - DEBUG - Current state: {"timestamp": 1733079441.7260904, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,726 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079441.7260904, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:21,726 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:22,427 - agent - DEBUG - Current state: {"timestamp": 1733079442.4274514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,427 - agent - DEBUG - Post-execution state: {"timestamp": 1733079442.4274514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,928 - agent - DEBUG - Current state: {"timestamp": 1733079442.9281483, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,928 - agent - DEBUG - Current state: {"timestamp": 1733079442.9281483, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,928 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:22,928 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:22,928 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:22,928 - agent - DEBUG - Current state: {"timestamp": 1733079442.9283502, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,929 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079442.9283502, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:22,929 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:23,632 - agent - DEBUG - Current state: {"timestamp": 1733079443.6327157, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:23,633 - agent - DEBUG - Post-execution state: {"timestamp": 1733079443.6327157, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,134 - agent - DEBUG - Current state: {"timestamp": 1733079444.134696, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,134 - agent - DEBUG - Current state: {"timestamp": 1733079444.134696, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,134 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:24,134 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:24,135 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:24,135 - agent - DEBUG - Current state: {"timestamp": 1733079444.1357033, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,135 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079444.1357033, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,135 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:24,837 - agent - DEBUG - Current state: {"timestamp": 1733079444.8379743, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:24,837 - agent - DEBUG - Post-execution state: {"timestamp": 1733079444.8379743, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:25,338 - agent - DEBUG - Current state: {"timestamp": 1733079445.3387122, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:25,338 - agent - DEBUG - Current state: {"timestamp": 1733079445.3387122, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:25,338 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:25,338 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:25,338 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:25,339 - agent - DEBUG - Current state: {"timestamp": 1733079445.3397155, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:25,339 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079445.3397155, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:25,339 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:26,041 - agent - DEBUG - Current state: {"timestamp": 1733079446.0414147, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,041 - agent - DEBUG - Post-execution state: {"timestamp": 1733079446.0414147, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,541 - agent - DEBUG - Current state: {"timestamp": 1733079446.5419514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,541 - agent - DEBUG - Current state: {"timestamp": 1733079446.5419514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,542 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:26,542 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:26,542 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:26,542 - agent - DEBUG - Current state: {"timestamp": 1733079446.5424592, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,542 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079446.5424592, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:26,542 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:27,244 - agent - DEBUG - Current state: {"timestamp": 1733079447.244385, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,244 - agent - DEBUG - Post-execution state: {"timestamp": 1733079447.244385, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,745 - agent - DEBUG - Current state: {"timestamp": 1733079447.745295, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,745 - agent - DEBUG - Current state: {"timestamp": 1733079447.745295, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,745 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:27,745 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:27,745 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:27,745 - agent - DEBUG - Current state: {"timestamp": 1733079447.745295, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,745 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079447.745295, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:27,746 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:28,448 - agent - DEBUG - Current state: {"timestamp": 1733079448.4489772, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,448 - agent - DEBUG - Post-execution state: {"timestamp": 1733079448.4489772, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,950 - agent - DEBUG - Current state: {"timestamp": 1733079448.950474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,950 - agent - DEBUG - Current state: {"timestamp": 1733079448.950474, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,950 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:28,950 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:28,950 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:28,950 - agent - DEBUG - Current state: {"timestamp": 1733079448.9509766, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,950 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079448.9509766, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:28,952 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:29,653 - agent - DEBUG - Current state: {"timestamp": 1733079449.6537697, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:29,653 - agent - DEBUG - Post-execution state: {"timestamp": 1733079449.6537697, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,154 - agent - DEBUG - Current state: {"timestamp": 1733079450.1548662, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,154 - agent - DEBUG - Current state: {"timestamp": 1733079450.1548662, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,154 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:30,154 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:30,154 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:30,154 - agent - DEBUG - Current state: {"timestamp": 1733079450.1548662, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,155 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079450.1548662, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,155 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:30,857 - agent - DEBUG - Current state: {"timestamp": 1733079450.85778, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:30,857 - agent - DEBUG - Post-execution state: {"timestamp": 1733079450.85778, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:31,358 - agent - DEBUG - Current state: {"timestamp": 1733079451.3588624, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:31,358 - agent - DEBUG - Current state: {"timestamp": 1733079451.3588624, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:31,358 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:31,358 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:31,358 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:31,358 - agent - DEBUG - Current state: {"timestamp": 1733079451.3588624, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:31,359 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079451.3588624, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:31,359 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:32,061 - agent - DEBUG - Current state: {"timestamp": 1733079452.0618877, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,062 - agent - DEBUG - Post-execution state: {"timestamp": 1733079452.0618877, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,562 - agent - DEBUG - Current state: {"timestamp": 1733079452.5627873, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,562 - agent - DEBUG - Current state: {"timestamp": 1733079452.5627873, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,562 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:32,562 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:32,564 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:32,564 - agent - DEBUG - Current state: {"timestamp": 1733079452.5644898, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,564 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079452.5644898, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:32,565 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:33,267 - agent - DEBUG - Current state: {"timestamp": 1733079453.2673535, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,267 - agent - DEBUG - Post-execution state: {"timestamp": 1733079453.2673535, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,768 - agent - DEBUG - Current state: {"timestamp": 1733079453.7682095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,768 - agent - DEBUG - Current state: {"timestamp": 1733079453.7682095, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,768 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:33,768 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:33,768 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:33,769 - agent - DEBUG - Current state: {"timestamp": 1733079453.7692146, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,769 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079453.7692146, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:33,769 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:34,471 - agent - DEBUG - Current state: {"timestamp": 1733079454.4711335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,471 - agent - DEBUG - Post-execution state: {"timestamp": 1733079454.4711335, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,971 - agent - DEBUG - Current state: {"timestamp": 1733079454.9716861, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,971 - agent - DEBUG - Current state: {"timestamp": 1733079454.9716861, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,971 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:34,971 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:34,971 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:34,971 - agent - DEBUG - Current state: {"timestamp": 1733079454.9716861, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,971 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079454.9716861, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:34,971 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:35,674 - agent - DEBUG - Current state: {"timestamp": 1733079455.6744666, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:35,674 - agent - DEBUG - Post-execution state: {"timestamp": 1733079455.6744666, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,175 - agent - DEBUG - Current state: {"timestamp": 1733079456.1751726, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,175 - agent - DEBUG - Current state: {"timestamp": 1733079456.1751726, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,175 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:36,175 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:36,175 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:36,175 - agent - DEBUG - Current state: {"timestamp": 1733079456.1751726, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,175 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079456.1751726, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,176 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:36,877 - agent - DEBUG - Current state: {"timestamp": 1733079456.8777494, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:36,877 - agent - DEBUG - Post-execution state: {"timestamp": 1733079456.8777494, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:37,378 - agent - DEBUG - Current state: {"timestamp": 1733079457.3785973, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:37,378 - agent - DEBUG - Current state: {"timestamp": 1733079457.3785973, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:37,379 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:37,379 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:37,379 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:37,379 - agent - DEBUG - Current state: {"timestamp": 1733079457.3793643, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:37,379 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079457.3793643, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:37,379 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:38,083 - agent - DEBUG - Current state: {"timestamp": 1733079458.0831969, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,083 - agent - DEBUG - Post-execution state: {"timestamp": 1733079458.0831969, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,584 - agent - DEBUG - Current state: {"timestamp": 1733079458.5840354, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,584 - agent - DEBUG - Current state: {"timestamp": 1733079458.5840354, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,584 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:38,584 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:38,584 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:38,585 - agent - DEBUG - Current state: {"timestamp": 1733079458.5850399, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,585 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079458.5850399, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:38,585 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:39,287 - agent - DEBUG - Current state: {"timestamp": 1733079459.2870896, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,287 - agent - DEBUG - Post-execution state: {"timestamp": 1733079459.2870896, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,787 - agent - DEBUG - Current state: {"timestamp": 1733079459.787952, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,787 - agent - DEBUG - Current state: {"timestamp": 1733079459.787952, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,787 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:39,787 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:39,787 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:39,788 - agent - DEBUG - Current state: {"timestamp": 1733079459.7889574, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,788 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079459.7889574, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:39,788 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:40,491 - agent - DEBUG - Current state: {"timestamp": 1733079460.4910264, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,491 - agent - DEBUG - Post-execution state: {"timestamp": 1733079460.4910264, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,991 - agent - DEBUG - Current state: {"timestamp": 1733079460.991669, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,991 - agent - DEBUG - Current state: {"timestamp": 1733079460.991669, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,991 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:40,991 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:40,992 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:40,992 - agent - DEBUG - Current state: {"timestamp": 1733079460.9926717, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,992 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079460.9926717, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:40,993 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:41,695 - agent - DEBUG - Current state: {"timestamp": 1733079461.6953337, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:41,695 - agent - DEBUG - Post-execution state: {"timestamp": 1733079461.6953337, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,196 - agent - DEBUG - Current state: {"timestamp": 1733079462.1964717, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,196 - agent - DEBUG - Current state: {"timestamp": 1733079462.1964717, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,197 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:42,197 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:42,197 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:42,198 - agent - DEBUG - Current state: {"timestamp": 1733079462.1984756, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,198 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079462.1984756, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,198 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:42,900 - agent - DEBUG - Current state: {"timestamp": 1733079462.9009795, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:42,901 - agent - DEBUG - Post-execution state: {"timestamp": 1733079462.9009795, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:43,401 - agent - DEBUG - Current state: {"timestamp": 1733079463.4019601, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:43,401 - agent - DEBUG - Current state: {"timestamp": 1733079463.4019601, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:43,401 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:43,401 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:43,401 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:43,401 - agent - DEBUG - Current state: {"timestamp": 1733079463.4019601, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:43,402 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079463.4019601, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:43,402 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:44,104 - agent - DEBUG - Current state: {"timestamp": 1733079464.104829, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,104 - agent - DEBUG - Post-execution state: {"timestamp": 1733079464.104829, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,605 - agent - DEBUG - Current state: {"timestamp": 1733079464.605437, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,605 - agent - DEBUG - Current state: {"timestamp": 1733079464.605437, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,605 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:44,605 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:44,606 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:44,606 - agent - DEBUG - Current state: {"timestamp": 1733079464.6061916, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,606 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079464.6061916, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:44,606 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:45,308 - agent - DEBUG - Current state: {"timestamp": 1733079465.3082306, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,308 - agent - DEBUG - Post-execution state: {"timestamp": 1733079465.3082306, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,809 - agent - DEBUG - Current state: {"timestamp": 1733079465.8091588, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,809 - agent - DEBUG - Current state: {"timestamp": 1733079465.8091588, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,809 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:45,809 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:45,810 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:45,810 - agent - DEBUG - Current state: {"timestamp": 1733079465.8101718, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,810 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079465.8101718, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:45,810 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:46,513 - agent - DEBUG - Current state: {"timestamp": 1733079466.51309, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:46,513 - agent - DEBUG - Post-execution state: {"timestamp": 1733079466.51309, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,014 - agent - DEBUG - Current state: {"timestamp": 1733079467.014251, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,014 - agent - DEBUG - Current state: {"timestamp": 1733079467.014251, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,015 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:47,015 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:47,015 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:47,015 - agent - DEBUG - Current state: {"timestamp": 1733079467.015255, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,016 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079467.015255, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,016 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:47,718 - agent - DEBUG - Current state: {"timestamp": 1733079467.7187514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:47,718 - agent - DEBUG - Post-execution state: {"timestamp": 1733079467.7187514, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,219 - agent - DEBUG - Current state: {"timestamp": 1733079468.2194934, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,219 - agent - DEBUG - Current state: {"timestamp": 1733079468.2194934, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,219 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:48,220 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:48,220 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:48,220 - agent - DEBUG - Current state: {"timestamp": 1733079468.220498, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,220 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079468.220498, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,220 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:48,922 - agent - DEBUG - Current state: {"timestamp": 1733079468.9225054, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:48,922 - agent - DEBUG - Post-execution state: {"timestamp": 1733079468.9225054, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:49,423 - agent - DEBUG - Current state: {"timestamp": 1733079469.423268, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:49,423 - agent - DEBUG - Current state: {"timestamp": 1733079469.423268, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:49,423 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:49,423 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:49,423 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:49,423 - agent - DEBUG - Current state: {"timestamp": 1733079469.4239414, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:49,423 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079469.4239414, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:49,423 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:50,125 - agent - DEBUG - Current state: {"timestamp": 1733079470.1258707, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,125 - agent - DEBUG - Post-execution state: {"timestamp": 1733079470.1258707, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,627 - agent - DEBUG - Current state: {"timestamp": 1733079470.6270707, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,627 - agent - DEBUG - Current state: {"timestamp": 1733079470.6270707, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,627 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:50,627 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:50,628 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:50,628 - agent - DEBUG - Current state: {"timestamp": 1733079470.6280746, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,628 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079470.6280746, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:50,629 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:51,331 - agent - DEBUG - Current state: {"timestamp": 1733079471.3312142, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,331 - agent - DEBUG - Post-execution state: {"timestamp": 1733079471.3312142, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,833 - agent - DEBUG - Current state: {"timestamp": 1733079471.833041, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,833 - agent - DEBUG - Current state: {"timestamp": 1733079471.833041, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,833 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:51,833 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:51,834 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:51,834 - agent - DEBUG - Current state: {"timestamp": 1733079471.8340456, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,834 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079471.8340456, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:51,834 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:52,536 - agent - DEBUG - Current state: {"timestamp": 1733079472.5365725, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:52,536 - agent - DEBUG - Post-execution state: {"timestamp": 1733079472.5365725, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,037 - agent - DEBUG - Current state: {"timestamp": 1733079473.0372815, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,037 - agent - DEBUG - Current state: {"timestamp": 1733079473.0372815, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,037 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:53,037 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:53,037 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:53,037 - agent - DEBUG - Current state: {"timestamp": 1733079473.0372815, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,038 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079473.0372815, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,038 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:53,740 - agent - DEBUG - Current state: {"timestamp": 1733079473.7404714, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:53,740 - agent - DEBUG - Post-execution state: {"timestamp": 1733079473.7404714, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,241 - agent - DEBUG - Current state: {"timestamp": 1733079474.241398, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,241 - agent - DEBUG - Current state: {"timestamp": 1733079474.241398, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,241 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:54,241 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:54,241 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:54,241 - agent - DEBUG - Current state: {"timestamp": 1733079474.241398, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,241 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079474.241398, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,242 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:54,944 - agent - DEBUG - Current state: {"timestamp": 1733079474.9445114, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:54,944 - agent - DEBUG - Post-execution state: {"timestamp": 1733079474.9445114, "active_window": "Run", "cursor_position": [361, 205], "last_action": null, "paint_open": false}
+2024-12-01 12:57:55,445 - agent - DEBUG - Current state: {"timestamp": 1733079475.4455974, "active_window": "Run", "cursor_position": [635, 206], "last_action": null, "paint_open": false}
+2024-12-01 12:57:55,445 - agent - DEBUG - Current state: {"timestamp": 1733079475.4455974, "active_window": "Run", "cursor_position": [635, 206], "last_action": null, "paint_open": false}
+2024-12-01 12:57:55,446 - agent - DEBUG - Paint not open, attempting to launch
+2024-12-01 12:57:55,446 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:55,446 - agent - DEBUG - Starting execution of action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Opening Run dialog"}
+2024-12-01 12:57:55,446 - agent - DEBUG - Current state: {"timestamp": 1733079475.4460526, "active_window": "Run", "cursor_position": [635, 206], "last_action": null, "paint_open": false}
+2024-12-01 12:57:55,446 - agent - DEBUG - Pre-execution state: {"timestamp": 1733079475.4460526, "active_window": "Run", "cursor_position": [635, 206], "last_action": null, "paint_open": false}
+2024-12-01 12:57:55,446 - agent - DEBUG - Pressing keys: win+r
+2024-12-01 12:57:56,149 - agent - DEBUG - Current state: {"timestamp": 1733079476.1492083, "active_window": "LLM Vision Agent", "cursor_position": [633, 231], "last_action": null, "paint_open": false}
+2024-12-01 12:57:56,149 - agent - DEBUG - Post-execution state: {"timestamp": 1733079476.1492083, "active_window": "LLM Vision Agent", "cursor_position": [633, 231], "last_action": null, "paint_open": false}

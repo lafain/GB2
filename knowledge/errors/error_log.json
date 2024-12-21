@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "2024-12-01T11:47:50.818934",
+    "error": "'LLMAgent' object has no attribute 'current_steps'",
+    "context": "process_vision",
+    "solution": null,
+    "goal": "draw a house in paint"
+  },
+  {
+    "timestamp": "2024-12-01T11:47:52.933254",
+    "error": "'LLMAgent' object has no attribute 'current_steps'",
+    "context": "process_vision",
+    "solution": null,
+    "goal": "draw a house in paint"
+  },
+  {
+    "timestamp": "2024-12-01T11:47:55.054039",
+    "error": "'LLMAgent' object has no attribute 'current_steps'",
+    "context": "process_vision",
+    "solution": null,
+    "goal": "draw a house in paint"
+  },
+  {
+    "timestamp": "2024-12-01T11:47:57.182926",
+    "error": "'LLMAgent' object has no attribute 'current_steps'",
+    "context": "process_vision",
+    "solution": null,
+    "goal": "draw a house in paint"
+  },
+  {
+    "timestamp": "2024-12-01T11:47:59.298667",
+    "error": "'LLMAgent' object has no attribute 'current_steps'",
+    "context": "process_vision",
+    "solution": null,
+    "goal": "draw a house in paint"
+  }
+]

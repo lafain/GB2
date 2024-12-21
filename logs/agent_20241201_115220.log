@@ -1,0 +1,18 @@
+2024-12-01 11:52:20,536 - agent - INFO - Agent initialized
+2024-12-01 11:52:30,181 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 11:52:30,181 - goal_planner - INFO - Found existing pattern for goal: draw a house in paint
+2024-12-01 11:52:30,182 - agent - INFO - Goal broken down into 2 steps
+2024-12-01 11:52:30,182 - agent - DEBUG - Step 1: {'name': 'launch_paint', 'description': 'Launch Microsoft Paint', 'verification': 'program_running', 'params': {'program': 'mspaint.exe'}, 'actions': ['PRESS win+r', 'TYPE mspaint', 'PRESS enter']}
+2024-12-01 11:52:30,182 - agent - DEBUG - Step 2: {'name': 'verify_paint_window', 'description': 'Ensure Paint window is active', 'verification': 'window_active', 'params': {'title': 'Paint'}, 'actions': []}
+2024-12-01 11:52:32,925 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:52:53,361 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 None
+2024-12-01 11:52:57,010 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:53:04,663 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1585
+2024-12-01 11:53:07,282 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:53:14,873 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1563
+2024-12-01 11:53:17,588 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:53:26,988 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1658
+2024-12-01 11:53:30,624 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:53:38,223 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1573
+2024-12-01 11:53:40,848 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
+2024-12-01 11:53:49,752 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1646

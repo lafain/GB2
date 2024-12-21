@@ -1,0 +1,10 @@
+2024-12-01 12:39:27,774 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
+2024-12-01 12:39:27,774 - llm - DEBUG - Using model: llama3.2-vision:latest
+2024-12-01 12:39:27,776 - llm - DEBUG - Prompt: As an AI controlling the computer, break down this goal into specific computer actions: draw a house in paint
+            
+            Return JSON with these exact action types:
+            {
+        ...
+2024-12-01 12:39:27,776 - llm - DEBUG - Sending request to Ollama...
+2024-12-01 12:40:27,232 - llm - DEBUG - Response status: 200
+2024-12-01 12:40:27,233 - llm - DEBUG - Response received: {'model': 'llama3.2-vision:latest', 'created_at': '2024-12-01T18:40:27.2314318Z', 'response': 'Here is the breakdown of the goal into specific computer actions in JSON format:\n\n```\n{\n  "goal_type"...

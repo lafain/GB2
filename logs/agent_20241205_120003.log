@@ -1,0 +1,2 @@
+2024-12-05 12:00:12,834 - agent - INFO - Setting goal: draw a house in paint
+2024-12-05 12:00:14,881 - agent - ERROR - Failed to generate plan for the goal

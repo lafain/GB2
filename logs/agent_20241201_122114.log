@@ -1,0 +1,6 @@
+2024-12-01 12:21:21,627 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 12:21:21,628 - agent - DEBUG - Creating high-level plan...
+2024-12-01 12:22:26,248 - agent - INFO - Created initial plan with 8 main steps
+2024-12-01 12:22:35,992 - agent - DEBUG - Breaking down step: Launch MS Paint
+2024-12-01 12:22:49,551 - agent - ERROR - Action failed: {'type': 'PRESS key+combination', 'params': {'keys': 'Win+E'}, 'description': 'Open File Explorer to browse for Paint program'}
+2024-12-01 12:22:49,551 - agent - ERROR - Error in run loop: 'KnowledgeManager' object has no attribute 'store_error'

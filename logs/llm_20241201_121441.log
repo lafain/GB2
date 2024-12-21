@@ -1,0 +1,9 @@
+2024-12-01 12:14:50,441 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
+2024-12-01 12:14:50,441 - llm - DEBUG - Using model: llama3.2-vision:latest
+2024-12-01 12:14:50,442 - llm - DEBUG - Prompt: Analyze this goal and create a detailed plan: draw a house in paint
+            Consider:
+            1. Required programs/tools
+            2. System state requirements
+            3. User interface ...
+2024-12-01 12:14:50,442 - llm - DEBUG - Sending request to Ollama...
+2024-12-01 12:17:52,497 - llm - ERROR - Request timed out

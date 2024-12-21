@@ -1,0 +1,90 @@
+{
+  "patterns": [
+    {
+      "goal_type": "draw_house",
+      "keywords": ["draw", "house", "paint"],
+      "steps": [
+        {
+          "name": "open_run_dialog",
+          "description": "Open Windows Run dialog",
+          "verification": "window_active",
+          "params": {"title": "Run"},
+          "actions": ["PRESS win+r"],
+          "required_state": {
+            "desktop_focused": true
+          }
+        },
+        {
+          "name": "verify_run_dialog",
+          "description": "Ensure Run dialog is ready",
+          "verification": "window_active",
+          "params": {"title": "Run"},
+          "actions": [],
+          "retry_if_failed": {
+            "action": "PRESS win+r",
+            "max_attempts": 3
+          }
+        },
+        {
+          "name": "type_paint_command",
+          "description": "Type mspaint command",
+          "verification": "text_entered",
+          "params": {
+            "window": "Run",
+            "expected_text": "mspaint"
+          },
+          "actions": ["TYPE mspaint"],
+          "required_state": {
+            "window_active": "Run"
+          }
+        },
+        {
+          "name": "launch_paint",
+          "description": "Execute paint command",
+          "verification": "command_sent",
+          "params": {},
+          "actions": ["PRESS enter"],
+          "required_state": {
+            "window_active": "Run",
+            "text_entered": true
+          }
+        },
+        {
+          "name": "wait_for_paint",
+          "description": "Wait for Paint to launch",
+          "verification": "program_running",
+          "params": {"program": "mspaint.exe"},
+          "actions": [],
+          "timeout": 5,
+          "retry_if_failed": {
+            "restart_from": "open_run_dialog",
+            "max_attempts": 3
+          }
+        },
+        {
+          "name": "verify_paint_window",
+          "description": "Ensure Paint window is active and ready",
+          "verification": "window_active",
+          "params": {"title": "Paint"},
+          "actions": ["CLICK Paint"],
+          "required_state": {
+            "program_running": "mspaint.exe"
+          }
+        },
+        {
+          "name": "verify_paint_canvas",
+          "description": "Ensure Paint canvas is ready",
+          "verification": "ui_element_exists",
+          "params": {
+            "element": "canvas",
+            "window": "Paint"
+          },
+          "actions": [],
+          "required_state": {
+            "window_active": "Paint"
+          }
+        }
+      ]
+    }
+  ]
+} 

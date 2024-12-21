@@ -1,0 +1,12 @@
+pyautogui==0.9.54
+keyboard==0.13.5
+mouse==0.7.1
+rich==13.7.0
+requests==2.31.0
+customtkinter==5.2.2
+psutil==5.9.8
+nltk==3.8.1
+pywin32==306
+numpy==1.26.2
+python-json-logger==2.0.7
+jsonschema==4.20.0 

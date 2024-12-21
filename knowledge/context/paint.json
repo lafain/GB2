@@ -1,0 +1,7 @@
+{
+  "domain": "paint",
+  "content": "Microsoft Paint (mspaint.exe) is a basic drawing program. Common tools include:\n- Pencil for freehand drawing\n- Brush for thicker strokes\n- Line tool for straight lines\n- Rectangle tool for squares and rectangles\n- Fill tool for coloring areas\n\nTo draw a house:\n1. Use rectangle tool for main structure\n2. Use line tool for roof (triangle shape)\n3. Add rectangles for windows and door\n4. Use fill tool to color\n\nCommon shortcuts:\n- Ctrl+S to save\n- Ctrl+Z to undo\n- Ctrl+Y to redo",
+  "keywords": ["paint", "draw", "tools", "house", "rectangle", "line", "fill", "color", "window", "door"],
+  "created": "2024-12-01T00:00:00Z",
+  "last_updated": "2024-12-01T00:00:00Z"
+} 

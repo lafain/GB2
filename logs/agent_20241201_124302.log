@@ -1,0 +1,21 @@
+2024-12-01 12:43:14,416 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 12:44:26,415 - agent - DEBUG - Current state: {"timestamp": 1733078666.4151387, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,415 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,422 - agent - DEBUG - Current state: {"timestamp": 1733078666.4221385, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,422 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,427 - agent - DEBUG - Current state: {"timestamp": 1733078666.4271376, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,428 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,434 - agent - DEBUG - Current state: {"timestamp": 1733078666.4341385, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,435 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,440 - agent - DEBUG - Current state: {"timestamp": 1733078666.440643, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,440 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,447 - agent - DEBUG - Current state: {"timestamp": 1733078666.4471552, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,447 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,453 - agent - DEBUG - Current state: {"timestamp": 1733078666.4531763, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,453 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,459 - agent - DEBUG - Current state: {"timestamp": 1733078666.459175, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,459 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,464 - agent - DEBUG - Current state: {"timestamp": 1733078666.464683, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,465 - agent - WARNING - Paint not open but required for current step
+2024-12-01 12:44:26,470 - agent - DEBUG - Current state: {"timestamp": 1733078666.4706836, "active_window": "LLM Vision Agent", "cursor_position": [555, 391], "last_action": null, "paint_open": false}
+2024-12-01 12:44:26,471 - agent - ERROR - Detected error loop - stopping agent

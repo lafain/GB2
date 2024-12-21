@@ -1,0 +1,3 @@
+2024-12-21 11:22:07,069 - root - INFO - Setting goal: draw a house in paint
+2024-12-21 11:22:11,169 - root - ERROR - Error breaking down goal: 'LLMInterface' object has no attribute 'get_response'
+2024-12-21 11:22:11,169 - root - ERROR - Failed to generate plan for the goal

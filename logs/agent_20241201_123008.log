@@ -1,0 +1,19 @@
+2024-12-01 12:30:14,751 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 12:30:14,752 - agent - DEBUG - Creating high-level plan...
+2024-12-01 12:31:29,752 - agent - INFO - Created initial plan with 8 main steps
+2024-12-01 12:31:34,298 - agent - DEBUG - Breaking down step: Launch MS Paint
+2024-12-01 12:31:41,335 - agent - DEBUG - Parsed action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:31:41,336 - agent - DEBUG - Executing action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:31:41,336 - agent - DEBUG - Clicking at: 100, 200
+2024-12-01 12:31:42,848 - agent - DEBUG - Breaking down step: Launch MS Paint
+2024-12-01 12:31:49,955 - agent - DEBUG - Parsed action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:31:49,955 - agent - DEBUG - Executing action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:31:49,956 - agent - DEBUG - Clicking at: 100, 200
+2024-12-01 12:31:51,464 - agent - DEBUG - Breaking down step: Launch MS Paint
+2024-12-01 12:32:00,569 - agent - DEBUG - Parsed action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:32:00,570 - agent - DEBUG - Executing action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:32:00,570 - agent - DEBUG - Clicking at: 100, 200
+2024-12-01 12:32:02,081 - agent - DEBUG - Breaking down step: Launch MS Paint
+2024-12-01 12:32:11,302 - agent - DEBUG - Parsed action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:32:11,302 - agent - DEBUG - Executing action: {"type": "CLICK", "params": {"x": 100, "y": 200}, "description": "Click on Start button"}
+2024-12-01 12:32:11,302 - agent - DEBUG - Clicking at: 100, 200

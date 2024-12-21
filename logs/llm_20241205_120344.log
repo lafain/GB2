@@ -1,0 +1,14 @@
+2024-12-05 12:03:53,753 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
+2024-12-05 12:03:53,754 - llm - DEBUG - Using model: llama2:latest
+2024-12-05 12:03:53,755 - llm - DEBUG - Prompt: Break down this goal into detailed, atomic steps with validations after each step: draw a house in paint
+
+Return as JSON:
+{
+    "steps": [
+        {
+            "name": "step_name",
+            "descr...
+2024-12-05 12:03:53,759 - llm - DEBUG - Sending request to Ollama...
+2024-12-05 12:03:55,809 - llm - DEBUG - Response status: 404
+2024-12-05 12:03:55,809 - llm - ERROR - HTTP Error: 404
+2024-12-05 12:03:55,810 - llm - ERROR - Response text: {"error":"model 'llama2:latest' not found"}

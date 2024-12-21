@@ -1,0 +1,3 @@
+2024-12-01 12:19:17,897 - agent - INFO - Setting goal: draw a house in paint
+2024-12-01 12:19:17,898 - agent - DEBUG - Creating high-level plan...
+2024-12-01 12:19:51,728 - agent - INFO - Created initial plan with 3 main steps
