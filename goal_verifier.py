@@ -140,3 +140,35 @@ class GoalVerifier:
             
         except Exception as e:
             self.logger.error(f"Failed to store verification: {str(e)}")
+
+    def _verify_visual_state(self, screen_state, goal):
+        """Verify the visual state matches goal requirements"""
+        try:
+            # Convert screen state to grayscale for processing
+            gray = cv2.cvtColor(screen_state, cv2.COLOR_BGR2GRAY)
+            
+            # Get expected visual patterns for this goal
+            expected_patterns = self._load_expected_patterns(goal)
+            
+            results = {}
+            for pattern_name, pattern_data in expected_patterns.items():
+                template = cv2.imread(pattern_data['template_path'], 0)
+                if template is None:
+                    continue
+                    
+                # Template matching
+                res = cv2.matchTemplate(gray, template, cv2.TM_CCOEFF_NORMED)
+                min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+                
+                # Check if match exceeds threshold
+                results[pattern_name] = {
+                    'matched': max_val >= pattern_data.get('threshold', 0.8),
+                    'confidence': max_val,
+                    'location': max_loc
+                }
+                
+            return results
+            
+        except Exception as e:
+            self.logger.error(f"Visual state verification failed: {str(e)}")
+            return None

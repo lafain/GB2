@@ -1,10 +1,3 @@
-2024-12-01 11:50:58,266 - agent - INFO - Agent initialized
-2024-12-01 11:51:07,124 - agent - INFO - Setting goal: draw a house in paint
-2024-12-01 11:51:07,125 - goal_planner - INFO - Found existing pattern for goal: draw a house in paint
-2024-12-01 11:51:07,126 - agent - INFO - Goal broken down into 2 steps
-2024-12-01 11:51:07,126 - agent - DEBUG - Step 1: {'name': 'launch_paint', 'description': 'Launch Microsoft Paint', 'verification': 'program_running', 'params': {'program': 'mspaint.exe'}, 'actions': ['PRESS win+r', 'TYPE mspaint', 'PRESS enter']}
-2024-12-01 11:51:07,127 - agent - DEBUG - Step 2: {'name': 'verify_paint_window', 'description': 'Ensure Paint window is active', 'verification': 'window_active', 'params': {'title': 'Paint'}, 'actions': []}
-2024-12-01 11:51:11,587 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
-2024-12-01 11:51:25,398 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1651
-2024-12-01 11:51:27,608 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
-2024-12-01 11:51:37,183 - urllib3.connectionpool - DEBUG - http://localhost:11434 "POST /api/generate HTTP/11" 200 1675
+version https://git-lfs.github.com/spec/v1
+oid sha256:52a50aa719b6fc53a7b0692cb7e250a72e297cb34ad541759e06c8fc7340a9a0
+size 1234

@@ -1,22 +1,3 @@
-2024-12-05 14:29:56,209 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
-2024-12-05 14:29:56,210 - llm - DEBUG - Using model: llama2:latest
-2024-12-05 14:29:56,211 - llm - DEBUG - Prompt: As an AI assistant, break down the following goal into detailed, atomic steps with validations after each step.
-
-Goal: "draw a house in paint"
-
-Return the response in **valid JSON format** as follows:...
-2024-12-05 14:29:56,212 - llm - DEBUG - Sending request to Ollama...
-2024-12-05 14:29:58,257 - llm - DEBUG - Response status: 404
-2024-12-05 14:29:58,257 - llm - ERROR - HTTP Error: 404
-2024-12-05 14:29:58,257 - llm - ERROR - Response text: {"error":"model 'llama2:latest' not found"}
-2024-12-05 14:30:53,484 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
-2024-12-05 14:30:53,485 - llm - DEBUG - Using model: llama2:latest
-2024-12-05 14:30:53,486 - llm - DEBUG - Prompt: As an AI assistant, break down the following goal into detailed, atomic steps with validations after each step.
-
-Goal: "draw a house in paint"
-
-Return the response in **valid JSON format** as follows:...
-2024-12-05 14:30:53,490 - llm - DEBUG - Sending request to Ollama...
-2024-12-05 14:30:55,534 - llm - DEBUG - Response status: 404
-2024-12-05 14:30:55,535 - llm - ERROR - HTTP Error: 404
-2024-12-05 14:30:55,536 - llm - ERROR - Response text: {"error":"model 'llama2:latest' not found"}
+version https://git-lfs.github.com/spec/v1
+oid sha256:77c20ddab4356c8e4591672c633dcde4c9f2aed90925443b882cd9f9d5d33ea4
+size 1424

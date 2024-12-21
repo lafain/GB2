@@ -1,16 +1,3 @@
-2024-12-19 07:42:31,714 - agent - INFO - Setting goal: draw a house in paint
-2024-12-19 08:06:08,075 - agent - DEBUG - Current state: {"timestamp": 1734617168.0749693, "active_window": "LLM Vision Agent", "cursor_position": [491, 241], "last_action": null, "paint_open": false}
-2024-12-19 08:06:08,075 - agent - DEBUG - Current state: {"timestamp": 1734617168.0749693, "active_window": "LLM Vision Agent", "cursor_position": [491, 241], "last_action": null, "paint_open": false}
-2024-12-19 08:06:08,076 - agent - DEBUG - Executing action: {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}
-2024-12-19 08:06:08,076 - agent - DEBUG - Executing action (attempt 1): {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}
-2024-12-19 08:06:08,076 - agent - DEBUG - Current state: {"timestamp": 1734617168.0769675, "active_window": "LLM Vision Agent", "cursor_position": [491, 241], "last_action": null, "paint_open": false}
-2024-12-19 08:06:09,079 - agent - DEBUG - Current state: {"timestamp": 1734617169.0791543, "active_window": "Run", "cursor_position": [491, 241], "last_action": {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}, "paint_open": false}
-2024-12-19 08:06:09,579 - agent - DEBUG - Current state: {"timestamp": 1734617169.579695, "active_window": "Run", "cursor_position": [491, 241], "last_action": {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}, "paint_open": false}
-2024-12-19 08:06:09,579 - agent - DEBUG - Current state: {"timestamp": 1734617169.579695, "active_window": "Run", "cursor_position": [491, 241], "last_action": {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}, "paint_open": false}
-2024-12-19 08:06:09,580 - agent - DEBUG - Executing action: {"type": "TYPE", "params": {"text": "mspaint\n"}, "description": "Type mspaint command and press enter"}
-2024-12-19 08:06:09,580 - agent - DEBUG - Executing action (attempt 1): {"type": "TYPE", "params": {"text": "mspaint\n"}, "description": "Type mspaint command and press enter"}
-2024-12-19 08:06:09,580 - agent - DEBUG - Current state: {"timestamp": 1734617169.5806992, "active_window": "Run", "cursor_position": [491, 241], "last_action": {"type": "PRESS", "params": {"keys": "win+r"}, "description": "Open Run dialog to launch Paint"}, "paint_open": false}
-2024-12-19 08:06:11,098 - agent - DEBUG - Current state: {"timestamp": 1734617171.0987945, "active_window": "Untitled - Paint", "cursor_position": [491, 241], "last_action": {"type": "TYPE", "params": {"text": "mspaint\n"}, "description": "Type mspaint command and press enter"}, "paint_open": true}
-2024-12-19 08:06:11,599 - agent - DEBUG - Current state: {"timestamp": 1734617171.599712, "active_window": "Untitled - Paint", "cursor_position": [491, 241], "last_action": {"type": "TYPE", "params": {"text": "mspaint\n"}, "description": "Type mspaint command and press enter"}, "paint_open": true}
-2024-12-19 08:06:11,599 - agent - DEBUG - Current state: {"timestamp": 1734617171.599712, "active_window": "Untitled - Paint", "cursor_position": [491, 241], "last_action": {"type": "TYPE", "params": {"text": "mspaint\n"}, "description": "Type mspaint command and press enter"}, "paint_open": true}
-2024-12-19 08:06:11,599 - agent - DEBUG - No action returned, checking goal completion
+version https://git-lfs.github.com/spec/v1
+oid sha256:fda4b2cd8040a496a78dbc7151c3e81a41ab71fd5583ac9d9000f77b4563776e
+size 3467

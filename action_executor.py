@@ -12,49 +12,74 @@ class ActionExecutor:
         self.knowledge = knowledge_manager
         self.logger = logger
         self.last_action = None
-        self.action_delay = 0.5
+        self.action_delay = 1.0  # Default action delay
+        self.verify_delay = 0.5  # Default verification delay
         self.last_screenshot = None
         
         # Initialize pyautogui settings
-        pyautogui.PAUSE = 0.5  # Add delay between actions
+        pyautogui.PAUSE = 0.5
         pyautogui.FAILSAFE = True
         
-    def execute(self, action: Dict[str, Any], context: Dict[str, Any] = None) -> bool:
-        max_retries = 3
-        retry_count = 0
-        
-        while retry_count < max_retries:
-            try:
-                self.logger.debug(f"Executing action (attempt {retry_count + 1}): {json.dumps(action)}")
-                pre_state = self.capture_state()
-                
-                if not self.validate_action(action):
-                    self.logger.error("Invalid action format")
-                    return False
-                
-                success = self.perform_action(action)
-                if not success:
-                    retry_count += 1
-                    time.sleep(1)  # Wait before retry
-                    continue
-                    
-                time.sleep(self.action_delay)
-                
-                post_state = self.capture_state()
-                if self.verify_action_result(action, pre_state, post_state):
-                    self.knowledge.store_successful_action(action, pre_state, post_state)
-                    return True
+    def execute(self, action):
+        """Execute an action based on its type"""
+        try:
+            action_type = action.get('type', '').upper()
+            params = action.get('params', {})
+            
+            success = False
+            if action_type == 'PRESS':
+                keys = params.get('keys', [])
+                if isinstance(keys, list):
+                    # Execute each key combination separately
+                    for key in keys:
+                        self.logger.debug(f"Pressing key combination: {key}")
+                        keyboard.press_and_release(str(key))
+                        time.sleep(0.5)  # Wait between key presses
                 else:
-                    self.knowledge.store_failed_action(action, pre_state, post_state)
+                    # Handle single key or existing key combinations
+                    self.logger.debug(f"Pressing single key: {keys}")
+                    keyboard.press_and_release(str(keys))
+                success = True
                 
-                retry_count += 1
+            elif action_type == 'TYPE':
+                text = str(params.get('text', ''))
+                self.logger.debug(f"Typing text: {text}")
+                keyboard.write(text)
+                if text.endswith('\n') or params.get('enter', False):
+                    time.sleep(0.1)  # Small delay before enter
+                    keyboard.press_and_release('enter')
+                success = True
                 
-            except Exception as e:
-                self.logger.error(f"Action execution failed: {str(e)}")
-                retry_count += 1
+            elif action_type == 'CLICK':
+                x = params.get('x')
+                y = params.get('y')
+                if x is not None and y is not None:
+                    self.logger.debug(f"Clicking at position: ({x}, {y})")
+                    pyautogui.click(x, y)
+                    success = True
                 
-        self.logger.error(f"Action failed after {max_retries} attempts")
-        return False
+            if not success:
+                self.logger.error(f"Unknown action type: {action_type}")
+                return False
+                
+            # Add delay after action execution
+            time.sleep(1.0)  # Wait for action to take effect
+            
+            # Verify the result with retries
+            max_verify_attempts = 3
+            verify_delay = 0.5
+            
+            for attempt in range(max_verify_attempts):
+                if self.verify_action_result(action, None, None):
+                    return True
+                self.logger.debug(f"Verification attempt {attempt + 1} failed, retrying...")
+                time.sleep(verify_delay)
+                
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Action execution failed: {str(e)}")
+            return False
     
     def validate_action(self, action: Dict[str, Any]) -> bool:
         required_keys = ['type', 'params']
@@ -164,26 +189,20 @@ class ActionExecutor:
         self.knowledge.store_transition(transition) 
     
     def verify_action_result(self, action, pre_state, post_state):
-        """Enhanced verification of action results"""
+        """Verify the result of an action"""
         try:
-            # Basic state verification
-            if not self._verify_basic_state(action, post_state):
-                return False
-                
-            # Visual verification if specified
-            if 'visual_verification' in action:
-                if not self.verify_visual_state(action['visual_verification']):
-                    self.logger.error("Visual verification failed")
-                    return False
+            # Get current window title
+            current_window = self.get_active_window()
+            self.logger.debug(f"Current window after action: {current_window}")
+            
+            # Check verification rules
+            verification = action.get('verification', {})
+            if verification:
+                if verification.get('type') == 'window_title':
+                    expected_title = verification.get('value', '')
+                    self.logger.debug(f"Verifying window title. Expected: {expected_title}, Current: {current_window}")
+                    return expected_title.lower() in current_window.lower()
                     
-            # Verify specific action types
-            if action['type'] == 'CLICK':
-                return self._verify_click_result(action, post_state)
-            elif action['type'] == 'TYPE':
-                return self._verify_type_result(action, post_state)
-            elif action['type'] == 'PRESS':
-                return self._verify_press_result(action, post_state)
-                
             return True
             
         except Exception as e:

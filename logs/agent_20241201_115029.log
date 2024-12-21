@@ -1,3 +1,3 @@
-2024-12-01 11:50:29,283 - agent - INFO - Agent initialized
-2024-12-01 11:50:38,161 - agent - INFO - Setting goal: draw a house in paint
-2024-12-01 11:50:38,162 - agent - ERROR - Error in set_goal: 'GoalPlanner' object has no attribute 'log_message'
+version https://git-lfs.github.com/spec/v1
+oid sha256:ebad8db495488d2f4656aeef732c0221d227715c5a150bf80e0b122694bb0313
+size 252

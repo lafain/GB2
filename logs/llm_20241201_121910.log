@@ -1,11 +1,3 @@
-2024-12-01 12:19:17,898 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
-2024-12-01 12:19:17,898 - llm - DEBUG - Using model: llama3.2-vision:latest
-2024-12-01 12:19:17,898 - llm - DEBUG - Prompt: Break this goal into 3-5 main steps: draw a house in paint
-            Return as JSON:
-            {
-                "goal_type": "category_name",
-                "main_steps": [
-                    {...
-2024-12-01 12:19:17,898 - llm - DEBUG - Sending request to Ollama...
-2024-12-01 12:19:51,727 - llm - DEBUG - Response status: 200
-2024-12-01 12:19:51,727 - llm - DEBUG - Response received: {'model': 'llama3.2-vision:latest', 'created_at': '2024-12-01T18:19:51.1883041Z', 'response': 'Here is the broken down goal into 3 main steps:\n\n```\n{\n    "goal_type": "Art and Design",\n    "main_...
+version https://git-lfs.github.com/spec/v1
+oid sha256:7ce9555864c415486415c35d9856e41554fb74cac731dbaff5ea7f1139bea641
+size 829

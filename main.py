@@ -5,6 +5,10 @@ import os
 import time
 from typing import Optional, Dict, Any
 import json
+import keyboard
+import pyautogui
+from PIL import ImageGrab
+from datetime import datetime
 
 from llm_interface import LLMInterface
 from knowledge_manager import KnowledgeManager
@@ -48,6 +52,8 @@ class Agent:
             self.logger.error("Failed to verify input permissions")
             gui.log_message("Error: Input permissions check failed")
             return
+        
+        self.user_available = True
     
     def set_goal(self, goal: str) -> bool:
         try:
@@ -73,7 +79,6 @@ class Agent:
             self.error_count = 0
             self.gui.log_message("Creating plan...")
             
-            # Split plan creation into background thread
             def create_plan_thread():
                 self.current_plan = self.create_plan(self.goal)
                 self.gui.log_message(f"Plan created with {len(self.current_plan['steps'])} steps")
@@ -93,31 +98,44 @@ class Agent:
                 
                 step = self.get_next_step()
                 if not step:
-                    self.gui.log_message("Checking goal completion...")
-                    if self.check_goal_completion():
-                        self.logger.info("Goal completed successfully") 
-                        self.gui.log_message("Goal completed successfully")
-                        break
-                    else:
-                        self.gui.log_message("Replanning...")
-                        # Split replanning into background thread
-                        def replan_thread():
-                            self.replan()
-                        threading.Thread(target=replan_thread).start()
-                        continue
-
+                    break
+                    
                 self.gui.log_message(f"Executing: {step.get('name', 'unnamed_step')}")
                 
-                if not self.verify_prerequisites(step):
-                    self.gui.log_message("Prerequisites not met, adjusting...")
-                    self.handle_missing_prerequisites(step)
-                    continue
+                # Add timeout for prerequisite resolution
+                start_time = time.time()
+                max_prereq_time = 10  # 10 seconds timeout
+                prereq_attempts = 0
+                max_prereq_attempts = 3
+                
+                while self.running and not self.verify_prerequisites(step):
+                    if time.time() - start_time > max_prereq_time:
+                        self.gui.log_message("Prerequisite resolution timed out")
+                        return False
+                        
+                    prereq_attempts += 1
+                    if prereq_attempts > max_prereq_attempts:
+                        self.gui.log_message("Max prerequisite attempts exceeded")
+                        return False
+                        
+                    self.gui.log_message(f"Prerequisites not met, attempt {prereq_attempts}/{max_prereq_attempts}...")
+                    if not self.handle_missing_prerequisites(step):
+                        self.gui.log_message("Failed to resolve prerequisites")
+                        return False
+                    time.sleep(0.5)  # Prevent tight loop
                     
+                if not self.running:
+                    self.gui.log_message("Agent stopped during prerequisite resolution")
+                    return False
+                    
+                # Now execute the step's actions
                 for action in step.get('actions', []):
                     if not self.running:
-                        break
-                    
+                        self.gui.log_message("Agent stopped during action execution")
+                        return False
+                        
                     self.gui.log_message(f"Action: {action.get('description', 'unnamed_action')}")
+                    
                     pre_state = self.executor.capture_state()
                     action_success = self.executor.execute(action)
                     
@@ -125,39 +143,33 @@ class Agent:
                         self.gui.log_message("Action failed, handling failure...")
                         failure_state = self.executor.capture_state()
                         self.handle_failure(action, failure_state)
-                        if self.detect_unexpected_state_change(pre_state, failure_state):
-                            self.gui.log_message("Unexpected state change detected")
-                            self.handle_unexpected_state()
-                        self.error_count += 1
+                        
                         if self.error_count >= self.max_errors:
                             self.logger.error("Too many errors, stopping")
                             self.gui.log_message("Too many errors, stopping agent")
-                            self.running = False
-                            break
-                        else:
-                            self.gui.log_message("Trying alternative approach...")
-                            if not self.try_alternative_approach(action, failure_state):
-                                self.gui.log_message("No alternative found, replanning...")
-                                # Split replanning into background thread
-                                def replan_thread():
-                                    self.replan()
-                                threading.Thread(target=replan_thread).start()
-                            break
-                    
+                            return False
+                            
+                        self.gui.log_message("Trying alternative approach...")
+                        if not self.try_alternative_approach(action, failure_state):
+                            self.gui.log_message("No alternative found, replanning...")
+                            return self.replan()
+                        continue
+                        
                     post_state = self.executor.capture_state()
                     if not self.verify_action_result(action, pre_state, post_state):
                         self.gui.log_message("Action verification failed")
                         self.handle_verification_failure(action, post_state)
                         continue
-                    
+                        
                     time.sleep(0.1)  # Small delay to prevent UI lockup
                 
-                if self.running:
-                    self.gui.log_message("Checking goal completion...")
-                    if self.check_goal_completion():
-                        self.logger.info("Goal completed successfully")
-                        self.gui.log_message("Goal completed successfully")
-                        break
+                # Only move to next step if current step completed successfully
+                self.current_plan['current_step_index'] += 1
+                
+                if self.check_goal_completion():
+                    self.logger.info("Goal completed successfully")
+                    self.gui.log_message("Goal completed successfully")
+                    break
 
         except Exception as e:
             self.logger.error(f"Error in run loop: {str(e)}")
@@ -288,28 +300,149 @@ class Agent:
         return plan
     
     def verify_prerequisites(self, step):
-        required_state = step.get('required_state', {})
-        current_state = self.executor.capture_state()
-        
-        for key, value in required_state.items():
-            if current_state.get(key) != value:
-                self.logger.debug(f"Prerequisite not met: {key} = {value}")
-                return False
-        return True
+        """Verify all prerequisites are met for a step"""
+        try:
+            self.gui.log_debug("Starting prerequisite verification")
+            current_state = self.executor.capture_state()
+            required_state = step.get('required_state', {})
+            
+            self.gui.log_debug(f"Current state: {json.dumps(current_state, indent=2)}")
+            self.gui.log_debug(f"Required state: {json.dumps(required_state, indent=2)}")
+            
+            for state_name, expected_value in required_state.items():
+                self.gui.log_debug(f"Checking prerequisite: {state_name} = {expected_value}")
+                
+                if not self._check_prerequisite(state_name, expected_value):
+                    self.gui.log_debug(f"Prerequisite not met: {state_name}")
+                    return False
+                    
+                time.sleep(self.executor.verify_delay)
+                
+            self.gui.log_debug("All prerequisites met")
+            return True
+            
+        except Exception as e:
+            self.gui.log_debug(f"Error verifying prerequisites: {str(e)}", "ERROR")
+            return False
+    
+    def _check_prerequisite(self, prereq_name, expected_value):
+        """Check if a specific prerequisite is met"""
+        try:
+            current_state = self.executor.capture_state()
+            
+            # Log the check
+            self.logger.debug(f"Checking {prereq_name}: current={current_state.get(prereq_name)}, expected={expected_value}")
+            
+            if prereq_name == "program_open":
+                result = current_state.get("paint_open", False) == expected_value
+                self.gui.log_message(f"Paint open check: {'Success' if result else 'Failed'}")
+                return result
+            
+            elif prereq_name == "tool_selected":
+                result = current_state.get("current_tool") == expected_value
+                self.gui.log_message(f"Tool selection check: {'Success' if result else 'Failed'}")
+                return result
+            
+            elif prereq_name == "color_selected":
+                result = current_state.get("current_color") == expected_value
+                self.gui.log_message(f"Color selection check: {'Success' if result else 'Failed'}")
+                return result
+            
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error in prerequisite check: {str(e)}")
+            return False
     
     def handle_missing_prerequisites(self, step):
-        required_state = step.get('required_state', {})
-        current_state = self.executor.capture_state()
+        """Handle missing prerequisites for a step"""
+        try:
+            required_state = step.get('required_state', {})
+            for state_name, expected_value in required_state.items():
+                if not self._check_prerequisite(state_name, expected_value):
+                    resolution_actions = self._get_prerequisite_resolution(state_name)
+                    if not resolution_actions:
+                        self.logger.error(f"No resolution found for state: {state_name}")
+                        return False
+                        
+                    # Execute each resolution action in sequence
+                    for action in resolution_actions:
+                        # Log what we're about to do
+                        self.gui.log_message(f"Executing resolution: {action.get('type')} - {action.get('expected_result')}")
+                        
+                        pre_state = self.executor.capture_state()
+                        if not self.executor.execute(action):
+                            self.logger.error(f"Failed to execute resolution action: {action}")
+                            return False
+                            
+                        # Wait for action to take effect
+                        time.sleep(1.0)  # Full second wait after action
+                        
+                        # Verify the action worked
+                        post_state = self.executor.capture_state()
+                        if not self.verify_action_result(action, pre_state, post_state):
+                            self.logger.error("Resolution action verification failed")
+                            self.gui.log_message("Verification failed - retrying...")
+                            time.sleep(1.0)  # Wait before retry
+                            continue
+                            
+                        self.gui.log_message("Resolution step completed successfully")
+                        time.sleep(0.5)  # Small delay between steps
+                        
+                    # After all resolution actions, verify final state
+                    time.sleep(1.0)  # Wait before final check
+                    if not self._check_prerequisite(state_name, expected_value):
+                        self.logger.error(f"State still not met after resolution: {state_name}")
+                        return False
+                        
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Error handling prerequisites: {str(e)}")
+            return False
         
-        for key, value in required_state.items():
-            if current_state.get(key) != value:
-                # Create intermediate step to achieve required state
-                intermediate_step = self.create_intermediate_step(key, value)
-                if intermediate_step:
-                    self.current_plan['steps'].insert(
-                        self.current_plan['current_step_index'],
-                        intermediate_step
-                    )
+    def _get_prerequisite_resolution(self, prereq_name):
+        """Get action to resolve a missing prerequisite"""
+        if prereq_name == "program_open":
+            return [
+                # First action - open run dialog
+                {
+                    "type": "PRESS",
+                    "params": {"keys": "win+r"},  # Single string instead of list
+                    "expected_result": "Run dialog opens",
+                    "verification": {
+                        "type": "window_title",
+                        "value": "Run"
+                    }
+                },
+                # Second action - type mspaint and press enter
+                {
+                    "type": "TYPE",
+                    "params": {
+                        "text": "mspaint",
+                        "enter": True  # Use enter param instead of \n
+                    },
+                    "expected_result": "Paint opens",
+                    "verification": {
+                        "type": "window_title",
+                        "value": "Paint"
+                    }
+                }
+            ]
+        elif prereq_name == "tool_selected":
+            return {
+                "type": "CLICK",
+                "params": {"target": "tool_button"},
+                "expected_result": "Tool selected"
+            }
+        elif prereq_name == "color_selected":
+            return {
+                "type": "CLICK", 
+                "params": {"target": "color_picker"},
+                "expected_result": "Color selected"
+            }
+        
+        return None
     
     def detect_unexpected_state_change(self, pre_state, post_state):
         # Compare relevant state attributes
@@ -468,240 +601,872 @@ class Agent:
         """Reset step index to beginning"""
         if self.current_plan:
             self.current_plan['current_step_index'] = 0
+    
+    def set_user_available(self, available: bool):
+        """Set whether user is available for questions"""
+        self.user_available = available
+        
+    def handle_user_message(self, message: str):
+        """Handle incoming message from user"""
+        try:
+            # Format prompt to maintain context
+            prompt = f"""User message: {message}
+            Current goal: {self.goal}
+            Current state: {json.dumps(self.state, indent=2)}
+            
+            Respond appropriately and adjust your plan if needed.
+            """
+            
+            response = self.llm.generate(prompt)
+            if response:
+                self.gui.chat_display.insert("end", f"Agent: {response.get('response', '')}\n")
+                self.gui.chat_display.see("end")
+                
+        except Exception as e:
+            self.logger.error(f"Error handling user message: {str(e)}")
+            
+    def ask_user(self, question: str) -> Optional[str]:
+        """Ask user a question if available"""
+        if not self.user_available:
+            self.logger.info("User not available for questions, proceeding with best guess")
+            return None
+            
+        self.gui.chat_display.insert("end", f"Agent: {question}\n")
+        self.gui.chat_display.see("end")
+        
+        # Note: This is async - response will come through handle_user_message
+        return None
+
+    def log_action(self, action, result, details=None):
+        """Log action execution with details"""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+        log_entry = {
+            "timestamp": timestamp,
+            "action": action,
+            "result": result,
+            "details": details,
+            "state": self.executor.capture_state()
+        }
+        
+        # Format for display
+        message = (
+            f"Action: {action.get('type')} - {action.get('description', 'No description')}\n"
+            f"Result: {'Success' if result else 'Failed'}\n"
+        )
+        if details:
+            message += f"Details: {details}\n"
+        
+        # Log to GUI and debug
+        self.gui.log_debug(message)
+        
+        # Store in knowledge base
+        self.knowledge.store_action_log(log_entry)
 
 class AgentGUI(ctk.CTk):
     def __init__(self):
         super().__init__()
         
+        # Safety settings for pyautogui
+        pyautogui.FAILSAFE = True
+        pyautogui.PAUSE = 0.5
+        
         self.title("LLM Vision Agent")
         self.geometry("1200x800")
         
-        # Create main container with two columns
-        self.grid_columnconfigure(0, weight=2)  # Control column
-        self.grid_columnconfigure(1, weight=3)  # Status column
-        self.grid_rowconfigure(0, weight=1)
-        
-        # Left column - Controls
-        self.control_frame = ctk.CTkFrame(self)
-        self.control_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
-        self.setup_control_frame()
-        
-        # Right column - Status and Thought Process
-        self.status_frame = ctk.CTkFrame(self)
-        self.status_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
-        self.setup_status_frame()
+        # Add error display first
+        self.error_label = ctk.CTkLabel(self, text="", text_color="red")
+        self.error_label.pack(pady=5)
         
         # Initialize agent
-        self.agent = Agent(self)
+        try:
+            self.agent = Agent(self)
+            self.agent.logger = DebugLogger("agent", "logs", self)  # Pass GUI to logger
+        except Exception as e:
+            self.show_error("Failed to initialize agent", str(e))
+            self.agent = None
+            
+        # Create tabview
+        self.tabview = ctk.CTkTabview(self)
+        self.tabview.pack(expand=True, fill="both", padx=10, pady=10)
+        
+        # Add tabs
+        self.tab_main = self.tabview.add("Main")
+        self.tab_test = self.tabview.add("Testing")
+        self.tab_debug = self.tabview.add("Debug")
+        self.tab_settings = self.tabview.add("Settings")
+        
+        # Configure tab grids
+        for tab in [self.tab_main, self.tab_test, self.tab_debug, self.tab_settings]:
+            tab.grid_columnconfigure(0, weight=1)
+            tab.grid_columnconfigure(1, weight=1)
+            tab.grid_rowconfigure(0, weight=1)
+        
+        # Set up each tab
+        self.setup_main_tab()
+        self.setup_test_tab()
+        self.setup_debug_tab()
+        self.setup_settings_tab()
         
         # Set up cleanup on close
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
-    
-    def setup_control_frame(self):
-        self.control_frame.grid_columnconfigure(0, weight=1)
+
+    def show_error(self, title, message):
+        """Display error message to user"""
+        try:
+            error_text = f"{title}: {message}"
+            if hasattr(self, 'error_label'):
+                self.error_label.configure(text=error_text)
+            print(f"Error: {error_text}")  # Backup console output
+        except Exception as e:
+            print(f"Error showing error message: {str(e)}")
+            print(f"Original error: {title} - {message}")
+
+    def safe_keyboard_write(self, text):
+        """Safely execute keyboard write with error handling"""
+        try:
+            if not text:
+                raise ValueError("Empty text input")
+            
+            self.test_output.insert("end", f"Attempting to write: '{text}'\n")
+            
+            # Check if keyboard module is properly imported
+            if not 'keyboard' in globals():
+                raise ImportError("Keyboard module not properly imported")
+            
+            # Check if we have keyboard permissions
+            try:
+                # Test keyboard access with a harmless key
+                keyboard.is_pressed('shift')
+            except Exception as e:
+                raise PermissionError(f"No keyboard access: {str(e)}")
+            
+            # Try writing with delay between characters
+            for char in text:
+                keyboard.write(char)
+                time.sleep(0.05)  # Small delay between characters
+                self.test_output.insert("end", f"Wrote character: '{char}'\n")
+            
+            self.test_output.insert("end", "Write operation completed\n")
+            return True
+            
+        except Exception as e:
+            error_msg = f"Keyboard write failed: {str(e)}\n"
+            error_msg += f"Error type: {type(e).__name__}\n"
+            error_msg += f"Text attempted: '{text}'\n"
+            
+            self.test_output.insert("end", error_msg)
+            self.show_error("Keyboard write failed", str(e))
+            return False
+
+    def safe_keyboard_press(self, shortcut):
+        """Safely execute keyboard shortcut with error handling"""
+        try:
+            if not shortcut:
+                raise ValueError("Empty shortcut input")
+            
+            self.test_output.insert("end", f"Attempting to press: '{shortcut}'\n")
+            
+            # Check if keyboard module is properly imported
+            if not 'keyboard' in globals():
+                raise ImportError("Keyboard module not properly imported")
+            
+            # Check if we have keyboard permissions
+            try:
+                keyboard.is_pressed('shift')
+            except Exception as e:
+                raise PermissionError(f"No keyboard access: {str(e)}")
+            
+            # Validate shortcut format
+            if '+' in shortcut:
+                keys = shortcut.split('+')
+                self.test_output.insert("end", f"Parsed keys: {keys}\n")
+            
+            # Execute the shortcut
+            keyboard.press_and_release(shortcut)
+            self.test_output.insert("end", f"Pressed shortcut: '{shortcut}'\n")
+            return True
+            
+        except Exception as e:
+            error_msg = f"Keyboard shortcut failed: {str(e)}\n"
+            error_msg += f"Error type: {type(e).__name__}\n"
+            error_msg += f"Shortcut attempted: '{shortcut}'\n"
+            
+            self.test_output.insert("end", error_msg)
+            self.show_error("Keyboard shortcut failed", str(e))
+            return False
+
+    def test_typing(self, text):
+        """Test typing with safety checks"""
+        self.test_output.delete("1.0", "end")
+        self.test_output.insert("1.0", "Testing typing...\n")
         
-        # Goal Setting
-        goal_frame = ctk.CTkFrame(self.control_frame)
-        goal_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        # Add keyboard module check
+        self.test_output.insert("end", "Checking keyboard module...\n")
+        if not 'keyboard' in globals():
+            self.test_output.insert("end", "Error: Keyboard module not available\n")
+            return
         
-        ctk.CTkLabel(goal_frame, text="Goal:").grid(row=0, column=0, padx=5, pady=5)
-        self.goal_entry = ctk.CTkEntry(goal_frame, width=300)
-        self.goal_entry.grid(row=0, column=1, padx=5, pady=5)
+        # Add permission check
+        self.test_output.insert("end", "Checking keyboard permissions...\n")
+        try:
+            keyboard.is_pressed('shift')
+            self.test_output.insert("end", "Keyboard permissions OK\n")
+        except Exception as e:
+            self.test_output.insert("end", f"Keyboard permission error: {str(e)}\n")
+            return
         
-        button_frame = ctk.CTkFrame(goal_frame)
-        button_frame.grid(row=1, column=0, columnspan=2, pady=5)
+        if not self.safe_keyboard_write(text):
+            self.test_output.insert("end", "Typing test failed\n")
+            return
         
-        self.set_goal_btn = ctk.CTkButton(button_frame, text="Set Goal", command=self.set_goal)
-        self.set_goal_btn.grid(row=0, column=0, padx=5)
+        self.test_output.insert("end", f"Typed: {text}\n")
+
+    def test_shortcut(self, shortcut):
+        """Test shortcut with safety checks"""
+        self.test_output.delete("1.0", "end")
+        self.test_output.insert("1.0", f"Testing shortcut: {shortcut}\n")
         
-        self.start_btn = ctk.CTkButton(button_frame, text="Start", command=self.start_agent, state="disabled")
-        self.start_btn.grid(row=0, column=1, padx=5)
+        if not self.safe_keyboard_press(shortcut):
+            self.test_output.insert("end", "Shortcut test failed\n")
+            return
+            
+        self.test_output.insert("end", "Shortcut executed\n")
+
+    def test_launch_paint(self):
+        """Test Paint launch with safety checks"""
+        self.test_output.delete("1.0", "end")
+        self.test_output.insert("1.0", "Launching Paint...\n")
         
-        self.stop_btn = ctk.CTkButton(button_frame, text="Stop", command=self.stop_agent, state="disabled")
-        self.stop_btn.grid(row=0, column=2, padx=5)
+        # Execute each step with safety checks
+        if not self.safe_keyboard_press("win+r"):
+            return
+            
+        time.sleep(0.5)
         
-        # Log Frame
-        log_label = ctk.CTkLabel(self.control_frame, text="Agent Log")
-        log_label.grid(row=1, column=0, padx=10, pady=(10,0), sticky="w")
+        if not self.safe_keyboard_write("mspaint"):
+            return
+            
+        if not self.safe_keyboard_press("enter"):
+            return
+            
+        self.test_output.insert("end", "Paint launch sequence completed\n")
+
+    def test_llm_connection(self):
+        """Test LLM connection with proper error handling"""
+        self.test_output.delete("1.0", "end")
+        self.test_output.insert("1.0", "Testing LLM connection...\n")
         
-        self.log_text = ctk.CTkTextbox(self.control_frame, wrap="word", height=400)
-        self.log_text.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
+        if not self.agent:
+            self.test_output.insert("end", "Error: Agent not initialized\n")
+            return
+            
+        try:
+            response = self.agent.llm.generate("Say 'Hello World'")
+            if response:
+                # Extract and format relevant information
+                message = response.get('response', 'No response text')
+                model = response.get('model', 'Unknown model')
+                duration = response.get('total_duration', 0) / 1e9  # Convert nanoseconds to seconds
+                
+                # Format the output
+                output = (
+                    f"Response received:\n"
+                    f"  Message: {message}\n"
+                    f"  Model: {model}\n"
+                    f"  Response time: {duration:.2f} seconds\n"
+                )
+                
+                self.test_output.insert("end", output)
+            else:
+                self.test_output.insert("end", "Error: Empty response from LLM\n")
+        except Exception as e:
+            self.test_output.insert("end", f"Error: {str(e)}\n")
+            self.show_error("LLM test failed", str(e))
+
+    def on_closing(self):
+        """Clean up resources before closing"""
+        try:
+            if hasattr(self, 'agent') and self.agent:
+                self.agent.stop()
+            self.quit()
+        except Exception as e:
+            print(f"Error during cleanup: {str(e)}")
+            self.quit()
+
+    def setup_main_tab(self):
+        # Left column - Controls
+        control_frame = ctk.CTkFrame(self.tab_main)
+        control_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        
+        # Goal input
+        goal_label = ctk.CTkLabel(control_frame, text="Goal:")
+        goal_label.pack(pady=5)
+        
+        self.goal_entry = ctk.CTkEntry(control_frame, width=300)
+        self.goal_entry.pack(pady=5)
+        self.goal_entry.insert(0, "draw a house in paint")  # Default goal
         
         # Control buttons
-        control_frame = ctk.CTkFrame(self.control_frame)
-        control_frame.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
-        control_frame.grid_columnconfigure((0,1,2), weight=1)
+        self.start_button = ctk.CTkButton(control_frame, text="Start", command=self.start_agent)
+        self.start_button.pack(pady=5)
         
-        self.copy_log_btn = ctk.CTkButton(control_frame, text="Copy Log", command=self.copy_log)
-        self.copy_log_btn.grid(row=0, column=0, padx=5)
+        self.stop_button = ctk.CTkButton(control_frame, text="Stop", command=self.stop_agent)
+        self.stop_button.pack(pady=5)
         
-        self.clear_log_btn = ctk.CTkButton(control_frame, text="Clear Log", command=self.clear_log)
-        self.clear_log_btn.grid(row=0, column=1, padx=5)
+        # User availability toggle
+        self.user_available = ctk.CTkCheckBox(control_frame, text="Available for questions",
+                                            command=self.toggle_user_availability)
+        self.user_available.pack(pady=10)
+        self.user_available.select()  # Default to available
         
-        self.copy_all_btn = ctk.CTkButton(control_frame, text="Copy All Logs", command=self.copy_all_logs)
-        self.copy_all_btn.grid(row=0, column=2, padx=5)
+        # Right column - Status and Chat
+        status_frame = ctk.CTkFrame(self.tab_main)
+        status_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        status_frame.grid_rowconfigure(1, weight=1)  # Make chat expand
         
-        self.debug_btn = ctk.CTkButton(control_frame, text="Show Debug Log", command=self.show_debug_log)
-        self.debug_btn.grid(row=1, column=0, columnspan=3, padx=5, pady=(5,0))
-    
-    def setup_status_frame(self):
-        self.status_frame.grid_columnconfigure(0, weight=1)
+        # Status display
+        status_label = ctk.CTkLabel(status_frame, text="Status Log:")
+        status_label.pack(pady=(0, 5))
         
-        # Current Plan
-        plan_label = ctk.CTkLabel(self.status_frame, text="Current Plan")
-        plan_label.grid(row=0, column=0, padx=10, pady=(10,0), sticky="w")
+        self.status_text = ctk.CTkTextbox(status_frame, width=400, height=200)
+        self.status_text.pack(pady=5, fill="x")
         
-        self.plan_text = ctk.CTkTextbox(self.status_frame, wrap="word", height=150)
-        self.plan_text.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+        # Chat interface
+        chat_label = ctk.CTkLabel(status_frame, text="Agent Chat:")
+        chat_label.pack(pady=(10, 5))
         
-        # Current State
-        state_label = ctk.CTkLabel(self.status_frame, text="Current State")
-        state_label.grid(row=2, column=0, padx=10, pady=(10,0), sticky="w")
+        self.chat_display = ctk.CTkTextbox(status_frame, width=400, height=200)
+        self.chat_display.pack(pady=5, fill="both", expand=True)
         
-        self.state_text = ctk.CTkTextbox(self.status_frame, wrap="word", height=150)
-        self.state_text.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+        # Chat input area
+        chat_input_frame = ctk.CTkFrame(status_frame)
+        chat_input_frame.pack(fill="x", pady=5)
         
-        # Thought Process
-        thought_label = ctk.CTkLabel(self.status_frame, text="Agent Thoughts")
-        thought_label.grid(row=4, column=0, padx=10, pady=(10,0), sticky="w")
+        self.chat_input = ctk.CTkTextbox(chat_input_frame, height=60, width=300)
+        self.chat_input.pack(side="left", padx=5, fill="x", expand=True)
         
-        self.thought_text = ctk.CTkTextbox(self.status_frame, wrap="word", height=200)
-        self.thought_text.grid(row=5, column=0, padx=10, pady=10, sticky="ew")
+        send_button = ctk.CTkButton(chat_input_frame, text="Send",
+                                   command=self.send_chat_message)
+        send_button.pack(side="right", padx=5)
         
-        # Progress
-        progress_frame = ctk.CTkFrame(self.status_frame)
-        progress_frame.grid(row=6, column=0, padx=10, pady=10, sticky="ew")
-        
-        self.progress_bar = ctk.CTkProgressBar(progress_frame)
-        self.progress_bar.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-        self.progress_bar.set(0)
-        
-        self.status_label = ctk.CTkLabel(progress_frame, text="Status: Idle")
-        self.status_label.grid(row=1, column=0, padx=10, pady=5)
-    
-    def update_plan(self, plan_text):
-        self.plan_text.delete("1.0", "end")
-        if isinstance(plan_text, dict) and 'steps' in plan_text:
-            plan_str = "Current Plan:\n"
-            for i, step in enumerate(plan_text['steps']):
-                status = "✓" if step.get('completed') else "□"
-                plan_str += f"{status} {i+1}. {step['description']}\n"
-                if step.get('sub_steps'):
-                    for sub_step in step['sub_steps']:
-                        plan_str += f"  - {sub_step.get('description', '')}\n"
-        else:
-            plan_str = str(plan_text)
-        self.plan_text.insert("end", plan_str)
-    
-    def update_state(self, state_dict):
-        self.state_text.delete("1.0", "end")
-        state_text = "\n".join([f"{k}: {v}" for k, v in state_dict.items()])
-        self.state_text.insert("end", state_text)
-    
-    def update_thought_process(self, thought):
-        self.thought_text.insert("end", f"{thought}\n")
-        self.thought_text.see("end")
-    
-    def update_progress(self, progress: float, status: str):
-        self.progress_bar.set(progress)
-        self.status_label.configure(text=f"Status: {status}")
-    
-    def log_message(self, message):
-        self.log_text.insert("end", f"{message}\n")
-        self.log_text.see("end")
-    
-    def set_goal(self):
-        goal = self.goal_entry.get()
-        if goal:
-            if self.agent.set_goal(goal):
-                self.log_message(f"Goal set: {goal}")
-                self.start_btn.configure(state="normal")
-                self.update_progress(0, "Ready")
-            else:
-                self.log_message("Failed to set goal")
-        else:
-            self.log_message("Please enter a goal")
-    
-    def start_agent(self):
-        self.start_btn.configure(state="disabled")
-        self.stop_btn.configure(state="normal")
-        self.goal_entry.configure(state="disabled")
-        self.set_goal_btn.configure(state="disabled")
-        
-        # Start agent in separate thread
-        self.agent_thread = threading.Thread(target=self.run_agent)
-        self.agent_thread.daemon = True
-        self.agent_thread.start()
-    
-    def run_agent(self):
-        self.update_progress(0.1, "Starting")
-        self.agent.run()
-    
-    def stop_agent(self):
-        self.agent.stop()
-        self.start_btn.configure(state="normal")
-        self.stop_btn.configure(state="disabled")
-        self.goal_entry.configure(state="normal")
-        self.set_goal_btn.configure(state="normal")
-        self.update_progress(0, "Stopped")
-        # Clear current task
-        self.agent_thread = None
-    
-    def copy_log(self):
-        log_content = self.log_text.get("1.0", "end-1c")
-        self.clipboard_clear()
-        self.clipboard_append(log_content)
-        self.log_message("Log copied to clipboard")
-    
-    def clear_log(self):
-        self.log_text.delete("1.0", "end")
-    
-    def on_closing(self):
-        self.agent.stop()
-        self.quit()
-    
-    def copy_all_logs(self):
-        # Get agent log
-        agent_log = self.log_text.get("1.0", "end-1c")
-        
-        # Get debug log
-        debug_log = "Debug log not available"
-        try:
-            log_file = self.agent.logger.get_log_file()
-            with open(log_file, 'r') as f:
-                debug_log = f.read()
-        except Exception as e:
-            debug_log = f"Error reading debug log: {str(e)}"
-        
-        # Combine logs with headers
-        combined_logs = f"""Agent Log:
-{'-' * 80}
-{agent_log}
+        # Bind Enter and Shift+Enter
+        self.chat_input.bind("<Return>", self.handle_chat_return)
+        self.chat_input.bind("<Shift-Return>", self.handle_chat_shift_return)
 
-Debug Log:
-{'-' * 80}
-{debug_log}
-"""
+    def handle_chat_return(self, event):
+        """Handle Enter key in chat input"""
+        if not event.state & 0x1:  # No Shift pressed
+            self.send_chat_message()
+            return "break"  # Prevent default newline
+
+    def handle_chat_shift_return(self, event):
+        """Handle Shift+Enter in chat input"""
+        self.chat_input.insert("insert", "\n")
+        return "break"  # Prevent default behavior
+
+    def send_chat_message(self):
+        """Send chat message to agent"""
+        message = self.chat_input.get("1.0", "end-1c").strip()
+        if message:
+            # Display user message
+            self.chat_display.insert("end", f"You: {message}\n")
+            self.chat_display.see("end")
+            
+            # Clear input
+            self.chat_input.delete("1.0", "end")
+            
+            # Send to agent if it exists
+            if self.agent:
+                self.agent.handle_user_message(message)
+
+    def toggle_user_availability(self):
+        """Update user availability status"""
+        is_available = self.user_available.get()
+        if self.agent:
+            self.agent.set_user_available(is_available)
+        status = "available" if is_available else "unavailable"
+        self.log_message(f"User marked as {status} for questions")
+
+    def setup_test_tab(self):
+        # Left column - Input Tests
+        input_frame = ctk.CTkFrame(self.tab_test)
+        input_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
         
-        self.clipboard_clear()
-        self.clipboard_append(combined_logs)
-        self.log_message("All logs copied to clipboard")
-    
-    def show_debug_log(self):
-        debug_window = ctk.CTkToplevel(self)
-        debug_window.title("Debug Log")
-        debug_window.geometry("800x600")
+        # Test Mode Section
+        test_mode_label = ctk.CTkLabel(input_frame, text="AI-Assisted Testing", font=("Arial", 16, "bold"))
+        test_mode_label.pack(pady=10)
         
-        debug_text = ctk.CTkTextbox(debug_window, wrap="word")
-        debug_text.pack(fill="both", expand=True, padx=10, pady=10)
+        # Test Mode Controls
+        test_controls = ctk.CTkFrame(input_frame)
+        test_controls.pack(fill="x", padx=5, pady=5)
         
-        # Load and display debug log
+        self.test_input = ctk.CTkTextbox(test_controls, height=100, width=300)
+        self.test_input.pack(pady=5)
+        self.test_input.insert("1.0", "Type test instructions here...\nE.g., 'Test typing Hello World' or 'Test opening Paint'")
+        
+        test_button = ctk.CTkButton(test_controls, text="Run Test",
+                                   command=self.run_ai_test)
+        test_button.pack(pady=5)
+        
+        # Manual Test Section
+        manual_label = ctk.CTkLabel(input_frame, text="Manual Testing", font=("Arial", 16, "bold"))
+        manual_label.pack(pady=(20, 10))
+        
+        # Quick Tests
+        quick_label = ctk.CTkLabel(input_frame, text="Quick Tests")
+        quick_label.pack(pady=5)
+        
+        run_dialog_btn = ctk.CTkButton(input_frame, text="Test Run Dialog (Win+R)",
+                                     command=lambda: self.test_shortcut("win+r"))
+        run_dialog_btn.pack(pady=2)
+        
+        paint_btn = ctk.CTkButton(input_frame, text="Launch Paint",
+                                command=self.test_launch_paint)
+        paint_btn.pack(pady=2)
+        
+        # Right column - Output and Status
+        output_frame = ctk.CTkFrame(self.tab_test)
+        output_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+        
+        # Test Output
+        output_label = ctk.CTkLabel(output_frame, text="Test Output", font=("Arial", 16, "bold"))
+        output_label.pack(pady=10)
+        
+        self.test_output = ctk.CTkTextbox(output_frame, width=400, height=300)
+        self.test_output.pack(pady=5)
+        
+        # LLM Status
+        llm_frame = ctk.CTkFrame(output_frame)
+        llm_frame.pack(fill="x", padx=5, pady=5)
+        
+        test_llm_btn = ctk.CTkButton(llm_frame, text="Check LLM Connection",
+                                   command=self.test_llm_connection)
+        test_llm_btn.pack(side="left", padx=5)
+        
+        self.llm_status = ctk.CTkLabel(llm_frame, text="LLM Status: Unknown")
+        self.llm_status.pack(side="left", padx=5)
+
+    def setup_debug_tab(self):
+        # Debug controls
+        debug_frame = ctk.CTkFrame(self.tab_debug)
+        debug_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        
+        # Log controls
+        controls_frame = ctk.CTkFrame(debug_frame)
+        controls_frame.pack(fill="x", pady=5)
+        
+        clear_btn = ctk.CTkButton(controls_frame, text="Clear Log",
+                                command=self.clear_debug_log)
+        clear_btn.pack(side="left", padx=5)
+        
+        copy_btn = ctk.CTkButton(controls_frame, text="Copy All Logs",
+                               command=self.copy_all_logs)
+        copy_btn.pack(side="left", padx=5)
+        
+        save_btn = ctk.CTkButton(controls_frame, text="Save All Logs",
+                               command=self.save_all_logs)
+        save_btn.pack(side="left", padx=5)
+        
+        # Auto-scroll toggle
+        self.auto_scroll = ctk.CTkCheckBox(debug_frame, text="Auto-scroll")
+        self.auto_scroll.pack(pady=5)
+        self.auto_scroll.select()
+        
+        # Debug log display
+        self.debug_text = ctk.CTkTextbox(self.tab_debug, width=800, height=500)
+        self.debug_text.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+
+    def copy_all_logs(self):
+        """Copy all logs to clipboard"""
         try:
-            log_file = self.agent.logger.get_log_file()
-            with open(log_file, 'r') as f:
-                debug_text.insert("end", f.read())
+            all_logs = []
+            
+            # Get debug log
+            debug_log = self.debug_text.get("1.0", "end-1c")
+            if debug_log:
+                all_logs.append("=== DEBUG LOG ===")
+                all_logs.append(debug_log)
+            
+            # Get agent log
+            if hasattr(self, 'agent') and self.agent:
+                agent_log = self.get_file_contents(self.agent.logger.get_log_file())
+                if agent_log:
+                    all_logs.append("\n=== AGENT LOG ===")
+                    all_logs.append(agent_log)
+            
+            # Get all other logs from logs directory
+            logs_dir = "logs"
+            if os.path.exists(logs_dir):
+                for log_file in os.listdir(logs_dir):
+                    if log_file.endswith(".log"):
+                        log_path = os.path.join(logs_dir, log_file)
+                        log_content = self.get_file_contents(log_path)
+                        if log_content:
+                            all_logs.append(f"\n=== {log_file} ===")
+                            all_logs.append(log_content)
+            
+            # Copy to clipboard
+            combined_logs = "\n".join(all_logs)
+            self.clipboard_clear()
+            self.clipboard_append(combined_logs)
+            self.log_debug("All logs copied to clipboard", "INFO")
+            
         except Exception as e:
-            debug_text.insert("end", f"Error loading debug log: {str(e)}")
+            self.show_error("Failed to copy logs", str(e))
+
+    def get_file_contents(self, file_path):
+        """Safely read file contents"""
+        try:
+            if os.path.exists(file_path):
+                with open(file_path, 'r') as f:
+                    return f.read()
+        except Exception as e:
+            self.log_debug(f"Error reading {file_path}: {str(e)}", "ERROR")
+        return None
+
+    def save_all_logs(self):
+        """Save all logs to a single file"""
+        try:
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            filename = f"combined_logs_{timestamp}.txt"
+            
+            with open(filename, "w") as f:
+                # Write debug log
+                f.write("=== DEBUG LOG ===\n")
+                f.write(self.debug_text.get("1.0", "end-1c"))
+                
+                # Write agent log
+                if hasattr(self, 'agent') and self.agent:
+                    agent_log = self.get_file_contents(self.agent.logger.get_log_file())
+                    if agent_log:
+                        f.write("\n\n=== AGENT LOG ===\n")
+                        f.write(agent_log)
+                
+                # Write all other logs
+                logs_dir = "logs"
+                if os.path.exists(logs_dir):
+                    for log_file in os.listdir(logs_dir):
+                        if log_file.endswith(".log"):
+                            log_path = os.path.join(logs_dir, log_file)
+                            log_content = self.get_file_contents(log_path)
+                            if log_content:
+                                f.write(f"\n\n=== {log_file} ===\n")
+                                f.write(log_content)
+            
+            self.log_debug(f"All logs saved to {filename}", "INFO")
+            
+        except Exception as e:
+            self.show_error("Failed to save logs", str(e))
+
+    def clear_debug_log(self):
+        """Clear the debug log display"""
+        self.debug_text.delete("1.0", "end")
+
+    def copy_debug_log(self):
+        """Copy debug log to clipboard"""
+        log_text = self.debug_text.get("1.0", "end-1c")
+        self.clipboard_clear()
+        self.clipboard_append(log_text)
+        self.log_debug("Debug log copied to clipboard", "INFO")
+
+    def save_debug_log(self):
+        """Save debug log to file"""
+        try:
+            filename = f"debug_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+            with open(filename, "w") as f:
+                f.write(self.debug_text.get("1.0", "end-1c"))
+            self.log_debug(f"Debug log saved to {filename}", "INFO")
+        except Exception as e:
+            self.log_debug(f"Failed to save debug log: {str(e)}", "ERROR")
+
+    def toggle_auto_scroll(self):
+        """Toggle auto-scroll behavior"""
+        is_auto_scroll = self.auto_scroll.get()
+        if is_auto_scroll:
+            self.debug_text.see("end")
+
+    def setup_settings_tab(self):
+        settings_frame = ctk.CTkFrame(self.tab_settings)
+        settings_frame.pack(expand=True, fill="both", padx=10, pady=10)
+        
+        # Timing Settings Section
+        timing_label = ctk.CTkLabel(settings_frame, text="Timing Settings", font=("Arial", 16, "bold"))
+        timing_label.pack(pady=10)
+        
+        # Action Delay
+        action_frame = ctk.CTkFrame(settings_frame)
+        action_frame.pack(fill="x", padx=5, pady=5)
+        
+        action_label = ctk.CTkLabel(action_frame, text="Action Delay (seconds):")
+        action_label.pack(side="left", padx=5)
+        
+        self.action_delay = ctk.CTkEntry(action_frame, width=100)
+        self.action_delay.pack(side="left", padx=5)
+        self.action_delay.insert(0, "2.0")  # Default 2 seconds
+        
+        # Verification Delay
+        verify_frame = ctk.CTkFrame(settings_frame)
+        verify_frame.pack(fill="x", padx=5, pady=5)
+        
+        verify_label = ctk.CTkLabel(verify_frame, text="Verification Delay (seconds):")
+        verify_label.pack(side="left", padx=5)
+        
+        self.verify_delay = ctk.CTkEntry(verify_frame, width=100)
+        self.verify_delay.pack(side="left", padx=5)
+        self.verify_delay.insert(0, "1.5")  # Default 1.5 seconds
+        
+        # LLM Settings Section
+        llm_label = ctk.CTkLabel(settings_frame, text="LLM Settings", font=("Arial", 16, "bold"))
+        llm_label.pack(pady=(20, 10))
+        
+        # API URL
+        url_frame = ctk.CTkFrame(settings_frame)
+        url_frame.pack(fill="x", padx=5, pady=5)
+        
+        url_label = ctk.CTkLabel(url_frame, text="API URL:")
+        url_label.pack(side="left", padx=5)
+        
+        self.api_url = ctk.CTkEntry(url_frame, width=300)
+        self.api_url.pack(side="left", padx=5)
+        self.api_url.insert(0, "http://localhost:11434/api/generate")
+        
+        # Model Selection
+        model_frame = ctk.CTkFrame(settings_frame)
+        model_frame.pack(fill="x", padx=5, pady=5)
+        
+        model_label = ctk.CTkLabel(model_frame, text="Model:")
+        model_label.pack(side="left", padx=5)
+        
+        self.model_select = ctk.CTkComboBox(model_frame, 
+                                          values=["llama3.2-vision:latest"])
+        self.model_select.pack(side="left", padx=5)
+        
+        # Save Button
+        save_btn = ctk.CTkButton(settings_frame, text="Save Settings",
+                               command=self.save_settings)
+        save_btn.pack(pady=20)
+        
+        # Apply initial settings
+        self.save_settings()
+
+    def save_settings(self):
+        """Save current settings"""
+        try:
+            # Parse delay values
+            action_delay = float(self.action_delay.get())
+            verify_delay = float(self.verify_delay.get())
+            
+            # Update delays
+            self.agent.executor.action_delay = action_delay
+            self.agent.executor.verify_delay = verify_delay
+            
+            # Update other settings
+            # ... (API URL, model, etc.)
+            
+            self.show_error("Success", "Settings saved")  # Use error label as status
+        except ValueError as e:
+            self.show_error("Error", "Invalid delay value")
+        except Exception as e:
+            self.show_error("Error", f"Failed to save settings: {str(e)}")
+
+    def start_agent(self):
+        """Start the agent with current goal"""
+        try:
+            if not self.agent:
+                self.show_error("Error", "Agent not initialized")
+                return
+                
+            goal = self.goal_entry.get()
+            if not goal:
+                self.show_error("Error", "Please enter a goal")
+                return
+                
+            if self.agent.set_goal(goal):
+                self.log_message("Goal set: " + goal)
+                # Run agent in background thread
+                threading.Thread(target=self.agent.run).start()
+            else:
+                self.show_error("Error", "Failed to set goal")
+                
+        except Exception as e:
+            self.show_error("Error starting agent", str(e))
+
+    def stop_agent(self):
+        """Stop the running agent"""
+        try:
+            if self.agent:
+                self.agent.stop()
+                self.log_message("Agent stopped")
+            else:
+                self.show_error("Error", "No agent running")
+                
+        except Exception as e:
+            self.show_error("Error stopping agent", str(e))
+
+    def log_message(self, message):
+        """Add message to status display"""
+        try:
+            self.status_text.insert("end", message + "\n")
+            self.status_text.see("end")  # Scroll to bottom
+        except Exception as e:
+            print(f"Error logging message: {str(e)}")
+
+    def update_thought_process(self, thought):
+        """Update thought process display"""
+        try:
+            self.status_text.insert("end", "Thinking: " + thought + "\n")
+            self.status_text.see("end")
+        except Exception as e:
+            print(f"Error updating thought process: {str(e)}")
+
+    def update_state(self, state):
+        """Update state display"""
+        try:
+            state_text = "Current State:\n"
+            for key, value in state.items():
+                state_text += f"  {key}: {value}\n"
+            self.status_text.insert("end", state_text)
+            self.status_text.see("end")
+        except Exception as e:
+            print(f"Error updating state: {str(e)}")
+
+    def update_progress(self, progress, status):
+        """Update progress display"""
+        try:
+            progress_text = f"Progress: {progress*100:.1f}% - Status: {status}\n"
+            self.status_text.insert("end", progress_text)
+            self.status_text.see("end")
+        except Exception as e:
+            print(f"Error updating progress: {str(e)}")
+
+    def run_ai_test(self):
+        """Run test using AI assistance"""
+        self.test_output.delete("1.0", "end")
+        self.test_output.insert("1.0", "Starting AI-assisted test...\n")
+        
+        test_instruction = self.test_input.get("1.0", "end").strip()
+        if not test_instruction:
+            self.test_output.insert("end", "Error: Please enter test instructions\n")
+            return
+        
+        try:
+            # Create test-specific prompt with explicit available actions
+            prompt = f"""You are a testing assistant. Create a test plan for: {test_instruction}
+
+            Available actions:
+            1. Keyboard shortcuts:
+               - "win+r" to open Run dialog
+               - "enter" to confirm
+            2. Typing:
+               - Type "mspaint" to launch Paint
+               
+            To launch Paint, you MUST:
+            1. Press "win+r" to open Run dialog
+            2. Type "mspaint"
+            3. Press "enter"
+            
+            Respond with a SINGLE JSON object in this exact format:
+            {{
+                "steps": [
+                    {{
+                        "type": "shortcut|type",
+                        "text": "exact text or shortcut to use",
+                        "description": "human readable description"
+                    }}
+                ],
+                "verifications": [
+                    {{
+                        "type": "window_title|text_present",
+                        "expected": "what to expect",
+                        "description": "what we're checking"
+                    }}
+                ]
+            }}
+            
+            Do not include any explanations or multiple versions - just the single JSON object.
+            """
+            
+            # Get test plan from LLM
+            response = self.agent.llm.generate(prompt)
+            if not response:
+                self.test_output.insert("end", "Error: Failed to generate test plan\n")
+                return
+            
+            # Extract JSON from response
+            try:
+                response_text = response.get('response', '')
+                # Find JSON block between curly braces
+                import re
+                json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+                if not json_match:
+                    raise ValueError("No JSON found in response")
+                    
+                test_plan = json.loads(json_match.group())
+                
+                # Format test plan for display
+                formatted_plan = json.dumps(test_plan, indent=2)
+                self.test_output.insert("end", f"Generated test plan:\n{formatted_plan}\n\n")
+                
+                # Execute test plan
+                self.test_output.insert("end", "Executing test plan...\n")
+                
+                # Execute steps
+                for step in test_plan.get('steps', []):
+                    self.test_output.insert("end", f"\nStep: {step.get('description', '')}\n")
+                    
+                    step_type = step.get('type', '').lower()
+                    if step_type == 'type':
+                        if not self.safe_keyboard_write(step.get('text', '')):
+                            raise Exception(f"Failed to type: {step.get('text')}")
+                    elif step_type == 'shortcut':
+                        if not self.safe_keyboard_press(step.get('text', '')):
+                            raise Exception(f"Failed to press: {step.get('text')}")
+                    elif step_type == 'click':
+                        # TODO: Implement click handling
+                        self.test_output.insert("end", "Click actions not yet implemented\n")
+                    else:
+                        self.test_output.insert("end", f"Unknown step type: {step_type}\n")
+                        
+                    time.sleep(0.5)  # Delay between steps
+                
+                # Run verifications
+                self.test_output.insert("end", "\nRunning verifications...\n")
+                for verify in test_plan.get('verifications', []):
+                    self.test_output.insert("end", f"Checking: {verify.get('description', '')}\n")
+                    # TODO: Implement verifications
+                    
+                self.test_output.insert("end", "\nTest completed\n")
+                
+            except json.JSONDecodeError as e:
+                raise ValueError(f"Invalid JSON in response: {str(e)}")
+                
+        except Exception as e:
+            self.test_output.insert("end", f"\nTest failed: {str(e)}\n")
+            self.show_error("Test failed", str(e))
+
+    def log_debug(self, message, level="DEBUG"):
+        """Add timestamped message to debug log"""
+        try:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+            log_entry = f"[{timestamp}] [{level}] {message}\n"
+            
+            # Add to debug log
+            self.debug_text.insert("end", log_entry)
+            if hasattr(self, 'auto_scroll') and self.auto_scroll.get():
+                self.debug_text.see("end")
+            
+            # Also print to console
+            print(log_entry.strip())
+            
+            # Write to file
+            log_file = f"logs/debug_{datetime.now().strftime('%Y%m%d')}.log"
+            os.makedirs("logs", exist_ok=True)
+            with open(log_file, "a") as f:
+                f.write(log_entry)
+            
+        except Exception as e:
+            print(f"Error in log_debug: {str(e)}")
+            print(f"Original message: [{level}] {message}")
 
 if __name__ == "__main__":
     app = AgentGUI()

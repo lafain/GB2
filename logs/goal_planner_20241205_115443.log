@@ -1,1 +1,3 @@
-2024-12-05 11:54:43,853 - goal_planner - INFO - Error breaking down goal: 'GoalPlanner' object has no attribute 'llm'
+version https://git-lfs.github.com/spec/v1
+oid sha256:d475b20723c8b93276bf5ab5f9538708898cd62a72a20457a8a3215bd947cb7c
+size 119

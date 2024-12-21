@@ -1,10 +1,3 @@
-2024-12-01 13:01:12,526 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
-2024-12-01 13:01:12,527 - llm - DEBUG - Using model: llama3.2-vision:latest
-2024-12-01 13:01:12,527 - llm - DEBUG - Prompt: As an AI controlling the computer, break down this goal into specific computer actions: draw a house in paint
-            
-            Return JSON with these exact action types:
-            {
-        ...
-2024-12-01 13:01:12,527 - llm - DEBUG - Sending request to Ollama...
-2024-12-01 13:02:33,225 - llm - DEBUG - Response status: 200
-2024-12-01 13:02:33,226 - llm - DEBUG - Response received: {'model': 'llama3.2-vision:latest', 'created_at': '2024-12-01T19:02:32.772888Z', 'response': 'Here is the breakdown of the goal into specific computer actions:\n\n**JSON Response:**\n```json\n{\n  "go...
+version https://git-lfs.github.com/spec/v1
+oid sha256:25cd75818ab0eca0c2c98fe13a286f9aec4f4071b4f9c4c3c6e37c1b42fa22e5
+size 828

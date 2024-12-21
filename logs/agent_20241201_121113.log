@@ -1,14 +1,3 @@
-2024-12-01 12:11:25,835 - agent - INFO - Setting goal: draw a house in paint
-2024-12-01 12:11:25,836 - agent - DEBUG - Creating plan prompt...
-2024-12-01 12:11:25,836 - agent - DEBUG - Getting response from LLM...
-2024-12-01 12:11:25,836 - llm - DEBUG - Preparing request to http://localhost:11434/api/generate
-2024-12-01 12:11:25,837 - llm - DEBUG - Using model: llama3.2-vision:latest
-2024-12-01 12:11:25,837 - llm - DEBUG - Prompt: Analyze this goal and create a detailed plan: draw a house in paint
-            Consider:
-            1. Required programs/tools
-            2. System state requirements
-            3. User interface ...
-2024-12-01 12:11:25,837 - llm - DEBUG - Sending request to Ollama...
-2024-12-01 12:11:25,839 - urllib3.connectionpool - DEBUG - Starting new HTTP connection (1): localhost:11434
-2024-12-01 12:12:27,896 - llm - ERROR - Request timed out
-2024-12-01 12:12:27,896 - agent - ERROR - Failed to get plan: Request timed out
+version https://git-lfs.github.com/spec/v1
+oid sha256:3ea73fc17adb95df68425f8a482b0154858f223cd5cb20881a23dc925cca253d
+size 969

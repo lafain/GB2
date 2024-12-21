@@ -1,2 +1,3 @@
-2024-12-05 11:54:43,852 - agent - INFO - Setting goal: draw a house in paint
-2024-12-05 11:54:43,853 - agent - ERROR - Failed to generate plan for the goal
+version https://git-lfs.github.com/spec/v1
+oid sha256:ba3d3fe62f52f690c9b63d2135d11e16380380c81177d108ded106b10c48e406
+size 158
