@@ -6,18 +6,19 @@ import json
 import cv2
 import numpy as np
 from PIL import ImageGrab
+import os
 
 class ActionExecutor:
     def __init__(self, knowledge_manager, logger):
         self.knowledge = knowledge_manager
         self.logger = logger
         self.last_action = None
-        self.action_delay = 1.0  # Default action delay
-        self.verify_delay = 0.5  # Default verification delay
+        self.action_delay = 10.0  # Default 10 seconds
+        self.verify_delay = 10.0  # Default 10 seconds
         self.last_screenshot = None
         
         # Initialize pyautogui settings
-        pyautogui.PAUSE = 0.5
+        pyautogui.PAUSE = 1.0  # Increased default pause
         pyautogui.FAILSAFE = True
         
     def execute(self, action):
@@ -26,17 +27,20 @@ class ActionExecutor:
             action_type = action.get('type', '').upper()
             params = action.get('params', {})
             
+            # Get pre-execution state with delay
+            time.sleep(4.0)  # Wait for system to stabilize
+            pre_state = self.capture_state()
+            self.logger.debug(f"Pre-execution state: {json.dumps(pre_state, indent=2)}")
+            
             success = False
             if action_type == 'PRESS':
                 keys = params.get('keys', [])
                 if isinstance(keys, list):
-                    # Execute each key combination separately
                     for key in keys:
                         self.logger.debug(f"Pressing key combination: {key}")
                         keyboard.press_and_release(str(key))
-                        time.sleep(0.5)  # Wait between key presses
+                        time.sleep(0.5)
                 else:
-                    # Handle single key or existing key combinations
                     self.logger.debug(f"Pressing single key: {keys}")
                     keyboard.press_and_release(str(keys))
                 success = True
@@ -46,34 +50,42 @@ class ActionExecutor:
                 self.logger.debug(f"Typing text: {text}")
                 keyboard.write(text)
                 if text.endswith('\n') or params.get('enter', False):
-                    time.sleep(0.1)  # Small delay before enter
+                    time.sleep(0.1)
                     keyboard.press_and_release('enter')
                 success = True
                 
-            elif action_type == 'CLICK':
-                x = params.get('x')
-                y = params.get('y')
-                if x is not None and y is not None:
-                    self.logger.debug(f"Clicking at position: ({x}, {y})")
-                    pyautogui.click(x, y)
-                    success = True
-                
-            if not success:
-                self.logger.error(f"Unknown action type: {action_type}")
-                return False
-                
-            # Add delay after action execution
-            time.sleep(1.0)  # Wait for action to take effect
+            # Wait after action execution
+            time.sleep(4.0)  # Wait for action to take effect
             
-            # Verify the result with retries
-            max_verify_attempts = 3
-            verify_delay = 0.5
+            # Get post-action state
+            post_state = self.capture_state()
+            self.logger.debug(f"Post-action state: {json.dumps(post_state, indent=2)}")
             
-            for attempt in range(max_verify_attempts):
-                if self.verify_action_result(action, None, None):
+            # Compare states
+            state_changes = self._compare_states(pre_state, post_state)
+            self.logger.debug(f"State changes: {json.dumps(state_changes, indent=2)}")
+            
+            # Verify with retries and recovery
+            max_attempts = 3
+            for attempt in range(max_attempts):
+                verify_result = self.verify_action_result(action, pre_state, post_state)
+                
+                if verify_result:
+                    self.logger.debug(f"Action verified on attempt {attempt + 1}")
                     return True
-                self.logger.debug(f"Verification attempt {attempt + 1} failed, retrying...")
-                time.sleep(verify_delay)
+                    
+                self.logger.debug(f"Verification attempt {attempt + 1} failed")
+                
+                # Try recovery if verification fails
+                if attempt < max_attempts - 1:
+                    self.logger.debug("Attempting recovery...")
+                    if self._attempt_recovery(action, post_state):
+                        time.sleep(4.0)  # Wait after recovery
+                        post_state = self.capture_state()
+                        continue
+                        
+                time.sleep(4.0)  # Wait before next attempt
+                post_state = self.capture_state()
                 
             return False
             
@@ -193,16 +205,31 @@ class ActionExecutor:
         try:
             # Get current window title
             current_window = self.get_active_window()
-            self.logger.debug(f"Current window after action: {current_window}")
+            self.logger.debug(f"Verifying window: {current_window}")
             
             # Check verification rules
             verification = action.get('verification', {})
             if verification:
                 if verification.get('type') == 'window_title':
                     expected_title = verification.get('value', '')
-                    self.logger.debug(f"Verifying window title. Expected: {expected_title}, Current: {current_window}")
-                    return expected_title.lower() in current_window.lower()
+                    self.logger.debug(f"Checking window title - Expected: {expected_title}, Current: {current_window}")
                     
+                    # More flexible title matching
+                    if expected_title.lower() in current_window.lower():
+                        self.logger.debug("Window title verified")
+                        return True
+                        
+                    self.logger.debug("Window title mismatch")
+                    return False
+                    
+            # Check state changes
+            if 'expected_changes' in action:
+                for key, expected_value in action['expected_changes'].items():
+                    current_value = post_state.get(key)
+                    self.logger.debug(f"Checking state change - {key}: expected={expected_value}, current={current_value}")
+                    if current_value != expected_value:
+                        return False
+                        
             return True
             
         except Exception as e:
@@ -302,4 +329,124 @@ class ActionExecutor:
         rgb_screenshot = cv2.cvtColor(self.last_screenshot, cv2.COLOR_BGR2RGB)
         # Check for presence of the color
         return np.any(np.all(rgb_screenshot == bgr_color, axis=-1))
+    
+    def execute_action(self, action):
+        """Execute a single action"""
+        try:
+            action_type = action.get('type', '').lower()
+            
+            # Get pre-execution state
+            pre_state = self._get_current_state()
+            
+            # Execute based on action type
+            if action_type == 'launch_program':
+                success = self._launch_program(action)
+            elif action_type == 'keyboard':
+                success = self._execute_keyboard_action(action)
+            elif action_type == 'mouse':
+                success = self._execute_mouse_action(action)
+            elif action_type == 'wait':
+                success = self._execute_wait_action(action)
+            else:
+                self.logger.error(f"Unknown action type: {action_type}")
+                return False
+                
+            # Get post-execution state
+            post_state = self._get_current_state()
+            
+            # Store action result
+            if success:
+                self.knowledge.store_successful_action(action, pre_state, post_state)
+            else:
+                self.knowledge.store_failed_action(action, pre_state, post_state)
+                
+            return success
+            
+        except Exception as e:
+            self.logger.error(f"Action execution failed: {str(e)}")
+            return False
+    
+    def _launch_program(self, action):
+        """Launch a program using various methods"""
+        try:
+            program = action.get('program', '')
+            if not program:
+                return False
+                
+            # Get program info
+            program_info = self._get_program_info(program)
+            if not program_info:
+                return False
+                
+            # Try launch commands in order
+            for cmd in program_info.get('launch_commands', []):
+                try:
+                    if cmd.startswith('win+r:'):
+                        # Use Run dialog
+                        keyboard.press_and_release('win+r')
+                        time.sleep(0.5)
+                        keyboard.write(cmd.split(':')[1])
+                        keyboard.press_and_release('enter')
+                    elif cmd.startswith('cmd:'):
+                        # Use command prompt
+                        os.system(cmd.split(':')[1])
+                    else:
+                        # Direct command
+                        os.system(cmd)
+                        
+                    # Wait for program window
+                    time.sleep(2)
+                    if self._verify_program_window(program):
+                        return True
+                        
+                except Exception as e:
+                    self.logger.error(f"Launch command failed: {str(e)}")
+                    continue
+                    
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Program launch failed: {str(e)}")
+            return False
+    
+    def _compare_states(self, pre_state, post_state):
+        """Compare two states and return differences"""
+        changes = {}
+        for key in set(pre_state.keys()) | set(post_state.keys()):
+            pre_val = pre_state.get(key)
+            post_val = post_state.get(key)
+            if pre_val != post_val:
+                changes[key] = {
+                    'before': pre_val,
+                    'after': post_val
+                }
+        return changes
+    
+    def _attempt_recovery(self, action, current_state):
+        """Attempt to recover from failed action"""
+        try:
+            action_type = action.get('type', '').upper()
+            
+            if action_type == 'PRESS' and 'win+r' in str(action.get('params', {}).get('keys', '')):
+                # If Run dialog didn't open, try again
+                if 'Run' not in current_state.get('window_titles', []):
+                    self.logger.debug("Retrying Run dialog...")
+                    keyboard.press_and_release('win+r')
+                    return True
+                    
+            elif action_type == 'TYPE' and 'mspaint' in str(action.get('params', {}).get('text', '')):
+                # If Paint didn't open, try alternative launch
+                if not current_state.get('paint_open', False):
+                    self.logger.debug("Trying alternative Paint launch...")
+                    keyboard.press_and_release('win+r')
+                    time.sleep(1.0)
+                    keyboard.write('mspaint')
+                    keyboard.press_and_release('enter')
+                    return True
+                    
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Recovery attempt failed: {str(e)}")
+            return False
   

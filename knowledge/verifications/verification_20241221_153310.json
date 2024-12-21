@@ -1,0 +1,22 @@
+{
+  "goal": "Run dialog opens",
+  "timestamp": "2024-12-21T15:33:08.942214",
+  "screen_capture": "knowledge\\verifications\\verification_20241221_153308.png",
+  "current_state": {
+    "timestamp": 1734816789.970228,
+    "active_window": "Run",
+    "cursor_position": [
+      485,
+      413
+    ],
+    "last_action": null,
+    "paint_open": false
+  },
+  "expected_state": null,
+  "confidence": 0.3,
+  "results": {
+    "visual_check": {},
+    "state_check": true,
+    "goal_specific": false
+  }
+}

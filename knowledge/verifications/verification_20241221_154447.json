@@ -1,0 +1,46 @@
+{
+  "goal": "Paint opens",
+  "timestamp": "2024-12-21T15:44:44.852229",
+  "screen_capture": "knowledge\\verifications\\verification_20241221_154444.png",
+  "current_state": {
+    "timestamp": 1734817486.49065,
+    "active_window": "Untitled - Paint",
+    "cursor_position": [
+      489,
+      366
+    ],
+    "last_action": null,
+    "paint_open": true,
+    "window_titles": [
+      "Untitled - Paint",
+      "LLM Vision Agent",
+      "main.py - GB2 - Cursor",
+      "Steam",
+      "C:\\Windows\\System32\\cmd.exe",
+      "ChatGPT - Google Chrome",
+      "GB2 - File Explorer",
+      "XODUS - SampleScene - Windows, Mac, Linux - Unity 2022.3.39f1 <DX11>",
+      "Unity Hub 3.8.0",
+      "ComfyUI - File Explorer",
+      "Downloads - File Explorer",
+      "GB2 - File Explorer",
+      "Session timeout!",
+      "Session timeout!",
+      "Session timeout!",
+      "Mail",
+      "Mail",
+      "Settings",
+      "Settings",
+      "Windows Input Experience",
+      "TeamViewer",
+      "Program Manager"
+    ]
+  },
+  "expected_state": null,
+  "confidence": 0.3,
+  "results": {
+    "visual_check": {},
+    "state_check": true,
+    "goal_specific": false
+  }
+}

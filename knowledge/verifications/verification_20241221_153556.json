@@ -1,0 +1,22 @@
+{
+  "goal": "Paint opens",
+  "timestamp": "2024-12-21T15:35:56.057870",
+  "screen_capture": "knowledge\\verifications\\verification_20241221_153556.png",
+  "current_state": {
+    "timestamp": 1734816955.266562,
+    "active_window": "Untitled - Paint",
+    "cursor_position": [
+      520,
+      447
+    ],
+    "last_action": null,
+    "paint_open": true
+  },
+  "expected_state": null,
+  "confidence": 0.6,
+  "results": {
+    "visual_check": {},
+    "state_check": true,
+    "goal_specific": true
+  }
+}

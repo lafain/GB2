@@ -5349,5 +5349,4818 @@
     },
     "timestamp": "2024-12-21T15:16:02.774974",
     "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint application",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "program_name": "Paint"
+              },
+              "expected_result": "Paint window opened"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": true,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document with default settings",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "element_id": "FileNew"
+              },
+              "expected_result": "New document created"
+            }
+          ],
+          "verification": "Title bar shows 'Untitled - Paint'",
+          "required_state": {
+            "program_open": true,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Select Background Color",
+          "description": "Set the background color to white",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "element_id": "BackColor"
+              },
+              "expected_result": "Color picker opened"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key_code": "W"
+              },
+              "expected_result": "White color selected"
+            }
+          ],
+          "verification": "Background color is white",
+          "required_state": {
+            "program_open": true,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle with default settings",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "element_id": "RectangleTool"
+              },
+              "expected_result": "Rectangle tool selected"
+            }
+          ],
+          "verification": "Selection is rectangle tool",
+          "required_state": {
+            "program_open": true,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Draw a house with specific dimensions",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "First point of rectangle selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Rectangle drawn"
+            }
+          ],
+          "verification": "Rectangle is drawn with specific dimensions",
+          "required_state": {
+            "program_open": true,
+            "window_title": ""
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:22:14.963373",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Launch Microsoft Paint application",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {},
+              "expected_result": "Paint program opens"
+            }
+          ],
+          "verification": "Check for Paint icon in taskbar",
+          "required_state": {
+            "program_open": "",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Create a new document in Paint with default settings",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl+N"
+              },
+              "expected_result": "New document opens"
+            }
+          ],
+          "verification": "Check for 'Untitled' document title",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House Base",
+          "description": "Draw a rectangle as the base of the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Cursor moves to specified location"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Wait for 0.5 seconds"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Draws rectangle at specified location"
+            }
+          ],
+          "verification": "Check for drawn rectangle on canvas",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Draw door and windows on the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 250,
+                "y": 150
+              },
+              "expected_result": "Cursor moves to specified location"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Wait for 0.5 seconds"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 270,
+                "y": 160
+              },
+              "expected_result": "Draws door at specified location"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 220,
+                "y": 180
+              },
+              "expected_result": "Draws window at specified location"
+            }
+          ],
+          "verification": "Check for drawn door and windows on canvas",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled"
+          }
+        },
+        {
+          "name": "Add Roof to House",
+          "description": "Draw a triangle as the roof of the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 350,
+                "y": 50
+              },
+              "expected_result": "Cursor moves to specified location"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Wait for 0.5 seconds"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 100
+              },
+              "expected_result": "Draws triangle at specified location"
+            }
+          ],
+          "verification": "Check for drawn roof on canvas",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:23:22.196083",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Launch Microsoft Paint to draw a house",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WINKEY"
+              },
+              "expected_result": "Windows Start menu appears"
+            }
+          ],
+          "verification": "Check for 'Paint' icon in the start menu",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint Program",
+          "description": "Open Microsoft Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "location": "100, 100"
+              },
+              "expected_result": "Paint program is opened"
+            }
+          ],
+          "verification": "Check for 'Microsoft Paint' window title",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New Canvas",
+          "description": "Create a new canvas in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "location": "100, 200"
+              },
+              "expected_result": "New canvas is created"
+            }
+          ],
+          "verification": "Check for 'File' menu with 'New' option",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use Paint tools to draw a house",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "Rectangle Tool"
+              },
+              "expected_result": "Rectangle tool is selected"
+            }
+          ],
+          "verification": "Check for rectangle tool icon in toolbar",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Wait for Canvas to Load",
+          "description": "Wait for the canvas to load and be ready for drawing",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Canvas is loaded"
+            }
+          ],
+          "verification": "Check for 'Canvas' window with no errors",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:24:03.589258",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open the Paint application.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "WIN + R"
+              },
+              "expected_result": "The Paint application opens."
+            }
+          ],
+          "verification": "Check if 'Paint' is in the taskbar.",
+          "required_state": {
+            "program_open": "",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document in Paint.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + N"
+              },
+              "expected_result": "A new, untitled document opens."
+            }
+          ],
+          "verification": "Check if the window title is 'Untitled - Paint'.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Select Brush Tool",
+          "description": "Select the Brush tool in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "The Brush tool is selected."
+            }
+          ],
+          "verification": "Check if the toolbar displays 'Brush'.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House Base",
+          "description": "Draw a rectangle to serve as the base of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "The starting point for the rectangle is set."
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "A rectangle with the specified dimensions is drawn."
+            }
+          ],
+          "verification": "Check if a rectangle is drawn at the specified location.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Roof of House",
+          "description": "Draw a triangle to represent the roof of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "The starting point for the triangle is set."
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 400,
+                "y": 100
+              },
+              "expected_result": "A triangle with the specified dimensions is drawn."
+            }
+          ],
+          "verification": "Check if a triangle is drawn at the specified location.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Door of House",
+          "description": "Draw a rectangle to represent the door of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 250
+              },
+              "expected_result": "The starting point for the rectangle is set."
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 350,
+                "y": 280
+              },
+              "expected_result": "A rectangle with the specified dimensions is drawn."
+            }
+          ],
+          "verification": "Check if a rectangle is drawn at the specified location.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Save Document",
+          "description": "Save the document with the house drawing.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + S"
+              },
+              "expected_result": "The document is saved."
+            }
+          ],
+          "verification": "Check if a 'Untitled' document exists in the Paint directory.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:26:38.608450",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Opens the Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "win + r"
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint application starts"
+            }
+          ],
+          "verification": "Program window is open with title 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Creates a new, blank document in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "File menu is selected"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "n"
+              },
+              "expected_result": "New document created"
+            }
+          ],
+          "verification": "Document title in window says 'Untitled'",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a Rectangle for the House",
+          "description": "Creates a rectangle to serve as the house's foundation",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Pointer moves to x=100, y=100"
+            },
+            {
+              "type": "PRESS|DRAG",
+              "params": {
+                "button": "left",
+                "duration": 2000
+              },
+              "expected_result": "Rectangle is drawn at specified location and size"
+            }
+          ],
+          "verification": "Rectangle is visible on screen",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a Triangle for the House Roof",
+          "description": "Creates a triangle to serve as the house's roof",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 100
+              },
+              "expected_result": "Pointer moves to x=300, y=100"
+            },
+            {
+              "type": "PRESS|DRAG",
+              "params": {
+                "button": "left",
+                "duration": 2000
+              },
+              "expected_result": "Triangle is drawn at specified location and size"
+            }
+          ],
+          "verification": "Triangle is visible on screen",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a Door for the House",
+          "description": "Creates a rectangle to serve as the house's door",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 300
+              },
+              "expected_result": "Pointer moves to x=200, y=300"
+            },
+            {
+              "type": "PRESS|DRAG",
+              "params": {
+                "button": "left",
+                "duration": 2000
+              },
+              "expected_result": "Rectangle is drawn at specified location and size"
+            }
+          ],
+          "verification": "Rectangle is visible on screen",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a Window for the House",
+          "description": "Creates a rectangle to serve as the house's window",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 300
+              },
+              "expected_result": "Pointer moves to x=400, y=300"
+            },
+            {
+              "type": "PRESS|DRAG",
+              "params": {
+                "button": "left",
+                "duration": 2000
+              },
+              "expected_result": "Rectangle is drawn at specified location and size"
+            }
+          ],
+          "verification": "Rectangle is visible on screen",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save the House Drawing",
+          "description": "Saves the drawing as a bitmap file",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "File menu is selected"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "s"
+              },
+              "expected_result": "Save dialog box appears"
+            }
+          ],
+          "verification": "Bitmap file is saved with specified name and location",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:30:33.564640",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open Microsoft Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keycode": "R"
+              },
+              "expected_result": "Paint window opens"
+            }
+          ],
+          "verification": "Check for 'Microsoft Paint' title in taskbar",
+          "required_state": {
+            "program_open": null,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Image",
+          "description": "Create a new image in Paint",
+          "actions": [
+            {
+              "type": "PRESS|CLICK",
+              "params": {
+                "button": "left",
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Blank image window opens"
+            }
+          ],
+          "verification": "Check for blank canvas in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Set Brush Size",
+          "description": "Select a brush size for drawing",
+          "actions": [
+            {
+              "type": "PRESS|CLICK",
+              "params": {
+                "button": "left",
+                "x": 50,
+                "y": 500
+              },
+              "expected_result": "Brush size dropdown opens"
+            }
+          ],
+          "verification": "Check for brush size options in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle using the mouse",
+          "actions": [
+            {
+              "type": "CLICK|WAIT",
+              "params": {
+                "button": "left",
+                "duration": 1000
+              },
+              "expected_result": "Rectangle drawn on canvas"
+            }
+          ],
+          "verification": "Check for rectangle shape in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Door",
+          "description": "Draw a door using the mouse",
+          "actions": [
+            {
+              "type": "CLICK|WAIT",
+              "params": {
+                "button": "left",
+                "duration": 1000
+              },
+              "expected_result": "Door drawn on canvas"
+            }
+          ],
+          "verification": "Check for door shape in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Window",
+          "description": "Draw a window using the mouse",
+          "actions": [
+            {
+              "type": "CLICK|WAIT",
+              "params": {
+                "button": "left",
+                "duration": 1000
+              },
+              "expected_result": "Window drawn on canvas"
+            }
+          ],
+          "verification": "Check for window shape in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Draw a roof using the mouse",
+          "actions": [
+            {
+              "type": "CLICK|WAIT",
+              "params": {
+                "button": "left",
+                "duration": 1000
+              },
+              "expected_result": "Roof drawn on canvas"
+            }
+          ],
+          "verification": "Check for roof shape in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Save Image",
+          "description": "Save the house image as a file",
+          "actions": [
+            {
+              "type": "PRESS|TYPE",
+              "params": {
+                "text": "Ctrl+S"
+              },
+              "expected_result": "Save dialog opens"
+            }
+          ],
+          "verification": "Check for saved file in Paint window",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": ""
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:31:43.411037",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint program using keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": "win+r"
+              },
+              "expected_result": "Run dialog box appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint program opens in new window."
+            }
+          ],
+          "verification": "Verify Paint icon and title bar.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New File",
+          "description": "Create a new file in Paint using menu options.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "File menu is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "New file options appear."
+            }
+          ],
+          "verification": "Verify 'New' option in File menu.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a Rectangle",
+          "description": "Draw a rectangle on the canvas using toolbar options.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Rectangle tool is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Cursor changes to rectangle cursor."
+            }
+          ],
+          "verification": "Verify drawn rectangle on canvas.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a Roof",
+          "description": "Draw a roof shape using freehand tool.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 200
+              },
+              "expected_result": "Freehand tool is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Cursor changes to freehand cursor."
+            }
+          ],
+          "verification": "Verify drawn roof shape on canvas.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Windows and Doors",
+          "description": "Draw windows and doors using rectangle tool.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 300
+              },
+              "expected_result": "Rectangle tool is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Cursor changes to rectangle cursor."
+            }
+          ],
+          "verification": "Verify drawn windows and doors on canvas.",
+          "required_state": {}
+        },
+        {
+          "name": "Save File",
+          "description": "Save the file using menu options.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "File menu is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Save options appear."
+            }
+          ],
+          "verification": "Verify saved file in specified location.",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:33:06.833704",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "Win + R",
+                "command": "mspaint"
+              },
+              "expected_result": "Paint program opens on screen."
+            }
+          ],
+          "verification": "Verify 'Paint' window title and program icon.",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Select Brush Tool",
+          "description": "Switch to the brush tool in Paint application.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Brush tool selected."
+            }
+          ],
+          "verification": "Verify 'Brush' option selected in toolbar.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New Drawing",
+          "description": "Start a new drawing canvas with white background.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + N"
+              },
+              "expected_result": "New drawing canvas created."
+            }
+          ],
+          "verification": "Verify 'File' menu and blank canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use the brush tool to draw a house on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 200
+              },
+              "expected_result": "House outline drawn."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "User has time to draw house."
+            }
+          ],
+          "verification": "Verify house shape and size.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:33:46.751116",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint program on the computer.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "WIN + R"
+              },
+              "expected_result": "The Windows Run dialog box opens."
+            }
+          ],
+          "verification": "Check for the Paint icon in the search results.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document with the default settings.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + N"
+              },
+              "expected_result": "A new, blank document opens."
+            }
+          ],
+          "verification": "Check for an empty canvas with a white background.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Set Drawing Size",
+          "description": "Set the drawing size to 800x600 pixels.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "800x600"
+              },
+              "expected_result": "The canvas is resized to 800x600 pixels."
+            }
+          ],
+          "verification": "Check for the new dimensions in the title bar.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House Frame",
+          "description": "Draw a rectangle to represent the house frame.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LEFT",
+                "x1": 50,
+                "y1": 50,
+                "x2": 750,
+                "y2": 550
+              },
+              "expected_result": "A rectangle is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for a rectangular shape with the correct dimensions.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Roof Triangle",
+          "description": "Draw a triangle to represent the house roof.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LEFT",
+                "x1": 500,
+                "y1": 200,
+                "x2": 700,
+                "y2": 300
+              },
+              "expected_result": "A triangle is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for a triangular shape with the correct dimensions.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Door Rectangle",
+          "description": "Draw a rectangle to represent the house door.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LEFT",
+                "x1": 300,
+                "y1": 400,
+                "x2": 500,
+                "y2": 600
+              },
+              "expected_result": "A rectangle is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for a rectangular shape with the correct dimensions.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Save File",
+          "description": "Save the file as 'house.png'.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "house.png"
+              },
+              "expected_result": "The save dialog box opens."
+            }
+          ],
+          "verification": "Check for a saved file with the correct name.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:35:45.820173",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WIN + R"
+              },
+              "expected_result": "Run dialog box appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint"
+              },
+              "expected_result": "Paint application is launched."
+            }
+          ],
+          "verification": "Check for Paint title bar and 'File' menu.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Create a new, blank document in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "File menu is selected."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "N"
+              },
+              "expected_result": "New document is created."
+            }
+          ],
+          "verification": "Check for blank canvas and 'File' -> 'New' -> 'Blank Document'.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw House Structure",
+          "description": "Use the Paint tools to draw a house structure.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Paint cursor is at specified location."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Cursor remains stationary for 0.5 seconds."
+            }
+          ],
+          "verification": "Check for house structure drawn on canvas.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Use the Paint tools to draw a roof.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 150,
+                "y": 50
+              },
+              "expected_result": "Paint cursor is at specified location."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Cursor remains stationary for 0.5 seconds."
+            }
+          ],
+          "verification": "Check for roof drawn on canvas.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Windows and Doors",
+          "description": "Use the Paint tools to draw windows and doors.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 150
+              },
+              "expected_result": "Paint cursor is at specified location."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Cursor remains stationary for 0.5 seconds."
+            }
+          ],
+          "verification": "Check for windows and doors drawn on canvas.",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:38:14.366445",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the paint program on the computer.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "win+r",
+                  "enter"
+                ]
+              },
+              "expected_result": "The Paint program window should open."
+            }
+          ],
+          "verification": "Window title should be 'Microsoft Paint'.",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Set Brush Size and Color",
+          "description": "Select a large brush size and color in the paint program.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "ctrl+z",
+                  "b"
+                ]
+              },
+              "expected_result": "The brush size should change to 10 pixels."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "H"
+              },
+              "expected_result": "The color should change to red."
+            }
+          ],
+          "verification": "Brush size and color in the toolbar should match.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create a New Canvas",
+          "description": "Create a new canvas with dimensions 400x300 pixels.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "alt+n"
+                ]
+              },
+              "expected_result": "A new canvas should open."
+            }
+          ],
+          "verification": "Canvas size and title should match the expected dimensions.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a House Outline",
+          "description": "Use the large brush to draw an outline of a house on the new canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 50
+              },
+              "expected_result": "The cursor should be moved to the top-left corner of the canvas."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "The user can draw the house outline."
+            }
+          ],
+          "verification": "A rough outline of a house should be visible on the canvas.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Fill in House Walls",
+          "description": "Use the fill tool to fill in the walls of the house.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "f"
+                ]
+              },
+              "expected_result": "The fill tool should be selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "The user can fill in the walls of the house."
+            }
+          ],
+          "verification": "All walls of the house should be filled with color.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw a Roof",
+          "description": "Use the large brush to draw a roof on top of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 150
+              },
+              "expected_result": "The cursor should be moved to the center of the canvas."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "The user can draw a roof on top of the house."
+            }
+          ],
+          "verification": "A simple roof should be visible on top of the house.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save the Image",
+          "description": "Save the image as a PNG file.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "ctrl+s"
+                ]
+              },
+              "expected_result": "The Save As dialog should open."
+            }
+          ],
+          "verification": "A PNG file with the correct name and path should be saved.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:39:35.319167",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "win+r",
+                  "enter"
+                ]
+              },
+              "expected_result": "Windows Run dialog appears"
+            }
+          ],
+          "verification": "Window title should be 'Run'",
+          "required_state": {
+            "program_open": null,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint",
+          "description": "Launch Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS|TYPE",
+              "params": {
+                "keys": [
+                  "p"
+                ],
+                "text": "mspaint"
+              },
+              "expected_result": "Microsoft Paint opens"
+            }
+          ],
+          "verification": "Window title should be 'Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "New document created"
+            }
+          ],
+          "verification": "Document should be blank and have a title bar with 'Untitled - Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle on the canvas.",
+          "actions": [
+            {
+              "type": "PRESS|TYPE",
+              "params": {
+                "keys": [
+                  "r"
+                ]
+              },
+              "expected_result": "Rectangle tool selected"
+            }
+          ],
+          "verification": "Tool should be highlighted as Rectangle",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use the rectangle tool to draw a house.",
+          "actions": [
+            {
+              "type": "CLICK|CLICK|WAIT",
+              "params": {
+                "x": 100,
+                "y": 50
+              },
+              "expected_result": "Rectangle drawn at specified location"
+            }
+          ],
+          "verification": "A rectangle should be visible on the canvas with its top-left corner at (100, 50)",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Save Document",
+          "description": "Save the document as a bitmap file.",
+          "actions": [
+            {
+              "type": "PRESS|TYPE",
+              "params": {
+                "keys": [
+                  "ctrl+s"
+                ]
+              },
+              "expected_result": "Save dialog opens"
+            }
+          ],
+          "verification": "File should be saved with a .bmp extension and the correct name",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:41:24.931935",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WIN + R"
+              },
+              "expected_result": "Run dialog box appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint program launches."
+            }
+          ],
+          "verification": "Program window title is 'Microsoft Paint'.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create a New Drawing",
+          "description": "Create a new drawing in the paint program.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "File",
+                "x_offset": 0,
+                "y_offset": 0
+              },
+              "expected_result": "File menu dropdown appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "New"
+              },
+              "expected_result": "New file dialog box opens."
+            }
+          ],
+          "verification": "No error messages are displayed.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a House Shape",
+          "description": "Create the shape of a house in the paint program.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Shapes"
+              },
+              "expected_result": "Shape menu dropdown appears."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 100
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "House shape is selected in the shapes menu.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a Rectangle for the House Base",
+          "description": "Use the rectangle tool to draw the base of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Rectangle"
+              },
+              "expected_result": "Rectangle tool selected."
+            }
+          ],
+          "verification": "Rectangle tool icon is highlighted in the toolbar.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a Triangle for the House Roof",
+          "description": "Use the triangle tool to draw the roof of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Triangle"
+              },
+              "expected_result": "Triangle tool selected."
+            }
+          ],
+          "verification": "Triangle tool icon is highlighted in the toolbar.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw a Line for the House Door",
+          "description": "Use the line tool to draw the door of the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Line"
+              },
+              "expected_result": "Line tool selected."
+            }
+          ],
+          "verification": "Line tool icon is highlighted in the toolbar.",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:42:21.960657",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Open Paint Program",
+          "description": "Launch Paint program using keyboard shortcut",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WIN + R"
+              },
+              "expected_result": "Run dialog box appears"
+            }
+          ],
+          "verification": "Paint program icon is visible in the list of programs",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint",
+          "description": "Type 'paint' and press Enter to open the Paint program",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "paint"
+              },
+              "expected_result": "Paint program is selected in the list of programs"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "ENTER"
+              },
+              "expected_result": "Paint program window opens"
+            }
+          ],
+          "verification": "Paint program window title matches 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use the mouse to draw a house in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Pixel is drawn at specified coordinates"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 2000
+              },
+              "expected_result": "Paint program window remains open"
+            }
+          ],
+          "verification": "House shape is visible on the Paint canvas",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:44:34.971525",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open the Paint application.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {},
+              "expected_result": "Paint window opened"
+            }
+          ],
+          "verification": "Window title should be 'Paint'",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New Canvas",
+          "description": "Create a new canvas in Paint.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl+N"
+              },
+              "expected_result": "New document created"
+            }
+          ],
+          "verification": "Window title should be 'Untitled - Paint'",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Select Color Tool",
+          "description": "Select the color tool in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "Color palette opened"
+            }
+          ],
+          "verification": "Color palette should be visible",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Rectangle drawn"
+            }
+          ],
+          "verification": "Rectangle should be visible",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Door",
+          "description": "Draw a door on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 200
+              },
+              "expected_result": "Door drawn"
+            }
+          ],
+          "verification": "Door should be visible",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Window",
+          "description": "Draw a window on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 300
+              },
+              "expected_result": "Window drawn"
+            }
+          ],
+          "verification": "Window should be visible",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Draw a roof on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 400
+              },
+              "expected_result": "Roof drawn"
+            }
+          ],
+          "verification": "Roof should be visible",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:45:35.662532",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open Microsoft Paint",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "program": "mspaint.exe"
+              },
+              "expected_result": "Paint program window opens"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Set Drawing Mode to Brush Tool",
+          "description": "Select the brush tool in Paint",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl+1"
+              },
+              "expected_result": "Brush tool selected"
+            }
+          ],
+          "verification": "Tool icon is a paintbrush",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New Drawing Canvas",
+          "description": "Create a new drawing canvas in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "New canvas created"
+            }
+          ],
+          "verification": "Canvas has no content",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House Foundation",
+          "description": "Draw the foundation of a house in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "Line drawn"
+            }
+          ],
+          "verification": "Line is visible on canvas",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House Walls",
+          "description": "Draw the walls of a house in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Line drawn"
+            }
+          ],
+          "verification": "Line is visible on canvas",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House Roof",
+          "description": "Draw the roof of a house in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 500,
+                "y": 100
+              },
+              "expected_result": "Line drawn"
+            }
+          ],
+          "verification": "Line is visible on canvas",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Draw door and windows of a house in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 300
+              },
+              "expected_result": "Line drawn"
+            }
+          ],
+          "verification": "Line is visible on canvas",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save Drawing as Image",
+          "description": "Save the drawing as an image in Paint",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl+S"
+              },
+              "expected_result": "Image saved"
+            }
+          ],
+          "verification": "File saved successfully",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:47:43.192587",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Launch the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WIN + R"
+              },
+              "expected_result": "Run dialog box appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint program icon appears in the Run dialog box."
+            },
+            {
+              "type": "PRESS|CLICK",
+              "params": {
+                "key": "ENTER",
+                "button": "LEFT"
+              },
+              "expected_result": "Paint program opens with a new canvas."
+            }
+          ],
+          "verification": "Program title is 'Microsoft Paint'.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House Base",
+          "description": "Draw a rectangle to serve as the base of the house.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG|RELEASE",
+              "params": {
+                "x1": 100,
+                "y1": 100,
+                "x2": 300,
+                "y2": 300
+              },
+              "expected_result": "Rectangle appears on the canvas."
+            }
+          ],
+          "verification": "Rectangle has been drawn.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Roof Triangle",
+          "description": "Draw a triangle to serve as the roof of the house.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG|RELEASE",
+              "params": {
+                "x1": 200,
+                "y1": 100,
+                "x2": 300,
+                "y2": 50
+              },
+              "expected_result": "Triangle appears on the canvas."
+            }
+          ],
+          "verification": "Triangle has been drawn.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Draw simple shapes for the door and windows of the house.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG|RELEASE",
+              "params": {
+                "x1": 250,
+                "y1": 350,
+                "x2": 300,
+                "y2": 400
+              },
+              "expected_result": "Rectangle for door appears on the canvas."
+            },
+            {
+              "type": "CLICK|DRAG|RELEASE",
+              "params": {
+                "x1": 150,
+                "y1": 350,
+                "x2": 200,
+                "y2": 400
+              },
+              "expected_result": "Rectangle for window appears on the canvas."
+            }
+          ],
+          "verification": "Door and windows have been drawn.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save House Drawing",
+          "description": "Save the house drawing as a file.",
+          "actions": [
+            {
+              "type": "WAIT|CLICK",
+              "params": {
+                "duration": 1000,
+                "button": "LEFT"
+              },
+              "expected_result": "File Save dialog box appears."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "house.png"
+              },
+              "expected_result": "File name appears in the File Save dialog box."
+            },
+            {
+              "type": "PRESS|CLICK",
+              "params": {
+                "key": "ENTER",
+                "button": "LEFT"
+              },
+              "expected_result": "House drawing is saved as a file."
+            }
+          ],
+          "verification": "File has been saved.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:48:57.033656",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint application using a keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": "WIN + R"
+              },
+              "expected_result": "The Run dialog box appears."
+            }
+          ],
+          "verification": "Look for the 'Paint' icon in the search results.",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint",
+          "description": "Launch the Paint application from the Run dialog box.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint"
+              },
+              "expected_result": "The 'mspaint' command is recognized."
+            }
+          ],
+          "verification": "Look for the 'Paint' icon in the search results.",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Open a new document in Paint using the keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": "Ctrl + N"
+              },
+              "expected_result": "A new blank document appears."
+            }
+          ],
+          "verification": "Look for a blank canvas with a title bar.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Select Paintbrush Tool",
+          "description": "Choose the Paintbrush tool from the toolbar.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "The Paintbrush tool is selected."
+            }
+          ],
+          "verification": "Look for a paintbrush icon in the toolbar.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw a House",
+          "description": "Use the Paintbrush tool to draw a house on the canvas.",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 3000
+              },
+              "expected_result": "A house is drawn on the canvas."
+            }
+          ],
+          "verification": "Look for a house shape on the canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Save the Document",
+          "description": "Save the document using the keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": "Ctrl + S"
+              },
+              "expected_result": "The 'Save As' dialog box appears."
+            }
+          ],
+          "verification": "Look for a file save dialog box.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:51:13.607723",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "win + r"
+              },
+              "expected_result": "Run dialog box appears"
+            }
+          ],
+          "verification": "Program 'Paint' is listed in the Run dialog box",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint Program",
+          "description": "Launch Microsoft Paint application from the Run dialog box",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "paint"
+              },
+              "expected_result": "'Paint' is selected in the Run dialog box"
+            }
+          ],
+          "verification": "'Paint' program is listed in the open window",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Create New Drawing",
+          "description": "Open a new drawing canvas within Microsoft Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "'File' menu is selected in the menu bar"
+            }
+          ],
+          "verification": "'New' option is listed within the 'File' menu",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use Microsoft Paint to draw a house",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "b"
+              },
+              "expected_result": "'Brush' tool is selected in the toolbar"
+            }
+          ],
+          "verification": "Paintbrush icon is highlighted in the toolbar",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Wait for Canvas to Load",
+          "description": "Allow the drawing canvas to fully load within Microsoft Paint",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 2000
+              },
+              "expected_result": "Drawing canvas is fully loaded"
+            }
+          ],
+          "verification": "Canvas size and resolution are displayed in the window title",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Use Microsoft Paint to draw a roof for the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Paintbrush is placed on the drawing canvas"
+            }
+          ],
+          "verification": "'Brush size' and 'color' options are displayed in the toolbar",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Walls",
+          "description": "Use Microsoft Paint to draw walls for the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 300
+              },
+              "expected_result": "Paintbrush is placed on the drawing canvas"
+            }
+          ],
+          "verification": "'Brush size' and 'color' options are displayed in the toolbar",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Draw Door",
+          "description": "Use Microsoft Paint to draw a door for the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 500,
+                "y": 400
+              },
+              "expected_result": "Paintbrush is placed on the drawing canvas"
+            }
+          ],
+          "verification": "'Brush size' and 'color' options are displayed in the toolbar",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Save Drawing",
+          "description": "Use Microsoft Paint to save the drawing as a file",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "ctrl + s"
+              },
+              "expected_result": "'Save As' dialog box appears"
+            }
+          ],
+          "verification": "'File name' and 'file type' fields are displayed in the dialog box",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint (800x600)"
+          }
+        },
+        {
+          "name": "Exit Program",
+          "description": "Close Microsoft Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "alt + f4"
+              },
+              "expected_result": "'Microsoft Paint' window is closed"
+            }
+          ],
+          "verification": "'Paint' program is no longer listed in the Task Manager",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:58:33.924507",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "win+r"
+              },
+              "expected_result": "Run dialog appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint"
+              },
+              "expected_result": "Paint program is launched"
+            }
+          ],
+          "verification": "Check for 'Microsoft Paint' title in window",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Start a new drawing session",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "OK"
+              },
+              "expected_result": "New document is created"
+            }
+          ],
+          "verification": "Check for blank canvas",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House",
+          "description": "Create a rectangle for the house foundation",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LMB",
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Rectangle is drawn"
+            }
+          ],
+          "verification": "Check for rectangle at (100,100)",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Add door and windows to the house",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LMB",
+                "x": 150,
+                "y": 200
+              },
+              "expected_result": "Door is drawn"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "Window creation prompt appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "w"
+              },
+              "expected_result": "Window is drawn"
+            }
+          ],
+          "verification": "Check for door and window at (150,200) and (100,300)",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Add roof to the house",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LMB",
+                "x": 250,
+                "y": 100
+              },
+              "expected_result": "Roof is drawn"
+            }
+          ],
+          "verification": "Check for roof at (250,100)",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save Drawing as Image",
+          "description": "Save the house drawing as an image file",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "LMB",
+                "x": 350,
+                "y": 200
+              },
+              "expected_result": "File save dialog appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "house.png"
+              },
+              "expected_result": "File is saved as PNG"
+            }
+          ],
+          "verification": "Check for 'house.png' file in current directory",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Untitled - Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T15:59:45.548619",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "WINKEY+R"
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint application launches"
+            }
+          ],
+          "verification": "Check for Paint icon in taskbar.",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "New"
+              },
+              "expected_result": "New document created"
+            }
+          ],
+          "verification": "Check for blank canvas.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Use the Paint tools to draw a house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Line Tool"
+              },
+              "expected_result": "Line tool selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Tool ready for use"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Rectangle Tool"
+              },
+              "expected_result": "Rectangle tool selected"
+            }
+          ],
+          "verification": "Check for house shape.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:01:24.437930",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint program.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "program": "mspaint"
+              },
+              "expected_result": "The Paint window should open."
+            }
+          ],
+          "verification": "Check if 'Microsoft Paint' is in the taskbar.",
+          "required_state": {
+            "program_open": false
+          }
+        },
+        {
+          "name": "Create a New File",
+          "description": "Create a new file in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl+N"
+              },
+              "expected_result": "A new, untitled document should be created."
+            }
+          ],
+          "verification": "Check if the title bar says 'Untitled' and has a blank canvas.",
+          "required_state": {
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Choose White Color",
+          "description": "Select white as the fill color.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 20
+              },
+              "expected_result": "The color palette should display white."
+            }
+          ],
+          "verification": "Check if 'White' is selected in the color palette.",
+          "required_state": {
+            "color_selected": "White"
+          }
+        },
+        {
+          "name": "Draw a Rectangle",
+          "description": "Draw a rectangle on the canvas.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "5"
+              },
+              "expected_result": "A rectangle should be drawn on the canvas."
+            }
+          ],
+          "verification": "Check if a rectangle is visible on the canvas.",
+          "required_state": {
+            "shape_drawn": true
+          }
+        },
+        {
+          "name": "Draw a Door",
+          "description": "Draw a door above the rectangle.",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "The user should have time to position the cursor."
+            }
+          ],
+          "verification": "Check if the mouse is positioned over the top of the rectangle.",
+          "required_state": {
+            "cursor_position": true
+          }
+        },
+        {
+          "name": "Draw a Roof",
+          "description": "Draw a roof above the door.",
+          "actions": [
+            {
+              "type": "PRESS|DRAG|RELEASE",
+              "params": {
+                "key": "6"
+              },
+              "expected_result": "A triangle should be drawn on top of the house."
+            }
+          ],
+          "verification": "Check if a triangle is visible at the top of the canvas.",
+          "required_state": {
+            "shape_drawn": true
+          }
+        },
+        {
+          "name": "Save the File",
+          "description": "Save the file as 'house.png'.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "File name: house.png"
+              },
+              "expected_result": "The file should be saved with the specified name."
+            }
+          ],
+          "verification": "Check if a file named 'house.png' is in the Paint directory.",
+          "required_state": {
+            "file_saved": true
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:02:26.760413",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint program using keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key_code": "WIN + R"
+              },
+              "expected_result": "The Run dialog appears."
+            }
+          ],
+          "verification": "Verify that 'Paint' is listed in the search results.",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Open Paint",
+          "description": "Type 'mspaint' and press Enter to open Paint program.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint"
+              },
+              "expected_result": "The Run dialog opens the Paint program."
+            }
+          ],
+          "verification": "Verify that the Paint window is open and has a title 'Untitled - Paint'.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Create New Drawing",
+          "description": "Click on 'File' menu and select 'New' to create a new drawing.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "A new drawing window opens with a blank canvas."
+            }
+          ],
+          "verification": "Verify that the new drawing window is open and has a blank canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Click on 'Rectangle' tool to draw a house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 50,
+                "y": 100
+              },
+              "expected_result": "The Rectangle tool is selected in the toolbar."
+            }
+          ],
+          "verification": "Verify that the Rectangle tool is selected and ready to draw.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Click on the canvas to draw a roof with the Rectangle tool.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "A rectangle representing the roof is drawn on the canvas."
+            }
+          ],
+          "verification": "Verify that a rectangle representing the roof is drawn on the canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Walls",
+          "description": "Click on the canvas to draw walls with the Rectangle tool.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 150,
+                "y": 300
+              },
+              "expected_result": "Two rectangles representing the walls are drawn on the canvas."
+            }
+          ],
+          "verification": "Verify that two rectangles representing the walls are drawn on the canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Door",
+          "description": "Click on the canvas to draw a door with the Rectangle tool.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 400
+              },
+              "expected_result": "A rectangle representing the door is drawn on the canvas."
+            }
+          ],
+          "verification": "Verify that a rectangle representing the door is drawn on the canvas.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Save Drawing",
+          "description": "Click on 'File' menu and select 'Save As' to save the drawing as a PNG file.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 250,
+                "y": 500
+              },
+              "expected_result": "A Save dialog opens allowing you to choose a location and name for the file."
+            }
+          ],
+          "verification": "Verify that the drawing is saved as a PNG file in the chosen location.",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:04:17.618835",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint program using keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "r"
+              },
+              "expected_result": "Paint window should open."
+            }
+          ],
+          "verification": "Check for 'Paint' title in window title bar.",
+          "required_state": {
+            "program_open": "",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Create a new document in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "New document should open with blank canvas."
+            }
+          ],
+          "verification": "Check for blank white canvas.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House",
+          "description": "Draw a rectangle to serve as the house's base.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Rectangle should be drawn."
+            }
+          ],
+          "verification": "Check for rectangle on canvas.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Roof of House",
+          "description": "Draw a triangle to serve as the house's roof.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 150,
+                "y": 50
+              },
+              "expected_result": "Triangle should be drawn."
+            }
+          ],
+          "verification": "Check for triangle on top of rectangle.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Draw a small rectangle for the door and two smaller rectangles for windows.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 120,
+                "y": 150
+              },
+              "expected_result": "Small rectangle should be drawn."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "Check for small rectangles on house.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:05:07.253964",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Launch Microsoft Paint application",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {},
+              "expected_result": "Paint window opens"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe"
+          }
+        },
+        {
+          "name": "Create New File",
+          "description": "Create a new file in Microsoft Paint",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + N"
+              },
+              "expected_result": "New dialog box opens"
+            }
+          ],
+          "verification": "Title bar says 'Untitled - Paint'",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Rectangle for House",
+          "description": "Draw a rectangle to represent the house",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Mouse cursor moves to specified location"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Shift + R"
+              },
+              "expected_result": "Rectangle tool selected"
+            }
+          ],
+          "verification": "Rectangle tool icon is active",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Draw a triangle to represent the roof",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 150,
+                "y": 150
+              },
+              "expected_result": "Mouse cursor moves to specified location"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 100
+              },
+              "expected_result": "Second point of triangle selected"
+            }
+          ],
+          "verification": "Triangle tool icon is active",
+          "required_state": {}
+        },
+        {
+          "name": "Add Door and Windows",
+          "description": "Draw small rectangles for door and windows",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 120,
+                "y": 180
+              },
+              "expected_result": "Mouse cursor moves to specified location"
+            },
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Shift + R"
+              },
+              "expected_result": "Rectangle tool selected"
+            }
+          ],
+          "verification": "Rectangle tool icon is active",
+          "required_state": {}
+        },
+        {
+          "name": "Save File",
+          "description": "Save the drawing as a .bmp file",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "Ctrl + S"
+              },
+              "expected_result": "Save dialog box opens"
+            }
+          ],
+          "verification": "File is saved with title 'house'",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:07:07.443967",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "win+r"
+              },
+              "expected_result": "Run dialog box opens."
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint"
+              },
+              "expected_result": "Paint program is launched."
+            }
+          ],
+          "verification": "Check if the Paint window is open with the title 'Paint'.",
+          "required_state": {
+            "program_open": "mspaint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New File",
+          "description": "Create a new, blank file in Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "File menu is selected."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Menu items are displayed."
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 150,
+                "y": 120
+              },
+              "expected_result": "New file option is selected."
+            }
+          ],
+          "verification": "Check if a new, blank file has been created.",
+          "required_state": {}
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle for the house's walls.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 50,
+                "y": 50
+              },
+              "expected_result": "Mouse is at the top-left corner of the window."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Mouse cursor is visible and responsive."
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Rectangle is drawn."
+            }
+          ],
+          "verification": "Check if a rectangle has been drawn at the specified location.",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:07:49.290866",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open Microsoft Paint application",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "win + r"
+              },
+              "expected_result": "Paint window opens"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "New File",
+          "description": "Create a new file in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "File menu button",
+                "coordinates": "0, 0"
+              },
+              "expected_result": "File menu opens"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "Ctrl + N"
+              },
+              "expected_result": "New file dialog appears"
+            }
+          ],
+          "verification": "Window title is 'Untitled - Paint'",
+          "required_state": {
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle on the canvas",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Rectangle tool button",
+                "coordinates": "10, 10"
+              },
+              "expected_result": "Rectangle tool selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": "1000"
+              }
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Canvas at (50, 50)",
+                "coordinates": "50, 50"
+              },
+              "expected_result": "Rectangle drawn on canvas"
+            }
+          ],
+          "verification": "Rectangle visible on canvas",
+          "required_state": {
+            "tool_selected": "Rectangle tool"
+          }
+        },
+        {
+          "name": "Save File",
+          "description": "Save the file with a specific name and location",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "File menu button",
+                "coordinates": "0, 0"
+              },
+              "expected_result": "File menu opens"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "Ctrl + S"
+              },
+              "expected_result": "Save file dialog appears"
+            }
+          ],
+          "verification": "File saved successfully",
+          "required_state": {
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:12:24.397655",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open Microsoft Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "WIN+R"
+                ]
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint application launches"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": false,
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New File",
+          "description": "Create a new file in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "File menu opens"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "Ctrl+N"
+              },
+              "expected_result": "New file created"
+            }
+          ],
+          "verification": "Window title is 'Untitled'",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Select rectangle tool and draw a house shape",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 50,
+                "y": 50
+              },
+              "expected_result": "Rectangle tool selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "Rectangle drawn on canvas",
+          "required_state": {
+            "program_open": true,
+            "window_title": "Untitled"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:13:36.793842",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": "win+r"
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint application launches"
+            }
+          ],
+          "verification": "Check if Paint icon is visible in the taskbar.",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Paint Document",
+          "description": "Create a new, blank document in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "File menu is selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": "File menu options appear"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "New option is selected"
+            }
+          ],
+          "verification": "Check if new document is created and visible.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle for House Foundation",
+          "description": "Draw a rectangle to represent the house foundation.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Mouse cursor is at the starting point"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Rectangle is drawn"
+            }
+          ],
+          "verification": "Check if rectangle is visible on the screen.",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Untitled - Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:15:37.311057",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open Microsoft Paint application",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "Win + R, type 'mspaint'"
+              },
+              "expected_result": "Paint window opens"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Set Brush Size",
+          "description": "Adjust brush size to 10 pixels",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 50
+              },
+              "expected_result": "Brush size dropdown is selected"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "10"
+              },
+              "expected_result": "Brush size is set to 10 pixels"
+            }
+          ],
+          "verification": "Brush size is displayed as 10 pixels",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Door",
+          "description": "Draw a rectangle for the door",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "Cursor is at the starting point"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 300,
+                "y": 300
+              },
+              "expected_result": "Door rectangle is drawn"
+            }
+          ],
+          "verification": "Door rectangle is visible on screen",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Windows",
+          "description": "Draw two rectangles for the windows",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 400,
+                "y": 200
+              },
+              "expected_result": "Cursor is at the starting point"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 500,
+                "y": 300
+              },
+              "expected_result": "First window rectangle is drawn"
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 600,
+                "y": 400
+              },
+              "expected_result": "Cursor is at the starting point"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 700,
+                "y": 500
+              },
+              "expected_result": "Second window rectangle is drawn"
+            }
+          ],
+          "verification": "Two rectangles are visible on screen as windows",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Draw a triangle for the roof",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 800,
+                "y": 600
+              },
+              "expected_result": "Cursor is at the starting point"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 900,
+                "y": 700
+              },
+              "expected_result": "Roof triangle is drawn"
+            }
+          ],
+          "verification": "Triangle is visible on screen as roof",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save Image",
+          "description": "Save the image as 'house.png'",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 1000,
+                "y": 800
+              },
+              "expected_result": "Cursor is at the save location"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "house.png"
+              },
+              "expected_result": "File name is set to 'house.png'"
+            }
+          ],
+          "verification": "Image is saved as 'house.png'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:17:40.649275",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "winkey",
+                  "+"
+                ]
+              },
+              "expected_result": "Paint program opens"
+            }
+          ],
+          "verification": "Check if 'Microsoft Paint' window is open and visible",
+          "required_state": {
+            "program_open": false
+          }
+        },
+        {
+          "name": "Create New File in Paint",
+          "description": "Create a new file in the Paint application.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 100,
+                "y": 200
+              },
+              "expected_result": "New File dialog appears"
+            }
+          ],
+          "verification": "Check if 'New' button is clickable and 'File name' field is editable",
+          "required_state": {
+            "window_title": "Untitled - Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle in Paint",
+          "description": "Draw a rectangle on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 50,
+                "y": 50
+              },
+              "expected_result": "Rectangle appears on the canvas"
+            }
+          ],
+          "verification": "Check if rectangle is visible and its dimensions are correct",
+          "required_state": {
+            "program_open": true
+          }
+        },
+        {
+          "name": "Draw Door in Paint",
+          "description": "Draw a door on the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 150,
+                "y": 100
+              },
+              "expected_result": "Door appears on the canvas"
+            }
+          ],
+          "verification": "Check if door is visible and its dimensions are correct",
+          "required_state": {
+            "program_open": true
+          }
+        },
+        {
+          "name": "Draw Windows in Paint",
+          "description": "Draw windows on the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 250,
+                "y": 150
+              },
+              "expected_result": "Windows appear on the canvas"
+            }
+          ],
+          "verification": "Check if windows are visible and their dimensions are correct",
+          "required_state": {
+            "program_open": true
+          }
+        },
+        {
+          "name": "Draw Roof in Paint",
+          "description": "Draw a roof on the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 350,
+                "y": 200
+              },
+              "expected_result": "Roof appears on the canvas"
+            }
+          ],
+          "verification": "Check if roof is visible and its dimensions are correct",
+          "required_state": {
+            "program_open": true
+          }
+        },
+        {
+          "name": "Save File in Paint",
+          "description": "Save the file with a specific name.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "house.png"
+              },
+              "expected_result": "File is saved with specified name"
+            }
+          ],
+          "verification": "Check if file is saved successfully and its location is correct",
+          "required_state": {
+            "program_open": true
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:20:51.641735",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {},
+              "expected_result": "Paint window opens"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Create New File",
+          "description": "Create a new file in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 200,
+                "y": 100
+              },
+              "expected_result": "New file is created"
+            }
+          ],
+          "verification": "File name is 'untitled'",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Select Drawing Tool",
+          "description": "Select the brush tool in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "b"
+              },
+              "expected_result": "Brush tool is selected"
+            }
+          ],
+          "verification": "Tool selected is 'Brush'",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Choose Color",
+          "description": "Select a color for the brush in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 300,
+                "y": 200
+              },
+              "expected_result": "Color is selected"
+            }
+          ],
+          "verification": "Selected color is 'black'",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 100,
+                "y": 150
+              },
+              "expected_result": "Rectangle is drawn"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 300,
+                "y": 250
+              },
+              "expected_result": "Rectangle is resized"
+            }
+          ],
+          "verification": "Rectangle exists on canvas",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Draw a door and windows in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 250,
+                "y": 300
+              },
+              "expected_result": "Door is drawn"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 350,
+                "y": 400
+              },
+              "expected_result": "Window is drawn"
+            }
+          ],
+          "verification": "Door and window exist on canvas",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Draw a roof in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 150,
+                "y": 450
+              },
+              "expected_result": "Roof is drawn"
+            },
+            {
+              "type": "DRAG",
+              "params": {
+                "x": 250,
+                "y": 550
+              },
+              "expected_result": "Roof is resized"
+            }
+          ],
+          "verification": "Roof exists on canvas",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Save File",
+          "description": "Save the drawing as a file in Microsoft Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 500,
+                "y": 600
+              },
+              "expected_result": "File is saved"
+            }
+          ],
+          "verification": "File is saved as 'house.png'",
+          "required_state": {
+            "program_open": "paint",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Wait for 2 seconds",
+          "description": "",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 2000
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "",
+          "required_state": {}
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:22:58.537453",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open the Microsoft Paint application",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "key": "win+r"
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint application opens"
+            }
+          ],
+          "verification": "Check if Paint window is open with title 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Canvas",
+          "description": "Create a new canvas in Paint",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "File menu is selected"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "Check if 'New' option is available in File menu",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        },
+        {
+          "name": "Draw House",
+          "description": "Draw a house on the canvas",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 200
+              },
+              "expected_result": "Line is drawn"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 500
+              },
+              "expected_result": ""
+            }
+          ],
+          "verification": "Check if house shape is visible on canvas",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Microsoft Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:23:31.678270",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint",
+          "description": "Open the Microsoft Paint application.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "Win + R"
+              },
+              "expected_result": "The Paint program should open."
+            }
+          ],
+          "verification": "Verify that the Paint icon is on the screen and the window title is 'Paint'.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create a New Canvas",
+          "description": "Create a new canvas with dimensions 800x600.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Left mouse button",
+                "position": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              "expected_result": "A new canvas should be created with the specified dimensions."
+            }
+          ],
+          "verification": "Verify that a new canvas is created with the specified dimensions.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Set Brush Properties",
+          "description": "Select a red brush with size 10 and opacity 50.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "r10,50"
+              },
+              "expected_result": "The selected color should be red with the specified properties."
+            }
+          ],
+          "verification": "Verify that the brush is set to the specified color.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw a Rectangle",
+          "description": "Draw a rectangle at position (100, 100) with size 200x200.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Left mouse button",
+                "position": {
+                  "x": 100,
+                  "y": 100
+                }
+              },
+              "expected_result": "A rectangle should be drawn at the specified position and size."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 5000
+              },
+              "expected_result": "The rectangle should be visible on the canvas."
+            }
+          ],
+          "verification": "Verify that a rectangle is drawn at the specified position and size.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw a Door",
+          "description": "Draw a door at position (300, 300) with size 50x100.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Left mouse button",
+                "position": {
+                  "x": 300,
+                  "y": 300
+                }
+              },
+              "expected_result": "A door should be drawn at the specified position and size."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 5000
+              },
+              "expected_result": "The door should be visible on the canvas."
+            }
+          ],
+          "verification": "Verify that a door is drawn at the specified position and size.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw a Window",
+          "description": "Draw a window at position (400, 400) with size 50x100.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Left mouse button",
+                "position": {
+                  "x": 400,
+                  "y": 400
+                }
+              },
+              "expected_result": "A window should be drawn at the specified position and size."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 5000
+              },
+              "expected_result": "The window should be visible on the canvas."
+            }
+          ],
+          "verification": "Verify that a window is drawn at the specified position and size.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw a Roof",
+          "description": "Draw a roof at position (500, 500) with size 100x50.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "Left mouse button",
+                "position": {
+                  "x": 500,
+                  "y": 500
+                }
+              },
+              "expected_result": "A roof should be drawn at the specified position and size."
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 5000
+              },
+              "expected_result": "The roof should be visible on the canvas."
+            }
+          ],
+          "verification": "Verify that a roof is drawn at the specified position and size.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Save the Image",
+          "description": "Save the image as 'house.png'.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "Ctrl + S"
+              },
+              "expected_result": "The image should be saved with the specified file name."
+            }
+          ],
+          "verification": "Verify that the image is saved with the specified file name.",
+          "required_state": {
+            "program_open": "Paint",
+            "window_title": "Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:26:58.068466",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint application on the computer.",
+          "actions": [
+            {
+              "type": "LAUNCH",
+              "params": {
+                "shortcut": "Win + R"
+              },
+              "expected_result": "Paint application window opens."
+            }
+          ],
+          "verification": "Check for 'Paint' title in the taskbar.",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Select Brush Tool",
+          "description": "Switch to the brush tool within Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 100,
+                "y": 100
+              },
+              "expected_result": "Brush icon is selected."
+            }
+          ],
+          "verification": "Check for brush icon in the toolbar.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Choose Color",
+          "description": "Select a color from the palette within Paint.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "button": "left",
+                "x": 200,
+                "y": 100
+              },
+              "expected_result": "Color palette is opened."
+            }
+          ],
+          "verification": "Check for color palette in the window.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Use the brush tool to draw a rectangle on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "left",
+                "x": 10,
+                "y": 10
+              },
+              "expected_result": "Rectangle is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for rectangle shape in the window.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Use the brush tool to draw a door and two windows on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "left",
+                "x": 100,
+                "y": 50
+              },
+              "expected_result": "Door is drawn on the canvas."
+            },
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "left",
+                "x": 150,
+                "y": 70
+              },
+              "expected_result": "Window 1 is drawn on the canvas."
+            },
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "left",
+                "x": 200,
+                "y": 90
+              },
+              "expected_result": "Window 2 is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for door and two windows in the window.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Roof",
+          "description": "Use the brush tool to draw a roof on the canvas.",
+          "actions": [
+            {
+              "type": "CLICK|DRAG",
+              "params": {
+                "button": "left",
+                "x": 50,
+                "y": 120
+              },
+              "expected_result": "Roof is drawn on the canvas."
+            }
+          ],
+          "verification": "Check for roof shape in the window.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Save File",
+          "description": "Save the drawing as a file on the computer.",
+          "actions": [
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "File name: house.png\nFormat: PNG"
+              },
+              "expected_result": "File is saved."
+            }
+          ],
+          "verification": "Check for 'house.png' file in the directory.",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-21T16:29:19.745710",
+    "success": null
   }
 ]

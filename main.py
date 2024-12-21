@@ -27,6 +27,7 @@ class Agent:
         self.llm = LLMInterface()
         self.executor = ActionExecutor(self.knowledge, self.logger)
         self.goal_planner = GoalPlanner()
+        self.goal_verifier = GoalVerifier(self.logger, llm=self.llm)
         
         self.goal = None
         self.running = False
@@ -78,6 +79,9 @@ class Agent:
             self.running = True
             self.error_count = 0
             self.gui.log_message("Creating plan...")
+            
+            # Get LLM feedback on communication
+            self._get_llm_feedback()
             
             def create_plan_thread():
                 self.current_plan = self.create_plan(self.goal)
@@ -662,9 +666,95 @@ class Agent:
         # Store in knowledge base
         self.knowledge.store_action_log(log_entry)
 
+    def _get_llm_feedback(self):
+        """Get LLM feedback on communication and execution"""
+        try:
+            prompt = """
+            You are an AI agent working with a programmer to improve our interaction.
+            
+            Current Context:
+            - Goal: {self.goal}
+            - Last Action: {self.executor.last_action}
+            - Current State: {json.dumps(self.executor.capture_state(), indent=2)}
+            
+            System Limitations:
+            1. We cannot modify the UI layout or add new UI elements
+            2. We cannot add new input methods beyond keyboard and mouse
+            3. We cannot access system APIs beyond what's available through win32gui/win32api
+            4. We cannot modify program windows beyond size/position
+            5. We cannot add real-time monitoring or streaming data
+            6. We work with discrete state captures, not continuous monitoring
+            
+            What we CAN improve:
+            1. The information we exchange
+            2. The timing of our actions
+            3. The way we handle errors
+            4. The state verification process
+            5. The recovery strategies
+            
+            Please analyze our interaction and provide feedback on:
+            1. What additional information would help you make better decisions?
+            2. What patterns in the current state would be useful to track?
+            3. What error conditions should we watch for?
+            4. How can we improve our state verification?
+            5. What recovery strategies would be most effective?
+            
+            Format your response focusing on actionable improvements within our limitations.
+            """
+            
+            response = self.llm.generate(prompt)
+            if response:
+                feedback = response.get('response', '')
+                self.logger.debug(f"LLM Feedback:\n{feedback}")
+                
+                # Parse feedback for actionable items
+                try:
+                    feedback_lines = feedback.split('\n')
+                    actionable_items = []
+                    for line in feedback_lines:
+                        if line.strip().startswith('-') or line.strip().startswith('*'):
+                            actionable_items.append(line.strip())
+                    if actionable_items:
+                        self.logger.debug("Actionable Feedback Items:")
+                        for item in actionable_items:
+                            self.logger.debug(f"  {item}")
+                except Exception as e:
+                    self.logger.error(f"Failed to parse feedback items: {str(e)}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to get LLM feedback: {str(e)}")
+
 class AgentGUI(ctk.CTk):
     def __init__(self):
         super().__init__()
+        
+        # Set up window management
+        self.setup_window()
+        
+        # Define color schemes
+        self.normal_colors = {
+            "bg": "#2b2b2b",
+            "fg": "#ffffff",
+            "button": "#1f538d",
+            "button_hover": "#14375e",
+            "text_bg": "white",  # Always white
+            "text_fg": "black"   # Always black
+        }
+        
+        self.running_colors = {
+            "bg": "#1e3d59",
+            "fg": "#17b978",
+            "button": "#ff9a3c",
+            "button_hover": "#ff6e40",
+            "text_bg": "white",  # Always white
+            "text_fg": "black"   # Always black
+        }
+        
+        # Set initial color scheme
+        self.set_color_scheme(self.normal_colors)
+        
+        # Initialize thread tracking
+        self.active_threads = []
         
         # Safety settings for pyautogui
         pyautogui.FAILSAFE = True
@@ -709,6 +799,36 @@ class AgentGUI(ctk.CTk):
         
         # Set up cleanup on close
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def setup_window(self):
+        """Configure window size and position"""
+        try:
+            import win32gui
+            import win32con
+            import win32api
+            
+            # Get screen dimensions
+            screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
+            screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
+            
+            # Calculate 90% size
+            window_width = int(screen_width * 0.9)
+            window_height = int(screen_height * 0.9)
+            
+            # Center position
+            x = (screen_width - window_width) // 2
+            y = (screen_height - window_height) // 2
+            
+            # Set geometry
+            self.geometry(f"{window_width}x{window_height}+{x}+{y}")
+            
+            # Set window state
+            self.state('normal')
+            self.lift()
+            self.focus_force()
+            
+        except Exception as e:
+            print(f"Failed to setup window: {str(e)}")
 
     def show_error(self, title, message):
         """Display error message to user"""
@@ -886,9 +1006,18 @@ class AgentGUI(ctk.CTk):
     def on_closing(self):
         """Clean up resources before closing"""
         try:
+            # Stop agent if running
             if hasattr(self, 'agent') and self.agent:
                 self.agent.stop()
+                
+            # Wait for threads to finish
+            for thread in self.active_threads:
+                if thread.is_alive():
+                    thread.join(timeout=1.0)
+            
+            # Destroy window
             self.quit()
+            
         except Exception as e:
             print(f"Error during cleanup: {str(e)}")
             self.quit()
@@ -1202,7 +1331,7 @@ class AgentGUI(ctk.CTk):
         
         self.action_delay = ctk.CTkEntry(action_frame, width=100)
         self.action_delay.pack(side="left", padx=5)
-        self.action_delay.insert(0, "2.0")  # Default 2 seconds
+        self.action_delay.insert(0, "10.0")  # Default 10 seconds
         
         # Verification Delay
         verify_frame = ctk.CTkFrame(settings_frame)
@@ -1213,7 +1342,7 @@ class AgentGUI(ctk.CTk):
         
         self.verify_delay = ctk.CTkEntry(verify_frame, width=100)
         self.verify_delay.pack(side="left", padx=5)
-        self.verify_delay.insert(0, "1.5")  # Default 1.5 seconds
+        self.verify_delay.insert(0, "10.0")  # Default 10 seconds
         
         # LLM Settings Section
         llm_label = ctk.CTkLabel(settings_frame, text="LLM Settings", font=("Arial", 16, "bold"))
@@ -1281,15 +1410,31 @@ class AgentGUI(ctk.CTk):
                 self.show_error("Error", "Please enter a goal")
                 return
                 
+            # Change to running colors
+            self.set_color_scheme(self.running_colors)
+            
             if self.agent.set_goal(goal):
                 self.log_message("Goal set: " + goal)
                 # Run agent in background thread
-                threading.Thread(target=self.agent.run).start()
+                agent_thread = threading.Thread(target=self._run_agent_with_color_reset)
+                agent_thread.daemon = True
+                self.active_threads.append(agent_thread)
+                agent_thread.start()
             else:
                 self.show_error("Error", "Failed to set goal")
+                self.set_color_scheme(self.normal_colors)  # Reset colors on failure
                 
         except Exception as e:
             self.show_error("Error starting agent", str(e))
+            self.set_color_scheme(self.normal_colors)  # Reset colors on error
+
+    def _run_agent_with_color_reset(self):
+        """Run agent and ensure colors are reset when done"""
+        try:
+            self.agent.run()
+        finally:
+            # Always reset colors when agent stops
+            self.after(0, self.set_color_scheme, self.normal_colors)
 
     def stop_agent(self):
         """Stop the running agent"""
@@ -1297,11 +1442,21 @@ class AgentGUI(ctk.CTk):
             if self.agent:
                 self.agent.stop()
                 self.log_message("Agent stopped")
+                
+                # Wait for threads to finish
+                for thread in self.active_threads:
+                    if thread.is_alive():
+                        thread.join(timeout=1.0)
+                self.active_threads.clear()
+                
+                # Reset to normal colors
+                self.set_color_scheme(self.normal_colors)
             else:
                 self.show_error("Error", "No agent running")
                 
         except Exception as e:
             self.show_error("Error stopping agent", str(e))
+            self.set_color_scheme(self.normal_colors)  # Reset colors on error
 
     def log_message(self, message):
         """Add message to status display"""
@@ -1467,6 +1622,48 @@ class AgentGUI(ctk.CTk):
         except Exception as e:
             print(f"Error in log_debug: {str(e)}")
             print(f"Original message: [{level}] {message}")
+
+    def set_color_scheme(self, colors):
+        """Apply color scheme to all widgets"""
+        self.configure(fg_color=colors["bg"])
+        
+        # Update tab colors
+        if hasattr(self, 'tabview'):
+            self.tabview.configure(fg_color=colors["bg"])
+            for tab in [self.tab_main, self.tab_test, self.tab_debug, self.tab_settings]:
+                tab.configure(fg_color=colors["bg"])
+        
+        # Update buttons
+        if hasattr(self, 'start_button'):
+            self.start_button.configure(
+                fg_color=colors["button"],
+                hover_color=colors["button_hover"],
+                text_color=colors["fg"]
+            )
+            self.stop_button.configure(
+                fg_color=colors["button"],
+                hover_color=colors["button_hover"],
+                text_color=colors["fg"]
+            )
+        
+        # Update text areas - always black on white
+        if hasattr(self, 'status_text'):
+            self.status_text.configure(
+                fg_color=colors["text_bg"],
+                text_color=colors["text_fg"]
+            )
+        
+        if hasattr(self, 'debug_text'):
+            self.debug_text.configure(
+                fg_color=colors["text_bg"],
+                text_color=colors["text_fg"]
+            )
+        
+        if hasattr(self, 'test_output'):
+            self.test_output.configure(
+                fg_color=colors["text_bg"],
+                text_color=colors["text_fg"]
+            )
 
 if __name__ == "__main__":
     app = AgentGUI()
