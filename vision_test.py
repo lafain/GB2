@@ -45,11 +45,11 @@ class VisionTestWindow:
         self.label = tk.Label(
             content_frame, 
             text=self.test_string,
-            font=("Courier", 60, "bold"),
+            font=("Arial", 72, "bold"),
             bg='black',
             fg='white',
             padx=25,
-            pady=35  # Increased vertical padding
+            pady=35
         )
         self.label.pack(expand=True)
         
@@ -57,7 +57,7 @@ class VisionTestWindow:
         self.result_label = tk.Label(
             content_frame,
             text="Testing vision...",
-            font=("Arial", 14),  # Slightly larger
+            font=("Arial", 14),
             bg='black',
             fg='white'
         )

@@ -101,15 +101,18 @@ class VisionProcessor:
     def analyze_screen(self, screenshot: Image.Image, is_test: bool = False, test_string: str = None) -> Dict[str, Any]:
         """Analyze screenshot with vision model"""
         try:
+            # Verify screenshot is an Image
+            if not isinstance(screenshot, Image.Image):
+                raise ValueError("Screenshot must be a PIL Image object")
+            
             # Convert screenshot to base64
             img_byte_arr = io.BytesIO()
             screenshot.save(img_byte_arr, format='JPEG')
             img_str = base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
             
-            # Save debug screenshot with timestamp only during testing
+            # Save debug screenshot only during testing
             if is_test:
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                debug_file = f"debug_vision_test_{timestamp}.jpg"
+                debug_file = "debug_vision_test.jpg"
                 screenshot.save(debug_file)
                 self.logger.info(f"Saved debug screenshot to {debug_file}")
                 
@@ -248,14 +251,18 @@ Focus on window titles and interactive elements, not the text content.'''
             screenshot = ImageGrab.grab()
             self.last_screenshot = screenshot
             
-            # Check if image needs resizing
-            if screenshot.size[0] > 800 or screenshot.size[1] > 600:
-                self.logger.info("Resizing large image for better performance")
-                screenshot.thumbnail((800, 600), Image.Resampling.LANCZOS)
-            
             # Analyze with vision model (no testing)
             start_time = time.time()
+            
+            # Verify screenshot is an Image before proceeding
+            if not isinstance(screenshot, Image.Image):
+                raise ValueError("Failed to capture valid screenshot")
+            
             analysis = self.analyze_screen(screenshot, is_test=False)
+            
+            if not analysis.get("success"):
+                self.logger.error(f"Vision analysis failed: {analysis.get('error')}")
+                return analysis
             
             elapsed = time.time() - start_time
             self.logger.info(f"Got vision response in {elapsed:.1f} seconds")
