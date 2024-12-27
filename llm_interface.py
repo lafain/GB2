@@ -1,216 +1,196 @@
 from typing import Dict, Any, Tuple, Optional
 import json
+import requests
+import base64
+from PIL import Image
+import io
+import logging
+from io import BytesIO
 
 class LLMInterface:
-    """Handles all LLM interactions"""
+    """Handles all LLM interactions with Ollama's Llama 3.2 Vision API"""
     
-    def __init__(self, model="gpt-4-vision-preview", logger=None):
-        self.model = model
-        self.conversation_history = []
-        self.system_prompt = None
-        self.current_step = 0
+    def __init__(self, logger: logging.Logger, vision_processor):
         self.logger = logger
-        
-        # Task-specific action sequences
-        self.task_sequences = {
-            "draw_house": [
-                {
-                    "thought": "First, I need to open Paint and maximize it for consistent coordinates",
-                    "action": {
-                        "function_name": "launch_program",
-                        "function_params": {
-                            "program_name": "paint"
-                        }
-                    }
-                },
-                {
-                    "thought": "Now I need to verify the window is active and maximize it",
-                    "action": {
-                        "function_name": "get_window_info",
-                        "function_params": {
-                            "title": "Untitled - Paint"
-                        }
-                    }
-                },
-                {
-                    "thought": "I need to select the pencil tool from the Brushes section",
-                    "action": {
-                        "function_name": "click",
-                        "function_params": {
-                            "x": 250,  # Adjusted for Brushes section
-                            "y": 80,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Starting to draw the base of the house - bottom left corner",
-                    "action": {
-                        "function_name": "click",
-                        "function_params": {
-                            "x": 400,
-                            "y": 500,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Drawing the bottom line of the house",
-                    "action": {
-                        "function_name": "drag_mouse",
-                        "function_params": {
-                            "start_x": 400,
-                            "start_y": 500,
-                            "end_x": 600,
-                            "end_y": 500,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Drawing the right wall",
-                    "action": {
-                        "function_name": "drag_mouse",
-                        "function_params": {
-                            "start_x": 600,
-                            "start_y": 500,
-                            "end_x": 600,
-                            "end_y": 300,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Drawing the left wall",
-                    "action": {
-                        "function_name": "drag_mouse",
-                        "function_params": {
-                            "start_x": 400,
-                            "start_y": 500,
-                            "end_x": 400,
-                            "end_y": 300,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Drawing the roof - left side",
-                    "action": {
-                        "function_name": "drag_mouse",
-                        "function_params": {
-                            "start_x": 400,
-                            "start_y": 300,
-                            "end_x": 500,
-                            "end_y": 200,
-                            "relative": True
-                        }
-                    }
-                },
-                {
-                    "thought": "Drawing the roof - right side",
-                    "action": {
-                        "function_name": "drag_mouse",
-                        "function_params": {
-                            "start_x": 500,
-                            "start_y": 200,
-                            "end_x": 600,
-                            "end_y": 300,
-                            "relative": True
-                        }
-                    }
-                }
-            ],
-            "chrome_email": [
-                {
-                    "thought": "First, I need to launch Google Chrome",
-                    "action": {
-                        "function_name": "launch_program",
-                        "function_params": {
-                            "program_name": "chrome"
-                        }
-                    }
-                },
-                {
-                    "thought": "Now I need to wait for Chrome to load and navigate to Gmail",
-                    "action": {
-                        "function_name": "type_text",
-                        "function_params": {
-                            "text": "gmail.com",
-                            "enter": True
-                        }
-                    }
-                }
-            ]
-        }
+        self.vision_processor = vision_processor
+        self.conversation_history = []
+        self.api_url = "http://localhost:11434/api/generate"
+        self.model = "llama3.2-vision"
 
-    def start_conversation(self, system_prompt: str, initial_goal: str) -> bool:
-        """Initialize conversation with system prompt and goal"""
-        self.system_prompt = system_prompt
-        self.conversation_history = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": initial_goal}
-        ]
-        
-        # Reset step counter
-        self.current_step = 0
-        
-        # Determine task type
-        if "draw" in initial_goal.lower() and "house" in initial_goal.lower():
-            self.current_sequence = self.task_sequences["draw_house"]
-            if self.logger:
-                self.logger.info("Initialized house drawing sequence")
-        elif "chrome" in initial_goal.lower() and "email" in initial_goal.lower():
-            self.current_sequence = self.task_sequences["chrome_email"]
-            if self.logger:
-                self.logger.info("Initialized email task sequence")
-        else:
-            if self.logger:
-                self.logger.warning(f"No predefined sequence for goal: {initial_goal}")
-                self.logger.info("Available tasks: draw house in paint, check emails in chrome")
-            self.current_sequence = None
-            
-        return True
-
-    def _generate_response(self) -> str:
-        """Generate response from LLM"""
+    def get_next_action(self, goal: str, state: Dict[str, Any], vision_info: Dict[str, Any]) -> Dict[str, Any]:
+        """Get next action based on current state and vision info"""
         try:
-            if not self.current_sequence:
-                if self.logger:
-                    self.logger.error("No task sequence selected")
-                return None
+            # Format prompt as single string for /generate endpoint
+            prompt = f"""You are an AI agent that can control the computer to achieve goals.
+Your role is to analyze the current state and decide on the next action to take.
+
+Current goal: {goal}
+
+Current screen state:
+{vision_info.get('description', 'No screen description available')}
+
+Current system state:
+- Active window: {state.get('active_window', {}).get('title', 'Unknown')}
+- Mouse position: {state.get('mouse_position', 'Unknown')}
+- Screen size: {vision_info.get('screen_size', 'Unknown')}
+
+Based on this information, what action should I take next?
+
+Available actions:
+1. click (x, y) - Click at coordinates
+2. type (text) - Type text
+3. press (key) - Press a keyboard key
+4. move (x, y) - Move mouse
+5. drag (start_x, start_y, end_x, end_y) - Drag mouse
+6. wait (seconds) - Wait
+7. focus_window (title) - Focus window
+8. stop - Stop if goal complete
+
+Respond with ONLY the action in this format:
+<action_name>
+param1: value1
+param2: value2
+
+Example:
+click
+x: 100
+y: 200
+
+Your response:"""
+
+            self.logger.debug(f"Sending prompt to LLM...")
+            
+            response = requests.post(
+                self.api_url,
+                json={
+                    "model": self.model,
+                    "prompt": prompt,
+                    "stream": False
+                }
+            )
+            response.raise_for_status()
+            
+            result = response.json()
+            response_text = result.get("response", "").strip()
+            self.logger.debug(f"Raw LLM response: {response_text}")
+            
+            if not response_text:
+                self.logger.error("Empty response from LLM")
+                return {"function_name": "stop", "error": "Empty response from LLM"}
                 
-            if self.current_step < len(self.current_sequence):
-                response = self.current_sequence[self.current_step]
-                self.current_step += 1
-                if self.logger:
-                    self.logger.debug(f"Generated action {self.current_step}/{len(self.current_sequence)}")
-                    self.logger.info(f"Next step: {response['thought']}")
-                return response
-                
-            if self.logger:
-                self.logger.info("Task sequence completed")
-            return None
+            action = self._parse_action(response_text)
+            self.logger.debug(f"Parsed action: {action}")
+            
+            # Add to conversation history
+            self.conversation_history.append({
+                "role": "assistant", 
+                "content": response_text
+            })
+            
+            return action
             
         except Exception as e:
-            if self.logger:
-                self.logger.error(f"Error generating response: {str(e)}")
-            return None
+            self.logger.error(f"Failed to get next action: {str(e)}")
+            return {"error": str(e), "success": False}
 
-    def get_next_action(self):
-        """Get next thought and action from LLM"""
+    def _parse_action(self, content: str) -> Dict[str, Any]:
+        """Parse LLM response into action dictionary"""
         try:
-            response = self._generate_response()
-            if response:
-                return response["thought"], response["action"]
-            return None, None
+            if not content or "ERROR" in content.upper() or "FAIL" in content.upper():
+                return {"function_name": "stop", "error": content or "Empty response"}
+                
+            # Split into lines and remove empty lines
+            lines = [line.strip() for line in content.split("\n") if line.strip()]
+            if not lines:
+                return {"function_name": "stop", "error": "No action specified"}
+                
+            # First non-empty line is the action name
+            action = {
+                "function_name": lines[0].strip(),
+                "parameters": {}
+            }
+            
+            # Parse parameters from remaining lines
+            for line in lines[1:]:
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    # Convert numeric values
+                    value = value.strip()
+                    try:
+                        if "." in value:
+                            value = float(value)
+                        else:
+                            value = int(value)
+                    except ValueError:
+                        pass  # Keep as string if not numeric
+                    action["parameters"][key.strip()] = value
+                    
+            self.logger.debug(f"Parsed action: {action}")
+            return action
             
         except Exception as e:
-            print(f"Error getting next action: {str(e)}")
-            return None, None
-            
-    def add_action_result(self, result: Dict[str, Any]):
+            self.logger.error(f"Failed to parse action: {str(e)}")
+            return {"function_name": "stop", "error": f"Failed to parse action: {str(e)}"}
+
+    def add_action_result(self, result: dict):
         """Add action result to conversation history"""
-        self.conversation_history.append({
-            "role": "user", 
-            "content": f"Action_Response: {json.dumps(result)}"
-        })
+        if result:
+            self.conversation_history.append({
+                "role": "system",
+                "content": f"Action result: {json.dumps(result, indent=2)}"
+            })
+
+    def cleanup(self):
+        """Clean up resources"""
+        self.conversation_history.clear()
+
+    def _format_prompt(self, context: Dict[str, Any]) -> str:
+        """Format context into prompt for LLM"""
+        return f"""You are an AI agent that can see and interact with the computer screen.
+Current goal: {context['goal']}
+
+Current state:
+- Active window: {context['current_state'].get('active_window', {}).get('title', 'None')}
+- Mouse position: {context['current_state'].get('mouse_position', 'Unknown')}
+- Time: {context['current_state'].get('timestamp', 'Unknown')}
+
+Screen analysis:
+{context['vision_info'].get('description', 'No screen analysis available')}
+
+Screen size: {context['vision_info'].get('screen_size', 'Unknown')}
+UI elements detected: {len(context['vision_info'].get('elements', []))}
+
+Based on this information, what action should I take next?
+Respond with an action in this format:
+<action_name>
+param1: value1
+param2: value2
+
+Available actions:
+- click (x, y)
+- type (text)
+- press (key)
+- move (x, y)
+- drag (start_x, start_y, end_x, end_y)
+- wait (seconds)
+- focus_window (title)
+- stop (if goal is complete or impossible)
+
+Example response:
+click
+x: 100
+y: 200
+
+Your response:
+"""
+
+    def get_initial_action(self, goal: str) -> Dict[str, Any]:
+        """Get initial action based on goal"""
+        if "paint" in goal.lower():
+            return {
+                "function_name": "press",
+                "parameters": {
+                    "key": "win+r"  # Open Run dialog
+                }
+            }
+        return None

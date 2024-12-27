@@ -1,111 +1,117 @@
-from typing import Dict, Any, List, Optional
-import json
+import logging
+from typing import Optional, Dict, Any
+from PIL import ImageGrab
+import time
+import traceback
 from datetime import datetime
-import threading
-import queue
 
 class AgentCore:
-    """Core agent functionality implementing ReAct pattern"""
-    
-    def __init__(self, llm_interface, action_executor, logger):
-        self.llm = llm_interface
-        self.executor = action_executor
+    def __init__(self, llm, executor, logger, state_manager):
+        self.llm = llm
+        self.executor = executor
         self.logger = logger
+        self.state_manager = state_manager
         self.running = False
-        self.action_queue = queue.Queue()
-        self.thought_history = []
-        self.max_retries = 3
-        
-    def set_goal(self, goal: str) -> bool:
-        """Initialize agent with a goal"""
-        try:
-            # Format system prompt with available actions
-            system_prompt = f"""
-            You run in a loop of Thought, Action, PAUSE, Action_Response.
-            At the end of the loop you output an Answer.
-            
-            Use Thought to understand the question and current state.
-            Use Action to run one of the actions available to you - then return PAUSE.
-            Action_Response will be the result of running those actions.
-            
-            Your available actions are:
-            {self.executor.get_action_descriptions()}
-            
-            Always return actions in this JSON format:
-            {{
-                "function_name": "action_name",
-                "function_params": {{
-                    "param1": "value1"
-                }}
-            }}
-            """
-            
-            self.current_goal = goal
-            self.thought_history = []
-            self.action_queue = queue.Queue()
-            
-            # Initialize conversation with LLM
-            response = self.llm.start_conversation(system_prompt, goal)
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Failed to set goal: {str(e)}")
-            return False
+        self.last_screenshot = None
+        self.screenshot_interval = 0.5  # Time between auto-screenshots
+        self.action_delay = 0.5  # Time between actions
 
-    def run(self):
-        """Main agent loop implementing ReAct pattern"""
-        self.running = True
-        retry_count = 0
-        
+    def run(self, goal: str):
+        """Run agent with specified goal"""
         try:
-            self.logger.info(f"Starting agent with goal: '{self.current_goal}'")
-            self.logger.info("Initializing agent state and planning...")
+            self.running = True
+            self.logger.info(f"Starting agent execution with goal: {goal}")
             
-            while self.running and retry_count < self.max_retries:
+            while self.running:
                 try:
-                    # Get next action from LLM
-                    thought, action = self.llm.get_next_action()
+                    # 1. Capture current state including screen
+                    state = self.state_manager.capture_state()
+                    if state.get('error'):
+                        self.logger.error(f"State capture failed: {state['error']}")
+                        time.sleep(1)
+                        continue
                     
-                    if thought:
-                        self.logger.info(f"Agent thought: {thought}")
-                        self.thought_history.append(thought)
+                    self.logger.debug(f"Current state: Active window={state.get('active_window', {}).get('title')}, Mouse={state.get('mouse_position')}")
+                    
+                    # 2. Get screen analysis
+                    screen_info = self.capture_screen()
+                    if not screen_info.get('success'):
+                        self.logger.error(f"Screen capture failed: {screen_info.get('error')}")
+                        time.sleep(1)
+                        continue
+                    
+                    self.logger.info("Getting next action based on screen analysis...")
+                    
+                    # 3. Get next action from LLM
+                    action = self.llm.get_next_action(
+                        goal=goal,
+                        state=state,
+                        vision_info=screen_info
+                    )
                     
                     if not action:
-                        self.logger.info("No more actions needed - goal appears complete")
+                        self.logger.warning("No action returned from LLM")
                         break
-                        
-                    # Log planned action
-                    self.logger.info(f"Planning to execute: {action['function_name']}")
-                    self.logger.debug(f"Action parameters: {action['function_params']}")
                     
-                    # Execute action
+                    if action.get("error"):
+                        self.logger.error(f"Failed to get next action: {action.get('error')}")
+                        break
+                    
+                    self.logger.info(f"Planned action: {action.get('function_name')} with params: {action.get('parameters', {})}")
+                    
+                    # 4. Execute action
                     result = self.executor.execute_action(action)
+                    self.logger.info(f"Action result: {result.get('success', False)}")
+                    if not result.get('success'):
+                        self.logger.error(f"Action failed: {result.get('error')}")
                     
-                    # Log result
-                    if result["success"]:
-                        self.logger.info(f"Action succeeded: {action['function_name']}")
-                        self.logger.debug(f"Result details: {result}")
-                    else:
-                        self.logger.warning(f"Action failed: {action['function_name']}")
-                        self.logger.error(f"Error details: {result.get('error', 'Unknown error')}")
+                    # 5. Update state with result
+                    self.state_manager.update_state({
+                        "last_action": action,
+                        "last_result": result,
+                        "timestamp": datetime.now().isoformat()
+                    })
                     
-                    # Feed result back to LLM
-                    self.llm.add_action_result(result)
-                    retry_count = 0
+                    # 6. Small delay to prevent overwhelming system
+                    time.sleep(self.action_delay)
                     
                 except Exception as e:
-                    retry_count += 1
-                    self.logger.error(f"Error in agent loop (attempt {retry_count}/{self.max_retries}): {str(e)}")
+                    self.logger.error(f"Error in agent loop: {str(e)}")
+                    self.logger.error(traceback.format_exc())
+                    time.sleep(1)
                     
-            # Log completion status
-            if len(self.thought_history) > 0:
-                self.logger.info("Agent run completed")
-                self.logger.info(f"Total thoughts/actions: {len(self.thought_history)}")
-                self.logger.info("Final state: Success" if retry_count < self.max_retries else "Final state: Failed")
-            else:
-                self.logger.warning("Agent run completed without any actions taken")
-                
-            return len(self.thought_history) > 0
-            
+        except Exception as e:
+            self.logger.error(f"Agent execution failed: {str(e)}")
+            self.logger.error(traceback.format_exc())
         finally:
-            self.running = False 
+            self.running = False
+            self.logger.info("Agent completed goal")
+
+    def stop(self):
+        """Stop agent execution"""
+        self.running = False
+        self.logger.info("Agent stopping...")
+
+    def capture_screen(self) -> Dict[str, Any]:
+        """Capture and analyze current screen"""
+        try:
+            # Use PIL for screenshot
+            screenshot = ImageGrab.grab()
+            self.last_screenshot = screenshot
+            
+            # Get vision analysis
+            analysis = self.llm.vision_processor.analyze_screen(screenshot)
+            
+            # Update state with vision info if successful
+            if analysis.get("success"):
+                self.state_manager.update_vision_state(analysis)
+            
+            return analysis
+            
+        except Exception as e:
+            self.logger.error(f"Screen capture failed: {str(e)}")
+            return {
+                "success": False,
+                "error": str(e),
+                "screenshot": self.last_screenshot  # Include last screenshot if available
+            } 

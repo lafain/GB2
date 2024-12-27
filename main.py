@@ -1,564 +1,332 @@
-import customtkinter as ctk
-from rich.console import Console
-import threading
-import os
-import time
-from typing import Optional, Dict, Any
-import json
-import keyboard
-import pyautogui
-from PIL import ImageGrab
+"""
+Agent Overview:
+- GUI Components:
+  - Main tab with goal configuration and agent controls
+  - Debug tab with logging
+  - Test tab for system tests
+  - Settings tab for configuration
+  - Chat interface for agent communication
+
+- Core Components:
+  - Vision System: Ollama's llama3.2-vision model for screen analysis and agent control
+  - LLM Interface: Uses same llama3.2-vision model for decision making
+  - Action Executor: Performs system actions
+  - State Manager: Tracks system state
+  - Coordinate System: Handles window/screen coordinates
+  - Debug Manager: Logging and debugging
+  - Test Manager: System testing
+
+- Features:
+  - Continuous vision monitoring
+  - Dynamic action planning
+  - Error recovery
+  - State tracking
+  - Debug logging
+  - System testing
+  - Settings configuration
+  - Chat interface
+    - Progress tracking
+  - Resource cleanup
+
+- Dependencies:
+  - Ollama API (llama3.2-vision model) for vision and LLM
+  - PyAutoGUI for actions
+  - Win32 API for system interaction
+  - Tkinter for GUI
+  - PIL for image processing
+"""
+
+import tkinter as tk
+from tkinter import ttk, scrolledtext
+import traceback
 from datetime import datetime
+import threading
+import logging
 
-from agent_core import AgentCore
-from llm_interface import LLMInterface
-from action_executor import ActionExecutor
-from vision_processor import VisionProcessor
-from state_manager import StateManager
-from debug_logger import DebugLogger
+from app_core import AppCore
+from vision_test import VisionTestWindow
 
-class AgentGUI(ctk.CTk):
-    def __init__(self):
-        super().__init__()
+class AgentGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("AI Agent Control")
         
-        # Set appearance mode before creating widgets
-        ctk.set_appearance_mode("dark")
-        self._default_theme = "dark"
-        self._running_theme = "light"
+        # Initialize logger
+        self.logger = self._setup_logging()
         
-        # Initialize state variables
-        self._running = False
-        self._agent = None
-        self._agent_thread = None
-        self._active_threads = []
+        # Initialize core application
+        self.app = AppCore(logger=self.logger)
         
-        # Initialize GUI variables before creating widgets
-        self.auto_scroll = ctk.BooleanVar(value=True)
+        # Run startup tests
+        self.run_startup_tests()
         
-        # Define color schemes
-        self.color_schemes = {
-            "dark": {
-                "frame_color": "#2B2B2B",
-                "button_color": "#404040",
-                "button_hover_color": "#4A4A4A",
-                "text_color": "#FFFFFF",
-                "text_bg": "#1E1E1E"
-            },
-            "light": {
-                "frame_color": "#F0F0F0",
-                "button_color": "#E0E0E0",
-                "button_hover_color": "#D0D0D0",
-                "text_color": "#000000",
-                "text_bg": "#FFFFFF"
-            }
-        }
+        # Setup GUI components
+        self.setup_gui()
         
-        # Create main containers
-        self._setup_window()
-        self._create_main_layout()
+        # Initialize debug manager
+        if hasattr(self.app, 'debug_manager'):
+            self.app.debug_manager.start_logging(self.debug_text)
+            
+    def _setup_logging(self):
+        """Setup logging for GUI"""
+        logger = logging.getLogger('AgentGUI')
+        logger.setLevel(logging.DEBUG)
         
-        # Create goal input frame
-        goal_frame = ctk.CTkFrame(self.tab_main)
-        goal_frame.pack(fill="x", padx=10, pady=5)
-        
-        self.goal_label = ctk.CTkLabel(
-            goal_frame,
-            text="Goal:",
-            font=("Arial", 12, "bold")
+        # Console handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_handler.setFormatter(
+            logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
         )
-        self.goal_label.pack(side="left", padx=5)
+        logger.addHandler(console_handler)
         
-        self.goal_entry = ctk.CTkEntry(
-            goal_frame,
-            width=400,
-            font=("Arial", 12)
-        )
-        self.goal_entry.pack(side="left", padx=5)
+        return logger
         
-        # Create status label
-        self.status_label = ctk.CTkLabel(
-            self.tab_main,
-            text="Status: Ready",
-            font=("Arial", 12)
-        )
-        self.status_label.pack(anchor="w", padx=15, pady=5)
-        
-        # Create tabs after labels are initialized
-        self._create_tabs()
-        
-        # Initialize core components
-        self.logger = DebugLogger("gui", gui=self)
-        self.state_manager = StateManager()
-        
-        # Set default goal
-        self.goal_entry.insert(0, "draw a house in paint")
+    def run_startup_tests(self):
+        """Run system startup tests"""
+        try:
+            self.logger.info("\n=== Running Startup Tests ===")
+            
+            # Test vision system
+            vision_test = VisionTestWindow(self.app.vision_processor, self.logger)
+            vision_result = vision_test.run_test()
+            
+            if not vision_result:
+                self.logger.warning("Vision test failed - limited functionality may be available")
+            else:
+                self.logger.info("Vision test passed")
+                
+            # Run other tests
+            results = self.app.run_system_tests()
+            
+            # Check results
+            if all(results.values()) and vision_result:
+                self.logger.info("All startup tests passed")
+                self.app.initialize_components()
+            else:
+                failed = [k for k, v in results.items() if not v]
+                if not vision_result:
+                    failed.append("vision_test")
+                self.logger.warning(f"Some startup tests failed: {failed}")
+                
+        except Exception as e:
+            self.logger.error(f"Startup tests failed: {str(e)}")
+            self.logger.error(traceback.format_exc())
 
-    def _setup_window(self):
-        """Configure window size and position"""
-        # Get screen dimensions
-        screen_width = self.winfo_screenwidth()
-        screen_height = self.winfo_screenheight()
+    def setup_gui(self):
+        """Setup main GUI components"""
+        # Add main container with scrollbar
+        self.main_container = ttk.Frame(self.root)
+        self.main_container.pack(fill=tk.BOTH, expand=True)
         
-        # Calculate window size (80% of screen)
-        window_width = int(screen_width * 0.8)
-        window_height = int(screen_height * 0.8)
-        
-        # Calculate position (centered)
-        x = (screen_width - window_width) // 2
-        y = (screen_height - window_height) // 2
-        
-        # Set window properties
-        self.title("AI Vision Agent")
-        self.geometry(f"{window_width}x{window_height}+{x}+{y}")
-        self.minsize(800, 600)
-
-    def _init_colors(self):
-        """Initialize color schemes"""
-        self.normal_colors = {
-            "frame_color": "#2b2b2b",
-            "button_color": "#1f538d",
-            "button_hover_color": "#14375e",
-            "text_color": "#ffffff",
-            "entry_text_color": "#000000",
-            "entry_bg_color": "#ffffff"
-        }
-        
-        self.running_colors = {
-            "frame_color": "#1e3d59",
-            "button_color": "#ff9a3c",
-            "button_hover_color": "#ff6e40",
-            "text_color": "#17b978",
-            "entry_text_color": "#000000",
-            "entry_bg_color": "#ffffff"
-        }
-
-    def _create_main_layout(self):
-        """Create main window layout"""
-        # Main container
-        self.main_frame = ctk.CTkFrame(self)
-        self.main_frame.pack(fill="both", expand=True, padx=10, pady=10)
-        
-        # Tab view
-        self.tabview = ctk.CTkTabview(self.main_frame)
-        self.tabview.pack(fill="both", expand=True)
+        # Create notebook for tabs
+        self.notebook = ttk.Notebook(self.main_container)
+        self.notebook.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # Create tabs
-        self.tab_main = self.tabview.add("Main")
-        self.tab_test = self.tabview.add("Test")
-        self.tab_debug = self.tabview.add("Debug")
-        self.tab_settings = self.tabview.add("Settings")
-
-    def _create_tabs(self):
-        """Create all tab contents"""
-        self._create_main_tab()
-        self._create_test_tab()
-        self._create_debug_tab()
-        self._create_settings_tab()
-
-    def _create_main_tab(self):
-        """Create main control tab"""
-        # Goal input frame
-        goal_frame = ctk.CTkFrame(self.tab_main)
-        goal_frame.pack(fill="x", padx=10, pady=5)
+        self.main_tab = ttk.Frame(self.notebook)
+        self.debug_tab = ttk.Frame(self.notebook)
+        self.test_tab = ttk.Frame(self.notebook)
+        self.settings_tab = ttk.Frame(self.notebook)
         
-        goal_label = ctk.CTkLabel(
+        self.notebook.add(self.main_tab, text="Main")
+        self.notebook.add(self.debug_tab, text="Debug")
+        self.notebook.add(self.test_tab, text="Testing")
+        self.notebook.add(self.settings_tab, text="Settings")
+        
+        # Setup individual tabs
+        self.setup_main_tab()
+        self.setup_debug_tab()
+        self.setup_test_tab()
+        self.setup_settings_tab()
+
+    def setup_agent(self):
+        """Initialize agent components"""
+        try:
+            if self.app.initialize_components():
+                # Update GUI state
+                self.status_var = tk.StringVar(value="Agent initialized")
+                self.start_button.configure(state=tk.NORMAL)
+                self.stop_button.configure(state=tk.DISABLED)
+                self.progress_bar['value'] = 0
+                self.add_chat_message("System", "Agent initialized and ready.")
+            else:
+                raise Exception("Failed to initialize components")
+                
+        except Exception as e:
+            self.logger.error(f"Failed to initialize agent: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            if hasattr(self, 'status_var'):
+                self.status_var.set("Initialization failed")
+            if hasattr(self, 'start_button'):
+                self.start_button.configure(state=tk.DISABLED)
+            self.add_chat_message("System", f"Initialization failed: {str(e)}")
+
+    def add_chat_message(self, sender: str, message: str):
+        """Add message to chat display"""
+        if hasattr(self, 'chat_display'):
+            self.chat_display.insert(tk.END, f"{sender}: {message}\n")
+            self.chat_display.see(tk.END)
+
+    def setup_main_tab(self):
+        """Setup main control tab"""
+        # Goal configuration
+        goal_frame = ttk.LabelFrame(self.main_tab, text="Goal Configuration")
+        goal_frame.pack(fill=tk.X, padx=5, pady=5)
+        
+        self.goal_var = tk.StringVar(value="Draw a simple house in Paint")
+        goal_entry = ttk.Entry(
             goal_frame, 
-            text="Goal:",
-            font=("Arial", 12, "bold")
+            textvariable=self.goal_var,
+            width=50
         )
-        goal_label.pack(side="left", padx=5)
+        goal_entry.pack(fill=tk.X, padx=5, pady=5)
         
-        self.goal_entry = ctk.CTkEntry(
-            goal_frame,
-            placeholder_text="Enter goal here...",
-            width=400,
-            font=("Arial", 12)
-        )
-        self.goal_entry.pack(side="left", padx=5, fill="x", expand=True)
+        # Control buttons
+        button_frame = ttk.Frame(self.main_tab)
+        button_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        # Control buttons - Moved up
-        button_frame = ctk.CTkFrame(self.tab_main)
-        button_frame.pack(fill="x", padx=10, pady=5)
-        
-        self.start_button = ctk.CTkButton(
+        self.start_button = ttk.Button(
             button_frame,
             text="Start Agent",
-            command=self.start_agent,
-            font=("Arial", 12, "bold"),
-            height=35
+            command=self.start_agent
         )
-        self.start_button.pack(side="left", padx=5)
+        self.start_button.pack(side=tk.LEFT, padx=5)
         
-        self.stop_button = ctk.CTkButton(
+        self.stop_button = ttk.Button(
             button_frame,
             text="Stop Agent",
             command=self.stop_agent,
-            state="disabled",
-            font=("Arial", 12, "bold"),
-            height=35
+            state=tk.DISABLED
         )
-        self.stop_button.pack(side="left", padx=5)
+        self.stop_button.pack(side=tk.LEFT, padx=5)
         
-        # Status output
-        status_frame = ctk.CTkFrame(self.tab_main)
-        status_frame.pack(fill="both", expand=True, padx=10, pady=5)
+        # Progress frame
+        progress_frame = ttk.LabelFrame(self.main_tab, text="Progress")
+        progress_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        self.status_text = ctk.CTkTextbox(
-            status_frame,
-            wrap="word",
-            font=("Arial", 12)
+        self.progress_var = tk.DoubleVar(value=0.0)
+        self.progress_bar = ttk.Progressbar(
+            progress_frame,
+            mode='determinate',
+            variable=self.progress_var,
+            length=300
         )
-        self.status_text.pack(fill="both", expand=True, padx=5, pady=5)
-
-    def _update_theme(self, colors):
-        """Update GUI theme colors"""
-        self.configure(fg_color=colors["frame_color"])
-        self.main_frame.configure(fg_color=colors["frame_color"])
+        self.progress_bar.pack(fill=tk.X, padx=5, pady=5)
         
-        for tab in [self.tab_main, self.tab_test, self.tab_debug, self.tab_settings]:
-            tab.configure(fg_color=colors["frame_color"])
-            
-        if hasattr(self, 'start_button'):
-            self.start_button.configure(
-                fg_color=colors["button_color"],
-                hover_color=colors["button_hover_color"],
-                text_color=colors["text_color"]
-            )
-            self.stop_button.configure(
-                fg_color=colors["button_color"],
-                hover_color=colors["button_hover_color"],
-                text_color=colors["text_color"]
-            )
-
-    def start_agent(self):
-        """Start the agent in a separate thread"""
-        if not self._running:
-            goal_text = self.goal_entry.get().strip()
-            if not goal_text:
-                self.show_error("Error", "Please enter a goal")
-                return
-                
-            self._running = True
-            self._update_gui_state()
-            
-            # Initialize agent if needed
-            if not self._agent:
-                llm = LLMInterface(logger=self.logger)  # Pass logger to LLM
-                self._agent = AgentCore(
-                    llm,
-                    ActionExecutor(self.logger),
-                    self.logger
-                )
-            
-            # Start agent thread
-            self._agent_thread = threading.Thread(
-                target=self._run_agent,
-                args=(goal_text,),
-                daemon=True
-            )
-            self._agent_thread.start()
-            self._active_threads.append(self._agent_thread)
-            
-            self.log_message("Agent started")
-
-    def stop_agent(self):
-        """Stop the agent and clean up"""
-        if self._running:
-            self._running = False
-            if self._agent:
-                self._agent.running = False
-            self._update_gui_state()
-            self.log_message("Agent stopped")
-
-    def _update_gui_state(self):
-        """Update GUI elements based on running state"""
-        if self._running:
-            ctk.set_appearance_mode(self._running_theme)
-            self.start_button.configure(state="disabled")
-            self.stop_button.configure(state="normal")
-        else:
-            ctk.set_appearance_mode(self._default_theme)
-            self.start_button.configure(state="normal")
-            self.stop_button.configure(state="disabled")
-            
-        self._keep_text_readable()
-
-    def _keep_text_readable(self):
-        """Ensure text elements remain readable regardless of theme"""
-        theme = "light" if self._running else "dark"
-        colors = self.color_schemes[theme]
+        # Chat interface
+        chat_frame = ttk.LabelFrame(self.main_tab, text="Agent Chat")
+        chat_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        # Update text colors for input/display widgets
-        text_widgets = [
-            (self.goal_entry, "entry"),
-            (self.debug_text, "textbox"),
-            (self.test_input, "textbox"),
-            (self.test_output, "textbox")
-        ]
-        
-        for widget, widget_type in text_widgets:
-            if hasattr(self, widget.__str__()):
-                if widget_type == "entry":
-                    widget.configure(
-                        text_color=colors["text_color"],
-                        fg_color=colors["text_bg"]
-                    )
-                elif widget_type == "textbox":
-                    widget.configure(
-                        text_color=colors["text_color"],
-                        fg_color=colors["text_bg"]
-                    )
-        
-        # Update labels
-        labels = [self.goal_label, self.status_label]
-        for label in labels:
-            if hasattr(self, label.__str__()):
-                label.configure(text_color=colors["text_color"])
-
-    def log_message(self, message: str):
-        """Add message to status text"""
-        try:
-            timestamp = datetime.now().strftime("%H:%M:%S")
-            self.status_text.insert("end", f"[{timestamp}] {message}\n")
-            if self.auto_scroll.get():
-                self.status_text.see("end")
-        except Exception as e:
-            print(f"Error logging message: {str(e)}")
-
-    def _create_test_tab(self):
-        """Create test execution tab"""
-        # Test input frame
-        input_frame = ctk.CTkFrame(self.tab_test)
-        input_frame.pack(fill="x", padx=10, pady=5)
-        
-        input_label = ctk.CTkLabel(
-            input_frame, 
-            text="Test Instructions:",
-            font=("Arial", 12, "bold")
+        self.chat_display = scrolledtext.ScrolledText(
+            chat_frame,
+            wrap=tk.WORD,
+            height=10
         )
-        input_label.pack(anchor="w", padx=5, pady=5)
+        self.chat_display.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+
+    def setup_debug_tab(self):
+        """Setup debug tab"""
+        log_frame = ttk.LabelFrame(self.debug_tab, text="Debug Log")
+        log_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        self.test_input = ctk.CTkTextbox(
-            input_frame,
-            height=100,
-            wrap="word",
-            font=("Arial", 12)
-        )
-        self.test_input.pack(fill="x", padx=5, pady=5)
-        
-        # Test output
-        output_frame = ctk.CTkFrame(self.tab_test)
-        output_frame.pack(fill="both", expand=True, padx=10, pady=5)
-        
-        output_label = ctk.CTkLabel(
-            output_frame,
-            text="Test Results:",
-            font=("Arial", 12, "bold")
-        )
-        output_label.pack(anchor="w", padx=5, pady=5)
-        
-        self.test_output = ctk.CTkTextbox(
-            output_frame,
-            wrap="word",
-            font=("Arial", 12)
-        )
-        self.test_output.pack(fill="both", expand=True, padx=5, pady=5)
+        self.debug_text = scrolledtext.ScrolledText(log_frame, height=20)
+        self.debug_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # Control buttons
-        button_frame = ctk.CTkFrame(self.tab_test)
-        button_frame.pack(fill="x", padx=10, pady=5)
+        button_frame = ttk.Frame(self.debug_tab)
+        button_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        self.run_test_button = ctk.CTkButton(
+        clear_button = ttk.Button(
             button_frame,
-            text="Run Test",
-            command=self.run_ai_test,
-            font=("Arial", 12, "bold"),
-            height=35
+            text="Clear Log",
+            command=lambda: self.debug_text.delete(1.0, tk.END)
         )
-        self.run_test_button.pack(side="left", padx=5)
+        clear_button.pack(side=tk.LEFT, padx=5)
 
-    def _create_debug_tab(self):
-        """Create debug output tab"""
-        # Debug output
-        debug_frame = ctk.CTkFrame(self.tab_debug)
-        debug_frame.pack(fill="both", expand=True, padx=10, pady=5)
+    def setup_test_tab(self):
+        """Setup test tab"""
+        results_frame = ttk.LabelFrame(self.test_tab, text="Test Results")
+        results_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        self.debug_text = ctk.CTkTextbox(
-            debug_frame,
-            wrap="word",
-            font=("Arial", 12)
-        )
-        self.debug_text.pack(fill="both", expand=True, padx=5, pady=5)
-        
-        # Auto-scroll control
-        scroll_frame = ctk.CTkFrame(self.tab_debug)
-        scroll_frame.pack(fill="x", padx=10, pady=5)
-        
-        self.auto_scroll_check = ctk.CTkCheckBox(
-            scroll_frame,
-            text="Auto-scroll",
-            variable=self.auto_scroll,
-            font=("Arial", 12)
-        )
-        self.auto_scroll_check.pack(side="left", padx=5)
+        self.test_display = scrolledtext.ScrolledText(results_frame, height=20)
+        self.test_display.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-    def _create_settings_tab(self):
-        """Create settings configuration tab"""
-        # Color scheme selection
-        color_frame = ctk.CTkFrame(self.tab_settings)
-        color_frame.pack(fill="x", padx=10, pady=5)
+    def setup_settings_tab(self):
+        """Setup settings tab"""
+        # Vision settings
+        vision_frame = ttk.LabelFrame(self.settings_tab, text="Vision Settings")
+        vision_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        # Delay settings
-        delay_frame = ctk.CTkFrame(self.tab_settings)
-        delay_frame.pack(fill="x", padx=10, pady=5)
+        # Model selection
+        model_frame = ttk.Frame(vision_frame)
+        model_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        delay_label = ctk.CTkLabel(
-            delay_frame,
-            text="Action Delays (seconds):",
-            font=("Arial", 12, "bold")
+        ttk.Label(model_frame, text="Vision Model:").pack(side=tk.LEFT)
+        
+        self.model_var = tk.StringVar(value="llama2")  # Default to llama2 if vision not available
+        model_menu = ttk.OptionMenu(
+            model_frame,
+            self.model_var,
+            "llama2",
+            "llama2",
+            "llama2-vision",
+            command=self.update_model
         )
-        delay_label.pack(anchor="w", padx=5, pady=5)
-        
-        # Action delay
-        action_delay_frame = ctk.CTkFrame(delay_frame)
-        action_delay_frame.pack(fill="x", padx=5, pady=2)
-        
-        action_delay_label = ctk.CTkLabel(
-            action_delay_frame,
-            text="Min Action Delay:",
-            font=("Arial", 12)
-        )
-        action_delay_label.pack(side="left", padx=5)
-        
-        self.action_delay = ctk.CTkEntry(
-            action_delay_frame,
-            width=80,
-            font=("Arial", 12)
-        )
-        self.action_delay.insert(0, "0.5")
-        self.action_delay.pack(side="left", padx=5)
-        
-        # Key press delay
-        key_delay_frame = ctk.CTkFrame(delay_frame)
-        key_delay_frame.pack(fill="x", padx=5, pady=2)
-        
-        key_delay_label = ctk.CTkLabel(
-            key_delay_frame,
-            text="Key Press Delay:",
-            font=("Arial", 12)
-        )
-        key_delay_label.pack(side="left", padx=5)
-        
-        self.key_delay = ctk.CTkEntry(
-            key_delay_frame,
-            width=80,
-            font=("Arial", 12)
-        )
-        self.key_delay.insert(0, "0.1")
-        self.key_delay.pack(side="left", padx=5)
+        model_menu.pack(side=tk.LEFT, padx=5)
 
-    def _change_color_scheme(self, choice):
-        """Handle color scheme changes"""
-        ctk.set_appearance_mode(choice.lower())
-
-    def show_error(self, title, message):
-        """Show error dialog"""
+    def start_agent(self):
+        """Start agent execution"""
         try:
-            from tkinter import messagebox
-            messagebox.showerror(title, message)
-        except Exception as e:
-            print(f"Error showing dialog: {str(e)}")
-
-    def _run_agent(self, goal_text: str):
-        """Run agent with specified goal"""
-        try:
-            if self._agent:
-                if self._agent.set_goal(goal_text):
-                    self.log_message(f"Starting agent with goal: {goal_text}")
-                    
-                    # Run agent and wait for actual completion
-                    result = self._agent.run()
-                    
-                    if result:
-                        self.log_message("Goal completed successfully")
-                    else:
-                        self.log_message("Goal failed or was interrupted")
-                else:
-                    self.log_message("Failed to set goal")
-                    
-        except Exception as e:
-            error_msg = f"Error running agent: {str(e)}"
-            self.log_message(error_msg)
-            self.logger.error(error_msg)  # Log to debug as well
-        finally:
-            self._running = False
-            self._update_gui_state()
-
-    def run_ai_test(self):
-        """Run AI-assisted test"""
-        if not self._running:
-            test_text = self.test_input.get("1.0", "end").strip()
-            if test_text:
-                self.test_output.delete("1.0", "end")
-                self.test_output.insert("end", "Starting test...\n")
-                
-                # Create test context
-                test_context = {
-                    "start_time": datetime.now().isoformat(),
-                    "test_description": test_text,
-                    "results": []
-                }
-                
-                # Set up test logging
-                def log_test(message):
-                    timestamp = datetime.now().strftime("%H:%M:%S")
-                    self.test_output.insert("end", f"[{timestamp}] {message}\n")
-                    test_context["results"].append({
-                        "timestamp": timestamp,
-                        "message": message
-                    })
-                    self.test_output.see("end")
-                
-                # Run test in agent
-                try:
-                    self.goal_entry.delete(0, "end")
-                    self.goal_entry.insert(0, test_text)
-                    
-                    # Store original logging function
-                    original_log = self.log_message
-                    self.log_message = log_test
-                    
-                    # Start agent
-                    self.start_agent()
-                    
-                    # Restore original logging
-                    self.log_message = original_log
-                    
-                    # Save test results
-                    self._save_test_results(test_context)
-                    
-                except Exception as e:
-                    log_test(f"Test error: {str(e)}")
+            self.start_button.configure(state=tk.DISABLED)
+            self.stop_button.configure(state=tk.NORMAL)
+            goal = self.goal_var.get()
+            
+            self.logger.info(f"Starting agent with goal: {goal}")
+            
+            # Start agent in separate thread
+            if hasattr(self.app, 'agent'):
+                self.agent_thread = threading.Thread(
+                    target=self.app.agent.run,
+                    args=(goal,),
+                    daemon=True
+                )
+                self.agent_thread.start()
+                self.add_chat_message("System", f"Started agent with goal: {goal}")
             else:
-                self.show_error("Error", "Please enter test instructions")
-
-    def _save_test_results(self, test_context):
-        """Save test results to file"""
-        try:
-            if not os.path.exists("test_results"):
-                os.makedirs("test_results")
-            
-            filename = f"test_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-            filepath = os.path.join("test_results", filename)
-            
-            with open(filepath, 'w') as f:
-                json.dump(test_context, f, indent=2)
-            
-            self.test_output.insert("end", f"\nTest results saved to {filename}\n")
+                raise Exception("Agent not properly initialized")
             
         except Exception as e:
-            self.test_output.insert("end", f"\nError saving test results: {str(e)}\n")
+            self.logger.error(f"Failed to start agent: {str(e)}")
+            self.add_chat_message("System", f"Failed to start: {str(e)}")
+            self.start_button.configure(state=tk.NORMAL)
+            self.stop_button.configure(state=tk.DISABLED)
+
+    def stop_agent(self):
+        """Stop agent execution"""
+        try:
+            if hasattr(self.app, 'agent'):
+                self.app.agent.stop()
+            
+            self.start_button.configure(state=tk.NORMAL)
+            self.stop_button.configure(state=tk.DISABLED)
+            self.add_chat_message("System", "Agent stopped")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to stop agent: {str(e)}")
+            self.add_chat_message("System", f"Failed to stop: {str(e)}")
+
+    def update_model(self, *args):
+        """Update model selection - disabled since we only use llama3.2-vision"""
+        self.model_var.set("llama3.2-vision")
+        self.add_chat_message("System", "Using llama3.2-vision model")
+
+def main():
+    root = tk.Tk()
+    app = AgentGUI(root)
+    root.mainloop()
+    return 0
 
 if __name__ == "__main__":
-    app = AgentGUI()
-    app.mainloop()
+    import sys
+    sys.exit(main())
