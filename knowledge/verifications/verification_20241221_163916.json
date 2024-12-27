@@ -1,0 +1,46 @@
+{
+  "goal": "Run dialog opens",
+  "timestamp": "2024-12-21T16:39:05.508785",
+  "screen_capture": "knowledge\\verifications\\verification_20241221_163905.png",
+  "current_state": {
+    "timestamp": 1734820755.602475,
+    "active_window": "Run",
+    "cursor_position": [
+      464,
+      354
+    ],
+    "last_action": null,
+    "paint_open": false,
+    "window_titles": [
+      "Run",
+      "LLM Vision Agent",
+      "main.py - GB2 - Cursor",
+      "C:\\Windows\\System32\\cmd.exe",
+      "Steam",
+      "ChatGPT - Google Chrome",
+      "GB2 - File Explorer",
+      "XODUS - SampleScene - Windows, Mac, Linux - Unity 2022.3.39f1 <DX11>",
+      "Unity Hub 3.8.0",
+      "ComfyUI - File Explorer",
+      "Downloads - File Explorer",
+      "GB2 - File Explorer",
+      "Session timeout!",
+      "Session timeout!",
+      "Session timeout!",
+      "Mail",
+      "Mail",
+      "Settings",
+      "Settings",
+      "Windows Input Experience",
+      "TeamViewer",
+      "Program Manager"
+    ]
+  },
+  "expected_state": null,
+  "confidence": 0.3,
+  "results": {
+    "visual_check": {},
+    "state_check": true,
+    "goal_specific": false
+  }
+}

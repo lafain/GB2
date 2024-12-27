@@ -10162,5 +10162,276 @@
     },
     "timestamp": "2024-12-21T16:29:19.745710",
     "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the paint program on the computer.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "win+r"
+                ]
+              },
+              "expected_result": "Run dialog box appears"
+            },
+            {
+              "type": "TYPE",
+              "params": {
+                "text": "mspaint.exe"
+              },
+              "expected_result": "Paint program starts to open"
+            }
+          ],
+          "verification": "Window title is 'Microsoft Paint'",
+          "required_state": {
+            "program_open": "",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Create New Document",
+          "description": "Create a new document in the paint program.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "location": "top-left corner of the window"
+              },
+              "expected_result": "New document dialog box appears"
+            }
+          ],
+          "verification": "Window title is 'Untitled - Paint'",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Rectangle for House",
+          "description": "Draw a rectangle to represent the house.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "location": "middle of the window"
+              },
+              "expected_result": "Crosshair cursor appears"
+            }
+          ],
+          "verification": "Rectangle is drawn on the canvas",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Roof of House",
+          "description": "Draw a triangle to represent the roof.",
+          "actions": [
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": "Triangle is drawn on top of rectangle"
+            }
+          ],
+          "verification": "Triangle is drawn on top of rectangle",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Draw Windows and Door",
+          "description": "Draw circles for windows and a rectangle for the door.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "location": "top-left corner of the window"
+              },
+              "expected_result": "Circle is drawn on canvas"
+            }
+          ],
+          "verification": "Circles are drawn for windows and rectangle for door",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Save the Drawing",
+          "description": "Save the drawing as an image file.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "ctrl+s"
+                ]
+              },
+              "expected_result": "Save dialog box appears"
+            }
+          ],
+          "verification": "Drawing is saved as an image file",
+          "required_state": {
+            "program_open": "mspaint.exe",
+            "window_title": ""
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-27T08:00:37.931399",
+    "success": null
+  },
+  {
+    "goal": "draw a house in paint",
+    "steps": {
+      "steps": [
+        {
+          "name": "Launch Paint Program",
+          "description": "Open the Paint application using keyboard shortcut.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "Win + R",
+                  "Enter"
+                ]
+              },
+              "expected_result": "Paint program opens"
+            }
+          ],
+          "verification": "Verify 'Microsoft Paint' window is open",
+          "required_state": {
+            "program_open": "false",
+            "window_title": ""
+          }
+        },
+        {
+          "name": "Select Drawing Tools",
+          "description": "Navigate to the drawing tools tab in the Paint application.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 10,
+                "y": 20
+              },
+              "expected_result": "Drawing tools tab selected"
+            }
+          ],
+          "verification": "Verify 'Drawing Tools' tab is selected",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Create New Image",
+          "description": "Create a new image in Paint by selecting the correct options.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 100,
+                "y": 150
+              },
+              "expected_result": "New image created"
+            }
+          ],
+          "verification": "Verify new image is created with white background",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Rectangle",
+          "description": "Draw a rectangle on the canvas using the drawing tools.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 50,
+                "y": 100
+              },
+              "expected_result": "Rectangle drawn"
+            }
+          ],
+          "verification": "Verify rectangle is drawn at specified location",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Draw Door and Windows",
+          "description": "Continue drawing the house by adding door and windows.",
+          "actions": [
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 200,
+                "y": 150
+              },
+              "expected_result": "Door drawn"
+            },
+            {
+              "type": "WAIT",
+              "params": {
+                "duration": 1000
+              },
+              "expected_result": ""
+            },
+            {
+              "type": "CLICK",
+              "params": {
+                "x": 250,
+                "y": 200
+              },
+              "expected_result": "Window drawn"
+            }
+          ],
+          "verification": "Verify door and window are drawn at specified locations",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        },
+        {
+          "name": "Save Image",
+          "description": "Save the completed house image.",
+          "actions": [
+            {
+              "type": "PRESS",
+              "params": {
+                "keys": [
+                  "Ctrl + S"
+                ]
+              },
+              "expected_result": "Image saved"
+            }
+          ],
+          "verification": "Verify image is saved with specified filename",
+          "required_state": {
+            "program_open": "true",
+            "window_title": "Paint"
+          }
+        }
+      ],
+      "current_step_index": 0
+    },
+    "timestamp": "2024-12-27T08:04:43.757098",
+    "success": null
   }
 ]

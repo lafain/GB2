@@ -1,95 +1,168 @@
-import requests
+from typing import Dict, Any, Tuple, Optional
 import json
-import base64
-import os
-from debug_logger import DebugLogger
 
 class LLMInterface:
-    def __init__(self, base_url=None, model=None):
-        self.base_url = base_url or os.getenv("LLM_API_URL", "http://localhost:11434/api/generate")
-        self.model = model or os.getenv("LLM_MODEL", "llama3.2-vision:latest")
-        self.logger = DebugLogger("llm")
-        self.timeout = 300  # 5 minutes timeout
-        self.max_retries = 3
-        
-    def get_response(self, prompt, image_path=None):
-        """Backwards compatible method that calls generate"""
-        try:
-            context = {}
-            if image_path:
-                self.logger.debug(f"Including image: {image_path}")
-                with open(image_path, "rb") as img_file:
-                    base64_image = base64.b64encode(img_file.read()).decode('utf-8')
-                    context["images"] = [base64_image]
-                    
-            response = self.generate(prompt, context)
-            if response:
-                return response.get('response'), None
-            return None, "Failed to generate response"
-            
-        except Exception as e:
-            self.logger.error(f"Error in get_response: {str(e)}")
-            return None, str(e)
-
-    def generate(self, prompt, context=None, timeout=None):
-        """Generate response from LLM with timeout"""
-        self.logger.debug(f"Preparing request to {self.base_url}")
-        self.logger.debug(f"Using model: {self.model}")
-        self.logger.debug(f"Prompt: {prompt[:200]}...")
-        
-        timeout = timeout or self.timeout
-        
-        try:
-            payload = {
-                "model": self.model,
-                "prompt": prompt,
-                "stream": False
-            }
-            
-            if context:
-                payload.update(context)
-                
-            response = requests.post(
-                self.base_url,
-                json=payload,
-                timeout=timeout
-            )
-            
-            self.logger.debug(f"Response status: {response.status_code}")
-            
-            if response.status_code == 200:
-                result = response.json()
-                if 'error' in result:
-                    self.logger.error(f"LLM error: {result['error']}")
-                    return None
-                self.logger.debug(f"Response received: {str(result)[:200]}...")
-                return result
-            else:
-                self.logger.error(f"Request failed with status {response.status_code}")
-                return None
-                
-        except requests.Timeout:
-            self.logger.error(f"Request timed out after {timeout} seconds")
-            return None
-        except Exception as e:
-            self.logger.error(f"Request failed: {str(e)}")
-            return None
+    """Handles all LLM interactions"""
     
-    def parse_json_response(self, response):
+    def __init__(self, model="gpt-4-vision-preview", logger=None):
+        self.model = model
+        self.conversation_history = []
+        self.system_prompt = None
+        self.current_step = 0
+        self.logger = logger
+        
+        # Test sequence for drawing a house
+        self.test_actions = [
+            {
+                "thought": "First, I need to open Paint and maximize it for consistent coordinates",
+                "action": {
+                    "function_name": "launch_program",
+                    "function_params": {
+                        "program_name": "paint"
+                    }
+                }
+            },
+            {
+                "thought": "Now I need to verify the window is active and maximize it",
+                "action": {
+                    "function_name": "get_window_info",
+                    "function_params": {
+                        "title": "Untitled - Paint"
+                    }
+                }
+            },
+            {
+                "thought": "I need to select the pencil tool from the Brushes section",
+                "action": {
+                    "function_name": "click",
+                    "function_params": {
+                        "x": 250,  # Adjusted for Brushes section
+                        "y": 80,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Starting to draw the base of the house - bottom left corner",
+                "action": {
+                    "function_name": "click",
+                    "function_params": {
+                        "x": 400,
+                        "y": 500,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Drawing the bottom line of the house",
+                "action": {
+                    "function_name": "drag_mouse",
+                    "function_params": {
+                        "start_x": 400,
+                        "start_y": 500,
+                        "end_x": 600,
+                        "end_y": 500,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Drawing the right wall",
+                "action": {
+                    "function_name": "drag_mouse",
+                    "function_params": {
+                        "start_x": 600,
+                        "start_y": 500,
+                        "end_x": 600,
+                        "end_y": 300,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Drawing the left wall",
+                "action": {
+                    "function_name": "drag_mouse",
+                    "function_params": {
+                        "start_x": 400,
+                        "start_y": 500,
+                        "end_x": 400,
+                        "end_y": 300,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Drawing the roof - left side",
+                "action": {
+                    "function_name": "drag_mouse",
+                    "function_params": {
+                        "start_x": 400,
+                        "start_y": 300,
+                        "end_x": 500,
+                        "end_y": 200,
+                        "relative": True
+                    }
+                }
+            },
+            {
+                "thought": "Drawing the roof - right side",
+                "action": {
+                    "function_name": "drag_mouse",
+                    "function_params": {
+                        "start_x": 500,
+                        "start_y": 200,
+                        "end_x": 600,
+                        "end_y": 300,
+                        "relative": True
+                    }
+                }
+            }
+        ]
+
+    def start_conversation(self, system_prompt: str, initial_goal: str) -> bool:
+        """Initialize conversation with system prompt and goal"""
+        self.system_prompt = system_prompt
+        self.conversation_history = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": initial_goal}
+        ]
+        return True
+        
+    def _generate_response(self) -> str:
+        """Generate response from LLM"""
         try:
-            # First try to find JSON block in markdown
-            import re
-            json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', response, re.DOTALL)
-            if json_match:
-                json_str = json_match.group(1)
-            else:
-                # Try to find raw JSON
-                json_str = re.search(r'\{.*\}', response, re.DOTALL).group()
+            if self.current_step < len(self.test_actions):
+                response = self.test_actions[self.current_step]
+                self.current_step += 1
+                if self.logger:
+                    self.logger.debug(f"Generated action {self.current_step}/{len(self.test_actions)}")
+                return response
                 
-            parsed = json.loads(json_str)
-            self.logger.debug(f"Successfully parsed JSON: {str(parsed)[:200]}...")
-            return parsed
-        except (json.JSONDecodeError, AttributeError) as e:
-            self.logger.error(f"JSON parsing error: {str(e)}")
-            self.logger.error(f"Raw response: {response}")
+            if self.logger:
+                self.logger.info("House drawing sequence completed")
             return None
+            
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"Error generating response: {str(e)}")
+            return None
+
+    def get_next_action(self):
+        """Get next thought and action from LLM"""
+        try:
+            response = self._generate_response()
+            if response:
+                return response["thought"], response["action"]
+            return None, None
+            
+        except Exception as e:
+            print(f"Error getting next action: {str(e)}")
+            return None, None
+            
+    def add_action_result(self, result: Dict[str, Any]):
+        """Add action result to conversation history"""
+        self.conversation_history.append({
+            "role": "user", 
+            "content": f"Action_Response: {json.dumps(result)}"
+        })

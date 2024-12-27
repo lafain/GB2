@@ -2,16 +2,22 @@ import json
 import os
 from datetime import datetime
 from llm_interface import LLMInterface
+from debug_logger import DebugLogger
+from context_manager import ContextManager
+from typing import List, Dict, Any, Optional
 
 class GoalPlanner:
     def __init__(self, knowledge_dir="knowledge"):
         self.knowledge_dir = knowledge_dir
         self.ensure_knowledge_structure()
-        # Initialize logger
-        from debug_logger import DebugLogger
         self.logger = DebugLogger("goal_planner")
         self.llm = LLMInterface()
-        
+        self.current_plan = None
+        self.current_step = 0
+        self.retries = 0
+        self.max_retries = 3
+        self.context_manager = ContextManager(knowledge_dir)
+
     def ensure_knowledge_structure(self):
         # Create main knowledge directory
         if not os.path.exists(self.knowledge_dir):
@@ -25,72 +31,102 @@ class GoalPlanner:
                 os.makedirs(path)
     
     def break_down_goal(self, goal):
+        """Break down a goal into executable steps with retry logic and fallback"""
         try:
-            # Load context for the goal
-            context = self.load_goal_context(goal)
+            # Reset state
+            self.reset_plan()
+            self.retries = 0
             
-            prompt = f"""You are an AI agent that controls a computer to accomplish tasks.
-Your goal: "{goal}"
-
-Context about available actions:
-- You can launch programs using keyboard shortcuts
-- You can type text
-- You can move and click the mouse
-- You can wait for specific durations
-
-Return ONLY a JSON object with this exact structure:
-{{
-    "steps": [
-        {{
-            "name": "descriptive_name",
-            "description": "what this step does",
-            "actions": [
-                {{
-                    "type": "PRESS|TYPE|CLICK|WAIT",
-                    "params": {{
-                        // Parameters specific to action type
-                    }},
-                    "expected_result": "what should happen"
-                }}
-            ],
-            "verification": "how to verify step completed",
-            "required_state": {{
-                "program_open": "name of required program",
-                "window_title": "expected window title"
-            }}
-        }}
-    ]
-}}
-Do not include ANY explanatory text - ONLY the JSON object."""
-
-            response, error = self.llm.get_response(prompt)
-            if error:
-                self.logger.error(f"LLM Error: {error}")
+            while self.retries < self.max_retries:
+                try:
+                    prompt = self._create_planning_prompt(goal)
+                    print(f"Planning prompt: {prompt}")  # Debug print
+                    response = self.llm.generate(prompt)
+                    print(f"LLM response: {response}")  # Debug print
+                    
+                    if response and isinstance(response, dict) and 'steps' in response:
+                        steps = self._validate_steps(response['steps'])
+                        if steps:
+                            self.current_plan = steps
+                            self.current_step = 0
+                            self.logger.info(f"Successfully created plan with {len(steps)} steps")
+                            return steps
+                            
+                    self.retries += 1
+                    self.logger.warning(f"Invalid response from LLM (attempt {self.retries}/{self.max_retries})")
+                    
+                except Exception as e:
+                    self.retries += 1
+                    self.logger.error(f"Error in plan generation (attempt {self.retries}/{self.max_retries}): {str(e)}")
+                    
+            # If all retries failed, use fallback
+            self.logger.warning("All attempts failed, using fallback plan")
+            fallback_plan = self.create_fallback_steps(goal)
+            print(f"Fallback plan: {fallback_plan}")  # Debug print
+            if fallback_plan:
+                self.current_plan = fallback_plan
+                self.current_step = 0
+                self.logger.info(f"Created fallback plan with {len(fallback_plan)} steps")
+                return fallback_plan
+            else:
+                self.logger.error("Failed to create fallback plan")
                 return None
-
-            plan = self.llm.parse_json_response(response)
-            if not plan or 'steps' not in plan:
-                self.logger.error("Invalid response from LLM")
-                return None
-
-            # Add current_step_index to plan
-            plan['current_step_index'] = 0
             
-            self.store_goal_breakdown(goal, plan)
-            return plan
-
         except Exception as e:
-            self.logger.error(f"Error breaking down goal: {str(e)}")
+            self.logger.error(f"Critical error in break_down_goal: {str(e)}")
             return None
-    
-    def create_fallback_steps(self, goal):
-        return [
-            {
-                "name": "analyze_goal",
-                "description": f"Analyze requirements for: {goal}",
-                "verification": "requirements_understood"
-            }
-        ]
+
+    def create_fallback_steps(self, goal: str) -> List[Dict[str, Any]]:
+        """Create a simple fallback plan based on keywords in the goal."""
+        fallback_steps = []
+        
+        if "paint" in goal.lower():
+            fallback_steps.extend([
+                {
+                    "description": "Open the Run dialog",
+                    "action": {"type": "PRESS", "params": {"keys": "win+r"}},
+                    "verification": {"type": "check_window", "params": {"title": "Run"}}
+                },
+                {
+                    "description": "Type 'mspaint' and press Enter",
+                    "action": {"type": "TYPE", "params": {"text": "mspaint", "enter": True}},
+                    "verification": {"type": "check_window", "params": {"title": "Paint"}}
+                }
+            ])
+            
+            if "draw" in goal.lower():
+                fallback_steps.append(
+                    {
+                        "description": "Draw on the canvas",
+                        "action": {"type": "DRAW", "params": {}},
+                        "verification": {"type": "check_drawing", "params": {}}
+                    }
+                )
+                
+        elif "notepad" in goal.lower():
+            fallback_steps.extend([
+                {
+                    "description": "Open the Run dialog",
+                    "action": {"type": "PRESS", "params": {"keys": "win+r"}},
+                    "verification": {"type": "check_window", "params": {"title": "Run"}}
+                },
+                {
+                    "description": "Type 'notepad' and press Enter",
+                    "action": {"type": "TYPE", "params": {"text": "notepad", "enter": True}},
+                    "verification": {"type": "check_window", "params": {"title": "Notepad"}}
+                }
+            ])
+            
+        else:
+            fallback_steps.append(
+                {
+                    "description": "Generic action",
+                    "action": {"type": "WAIT", "params": {"duration": 1}},
+                    "verification": {}
+                }
+            )
+            
+        return fallback_steps
     
     def store_goal_breakdown(self, goal, steps):
         # Store in knowledge base for future reference
