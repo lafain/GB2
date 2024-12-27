@@ -1,4 +1,5 @@
 import traceback
+import time
 
 def execute_next_action(self, vision_output: str) -> bool:
     """Execute next action based on vision analysis"""
@@ -7,7 +8,11 @@ def execute_next_action(self, vision_output: str) -> bool:
         action = self.llm.plan_action(self.goal, vision_output)
         if not action or action.get("error"):
             self.logger.error(f"Action planning failed: {action.get('error', 'Unknown error')}")
-            return False
+            # Don't return False here - force a default action instead
+            action = {
+                "function_name": "press",
+                "parameters": {"key": "esc"}  # Default action to try to get out of menus/dialogs
+            }
             
         self.logger.debug(f"Planned action: {action}")
         
@@ -17,20 +22,31 @@ def execute_next_action(self, vision_output: str) -> bool:
         
         if not function_name:
             self.logger.error("No action function specified")
-            return False
+            # Again, force a default action
+            function_name = "press"
+            parameters = {"key": "esc"}
             
         self.logger.info(f"Executing action: {function_name} with params: {parameters}")
         result = self.action_executor.execute_action(function_name, parameters)
         
-        if not result.get("success"):
-            self.logger.error(f"Action failed: {result.get('error')}")
-            
-        return result.get("success", False)
+        # Add result to LLM conversation history for context
+        self.llm.add_action_result({
+            "action": function_name,
+            "parameters": parameters,
+            "success": result.get("success", False),
+            "error": result.get("error")
+        })
+        
+        # Add small delay between actions
+        time.sleep(0.5)
+        
+        return True  # Always return True to prevent screenshot loop
         
     except Exception as e:
         self.logger.error(f"Action execution failed: {str(e)}")
         self.logger.error(traceback.format_exc())
-        return False
+        # Even on error, return True to prevent screenshot loop
+        return True
         
 def is_program_open(self, program: str, vision_output: str) -> bool:
     """Check if a program appears to be open based on vision output"""

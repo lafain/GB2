@@ -258,20 +258,26 @@ Current screen state:
 {vision_description}
 
 Think through this step by step:
-1. What program(s) do you need for this task?
-2. Are those programs open (visible in the screen analysis)?
-3. If not, you need to launch them first using launch_program
-4. What SINGLE action will make the most progress toward the goal?
+1. What is the current state? (What windows/UI elements are visible?)
+2. What information do you need to progress toward the goal?
+3. What UI elements would help you get that information?
+4. What SINGLE action gets you closer to the goal?
+
+Remember:
+- Focus on visible, interactive elements
+- Use coordinates from the vision analysis
+- If needed information isn't visible, navigate menus/UI to find it
+- Take one action at a time, verify results
 
 Available actions:
 1. click (x: int, y: int) - Click at coordinates
 2. type (text: str) - Type text
-3. press (key: str) - Press a keyboard key (e.g., "win+r" to open Run dialog)
+3. press (key: str) - Press a keyboard key (e.g., "win+r" for Run)
 4. move (x: int, y: int) - Move mouse
 5. drag (start_x: int, start_y: int, end_x: int, end_y: int) - Drag mouse
 6. wait (seconds: int) - Wait
 7. focus_window (title: str) - Focus window
-8. launch_program (name: str) - Launch program
+8. launch_program (name: str) - Launch program if needed
 9. stop - Stop if goal complete
 
 Respond with ONLY the action in this format:
@@ -280,24 +286,21 @@ param1: value1
 param2: value2
 
 Example responses:
-launch_program
-name: paint
+click
+x: 45
+y: 12
+
+focus_window
+title: Browser
 
 press
-key: win+r
+key: win+r"""
 
-type
-text: paint
-
-click
-x: 100
-y: 200"""
-
-            self.logger.debug(f"Sending action planning request to LLM at {self.api_url}")
+            self.logger.debug(f"Planning next action for goal: {goal}")
+            self.logger.debug(f"Current vision state:\n{vision_description}")
             
-            # Fixed URL construction - using self.api_url directly since it already contains /api/generate
             response = requests.post(
-                self.api_url,  # Already contains /api/generate
+                self.api_url,
                 json={
                     "model": self.model,
                     "prompt": prompt,
@@ -309,9 +312,8 @@ y: 200"""
             response.raise_for_status()
             
             result = response.json()
-            self.logger.debug(f"Raw response: {result}")
-            
             action_text = result.get("response", "").strip()
+            
             if not action_text:
                 self.logger.error("Empty response from LLM")
                 return {"error": "Empty response from LLM"}
@@ -323,7 +325,9 @@ y: 200"""
             # Add to conversation history
             self.conversation_history.append({
                 "role": "assistant",
-                "content": action_text
+                "content": action_text,
+                "goal": goal,
+                "vision": vision_description
             })
             
             return action
