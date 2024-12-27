@@ -6,6 +6,7 @@ import sys
 import requests
 from datetime import datetime
 import os
+import traceback
 
 from agent_core import AgentCore
 from llm_interface import LLMInterface
@@ -16,77 +17,40 @@ from debug_manager import DebugManager
 from vision_processor import VisionProcessor
 
 class AppCore:
-    def __init__(self, logger=None):
-        # Initialize logger if not provided
-        self.logger = logger or self._setup_logging()
-        self.debug_manager = DebugManager(self.logger)
-        
-    def _setup_logging(self):
-        """Initialize logging system"""
-        if not os.path.exists('logs'):
-            os.makedirs('logs')
-            
-        logger = logging.getLogger('AppCore')
-        logger.setLevel(logging.DEBUG)
-        
-        # File handler
-        log_file = os.path.join('logs', f'agent_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log')
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
-        
-        # Console handler
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.INFO)
-        console_handler.setFormatter(logging.Formatter('%(asctime)s [%(levelname)s] %(message)s'))
-        
-        logger.addHandler(file_handler)
-        logger.addHandler(console_handler)
-        
-        return logger
+    def __init__(self, logger):
+        self.logger = logger
+        # Don't initialize components here - they will be set by AgentGUI
+        self.state_manager = None
+        self.vision_processor = None
+        self.llm = None
+        self.executor = None
+        self.coord_system = None
+        self.agent = None
 
     def initialize_components(self):
-        """Initialize all core components"""
+        """Verify all components are properly initialized"""
         try:
-            self.logger.info("Initializing core components...")
-            self.logger.info(f"Python version: {sys.version}")
-            self.logger.info(f"Platform: {sys.platform}")
+            # Check all required components exist
+            required = [
+                'state_manager',
+                'vision_processor', 
+                'llm',
+                'executor',
+                'coord_system',
+                'agent'
+            ]
             
-            # Initialize state manager with logger
-            self.state_manager = StateManager(logger=self.logger)
+            missing = [c for c in required if not hasattr(self, c) or getattr(self, c) is None]
             
-            # Initialize vision system with detected model
-            vision_config = {
-                "model": getattr(self, 'vision_model', 'llama2'),
-                "api_url": "http://localhost:11434/api/chat"
-            }
-            self.vision_processor = VisionProcessor(config=vision_config, logger=self.logger)
-            
-            # Initialize coordinate system
-            self.coord_system = CoordinateSystem(self.logger)
-            
-            # Initialize LLM interface
-            self.llm = LLMInterface(logger=self.logger, vision_processor=self.vision_processor)
-            
-            # Initialize action executor
-            self.executor = ActionExecutor(
-                logger=self.logger,
-                coordinate_system=self.coord_system,
-                state_manager=self.state_manager
-            )
-            
-            # Initialize agent core
-            self.agent = AgentCore(
-                llm=self.llm,
-                executor=self.executor,
-                logger=self.logger,
-                state_manager=self.state_manager
-            )
-            
+            if missing:
+                raise Exception(f"Missing required components: {missing}")
+                
+            self.logger.info("All core components verified")
             return True
             
         except Exception as e:
-            self.logger.error(f"Failed to initialize components: {str(e)}")
+            self.logger.error(f"Component verification failed: {str(e)}")
+            self.logger.error(traceback.format_exc())
             return False
 
     def run_system_tests(self):

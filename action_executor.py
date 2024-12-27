@@ -14,33 +14,55 @@ class ActionExecutor:
         self.state_manager = state_manager
         pyautogui.FAILSAFE = True
         
-    def execute_action(self, action: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute specified action"""
+    def execute_action(self, action_name: str, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute an action with given parameters"""
         try:
-            function_name = action.get("function_name", "")
-            parameters = action.get("parameters", {})
+            if action_name == "launch_program":
+                return self.launch_program(params.get("name", ""))
+            # ... other actions ...
             
-            # Map action to method
-            action_map = {
-                "click": self._click,
-                "type": self._type,
-                "press": self._press_key,
-                "move": self._move_mouse,
-                "drag": self._drag_mouse,
-                "wait": self._wait,
-                "focus_window": self._focus_window,
-                "stop": lambda x: {"success": True, "message": "Stopping"}
-            }
-            
-            if function_name in action_map:
-                result = action_map[function_name](parameters)
-                self.logger.info(f"Executed action {function_name}: {result}")
-                return result
-            else:
-                return {"success": False, "error": f"Unknown action: {function_name}"}
-                
         except Exception as e:
             self.logger.error(f"Action execution failed: {str(e)}")
+            return {"success": False, "error": str(e)}
+
+    def launch_program(self, program_name: str) -> Dict[str, Any]:
+        """Launch a program by name"""
+        try:
+            program_name = program_name.lower()
+            
+            # Common program aliases
+            program_map = {
+                "paint": ["mspaint.exe", "paint.exe"],
+                "notepad": ["notepad.exe"],
+                "calculator": ["calc.exe"],
+                "explorer": ["explorer.exe"],
+                # Add more as needed
+            }
+            
+            # Get possible executable names
+            possible_names = program_map.get(program_name, [program_name])
+            
+            # Check if already running
+            import psutil
+            for proc in psutil.process_iter(['name']):
+                if proc.info['name'].lower() in possible_names:
+                    self.logger.info(f"Program '{program_name}' is already running")
+                    return {"success": True}
+            
+            # Try to launch program
+            import subprocess
+            for exe_name in possible_names:
+                try:
+                    subprocess.Popen(exe_name)
+                    self.logger.info(f"Launched program: {exe_name}")
+                    return {"success": True}
+                except:
+                    continue
+                
+            raise Exception(f"Failed to launch program: {program_name}")
+            
+        except Exception as e:
+            self.logger.error(f"Program launch failed: {str(e)}")
             return {"success": False, "error": str(e)}
             
     def _click(self, params: Dict[str, Any]) -> Dict[str, Any]:

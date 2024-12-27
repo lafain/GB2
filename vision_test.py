@@ -4,6 +4,7 @@ import string
 import logging
 from PIL import ImageGrab
 import traceback
+import win32gui
 
 class VisionTestWindow:
     def __init__(self, vision_processor, logger):
@@ -17,23 +18,25 @@ class VisionTestWindow:
         # Position window in center of screen
         screen_width = self.window.winfo_screenwidth()
         screen_height = self.window.winfo_screenheight()
-        window_width = 800  # Increased from 600
-        window_height = 200
+        window_width = 1000  # Width stays the same
+        window_height = 400  # Increased from 300 to 400
         x = (screen_width - window_width) // 2
         y = (screen_height - window_height) // 2
         self.window.geometry(f"{window_width}x{window_height}+{x}+{y}")
         
+        # Add flag to track window state
+        self.window_destroyed = False
+        
         # Configure window
         self.window.attributes('-topmost', True)
-        self.window.configure(bg='white')  # White background for better contrast
-        # self.window.overrideredirect(True)  # Removed to keep window decorations
+        self.window.configure(bg='black')
         
         # Add border
-        border_frame = tk.Frame(self.window, bg='black', relief='solid', borderwidth=1)
-        border_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        border_frame = tk.Frame(self.window, bg='white', relief='solid', borderwidth=2)
+        border_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        content_frame = tk.Frame(border_frame, bg='white')
-        content_frame.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
+        content_frame = tk.Frame(border_frame, bg='black')
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
         # Generate random test string
         self.test_string = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
@@ -42,19 +45,21 @@ class VisionTestWindow:
         self.label = tk.Label(
             content_frame, 
             text=self.test_string,
-            font=("Arial", 48, "bold"),  # Large font
-            bg='white',
-            fg='black'
+            font=("Courier", 60, "bold"),
+            bg='black',
+            fg='white',
+            padx=25,
+            pady=35  # Increased vertical padding
         )
-        self.label.pack(pady=30)
+        self.label.pack(expand=True)
         
         # Add result label
         self.result_label = tk.Label(
             content_frame,
             text="Testing vision...",
-            font=("Arial", 12),
-            bg='white',
-            fg='blue'
+            font=("Arial", 14),  # Slightly larger
+            bg='black',
+            fg='white'
         )
         self.result_label.pack(pady=10)
         
@@ -105,9 +110,13 @@ class VisionTestWindow:
             screenshot = ImageGrab.grab()
             self.logger.info(f"Screenshot size: {screenshot.size}")
             
-            # Get vision analysis with test flag
+            # Get vision analysis with test flag and test string
             self.logger.info("Sending to vision processor...")
-            analysis = self.vision_processor.analyze_screen(screenshot, is_test=True)
+            analysis = self.vision_processor.analyze_screen(
+                screenshot, 
+                is_test=True,
+                test_string=self.test_string
+            )
             
             if not analysis.get("success"):
                 error_msg = f"Vision analysis failed: {analysis.get('error')}"
@@ -118,13 +127,31 @@ class VisionTestWindow:
                 )
                 return False
                 
-            # Check if test string is in description
-            description = analysis.get("description", "").lower()
-            self.logger.info("Vision response received:")
-            self.logger.info("-" * 40)
-            self.logger.info(description)
-            self.logger.info("-" * 40)
+            # Check test results
+            test_results = analysis.get("test_results", {})
+            exact_matches = test_results.get("exact_matches", [])
+            case_matches = test_results.get("case_insensitive_matches", [])
             
+            if exact_matches:
+                self.logger.info(f"Found exact match: {exact_matches[0]}")
+                self.result_label.config(
+                    text="Vision test passed! (Exact match)",
+                    fg="green"
+                )
+                self.window.after(2000, self.window.destroy)
+                return True
+                
+            elif case_matches:
+                self.logger.info(f"Found case-insensitive match: {case_matches[0]}")
+                self.result_label.config(
+                    text="Vision test passed! (Case-insensitive match)",
+                    fg="green"
+                )
+                self.window.after(2000, self.window.destroy)
+                return True
+                
+            # Fallback to description search
+            description = analysis.get("description", "").lower()
             if self.test_string.lower() in description:
                 self.logger.info("Test string found in description!")
                 self.result_label.config(
@@ -160,14 +187,44 @@ class VisionTestWindow:
             return False 
 
     def cleanup(self):
-        """Ensure window is destroyed"""
+        """Clean up and close test window"""
         try:
-            if self.window:
-                self.window.destroy()
-                self.window = None
-        except:
-            pass
+            if not self.window_destroyed:
+                # Store parent window handle before closing
+                parent_hwnd = win32gui.FindWindow(None, "AI Control Panel")
+                
+                try:
+                    # Close test window if it exists
+                    if self.window and self.window.winfo_exists():
+                        self.window_destroyed = True
+                        self.window.destroy()
+                        self.window = None
+                except tk.TclError as e:
+                    self.logger.debug(f"Window already destroyed: {e}")
+                
+                # Restore parent window if found
+                if parent_hwnd:
+                    try:
+                        # Restore if minimized
+                        if win32gui.IsIconic(parent_hwnd):
+                            win32gui.ShowWindow(parent_hwnd, 9)  # SW_RESTORE = 9
+                        
+                        # Bring to front
+                        win32gui.SetForegroundWindow(parent_hwnd)
+                    except Exception as e:
+                        self.logger.error(f"Failed to restore parent window: {e}")
+                
+                self.logger.info("Vision test window cleaned up")
+                
+        except Exception as e:
+            self.logger.error(f"Error during cleanup: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            
+        finally:
+            self.test_completed = True
+            self.window = None  # Ensure window reference is cleared
 
     def __del__(self):
         """Destructor to ensure cleanup"""
-        self.cleanup() 
+        if not self.window_destroyed:
+            self.cleanup() 

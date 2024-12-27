@@ -194,3 +194,54 @@ Your response:
                 }
             }
         return None
+
+    def analyze_and_plan(self, vision_output: str, goal: str) -> Dict[str, Any]:
+        """Analyze vision output and plan next action"""
+        try:
+            prompt = f"""You are an AI agent that controls a computer to accomplish tasks.
+Current goal: "{goal}"
+
+Latest screen analysis:
+{vision_output}
+
+Available actions:
+- focus_window(title): Focus a window with given title
+- launch_program(name): Launch a program by name
+- type_text(text): Type text
+- press_key(key): Press a keyboard key
+- click_element(element): Click on a UI element
+- move_mouse(x, y): Move mouse to coordinates
+
+Think through this step by step:
+1. What program(s) do you need for this task?
+2. Are those programs open (visible in the screen analysis)?
+3. If not, you need to launch them first
+4. What action will make the most progress toward the goal?
+
+Return a JSON response with:
+{
+    "reasoning": "Your step-by-step thought process",
+    "required_programs": ["list", "of", "needed", "programs"],
+    "next_action": {
+        "action": "action_name",
+        "params": {"param1": "value1"}
+    }
+}"""
+
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "user", "content": prompt}]
+            )
+
+            # Parse response
+            try:
+                result = json.loads(response.choices[0].message.content)
+                self.logger.debug(f"Planning result: {result}")
+                return result
+            except json.JSONDecodeError:
+                self.logger.error("Failed to parse LLM response as JSON")
+                return None
+
+        except Exception as e:
+            self.logger.error(f"Planning failed: {str(e)}")
+            return None

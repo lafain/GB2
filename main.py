@@ -49,31 +49,43 @@ import traceback
 from datetime import datetime
 import threading
 import logging
+import os
 
 from app_core import AppCore
 from vision_test import VisionTestWindow
+from vision_processor import VisionProcessor
+from agent_core import AgentCore
+from state_manager import StateManager
+from llm_interface import LLMInterface
+from action_executor import ActionExecutor
+from coordinate_system import CoordinateSystem
 
 class AgentGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("AI Agent Control")
+        self.root.title("AI Control Panel")
         
         # Initialize logger
         self.logger = self._setup_logging()
         
-        # Initialize core application
-        self.app = AppCore(logger=self.logger)
+        # Load config
+        self.config = {
+            "model": "llama3.2-vision",
+            "api_url": "http://localhost:11434",
+            "vision_timeout": 30,
+            "test_timeout": 10
+        }
         
-        # Run startup tests
-        self.run_startup_tests()
+        # Initialize components
+        self.initialize_components()
         
         # Setup GUI components
         self.setup_gui()
         
-        # Initialize debug manager
+        # Initialize debug manager if available
         if hasattr(self.app, 'debug_manager'):
             self.app.debug_manager.start_logging(self.debug_text)
-            
+
     def _setup_logging(self):
         """Setup logging for GUI"""
         logger = logging.getLogger('AgentGUI')
@@ -337,6 +349,69 @@ class AgentGUI:
         """Update model selection - disabled since we only use llama3.2-vision"""
         self.model_var.set("llama3.2-vision")
         self.add_chat_message("System", "Using llama3.2-vision model")
+
+    def initialize_components(self):
+        """Initialize agent components"""
+        try:
+            self.logger.info("Initializing core components...")
+            
+            # Initialize core application first
+            self.app = AppCore(logger=self.logger)
+            
+            # First initialize state manager since others depend on it
+            self.state_manager = StateManager(logger=self.logger)
+            self.app.state_manager = self.state_manager
+            
+            # Initialize coordinate system (needed by action executor)
+            self.coordinate_system = CoordinateSystem(logger=self.logger)
+            self.app.coord_system = self.coordinate_system
+            
+            # Initialize vision processor
+            self.vision_processor = VisionProcessor(
+                config=self.config, 
+                logger=self.logger
+            )
+            self.app.vision_processor = self.vision_processor
+            
+            # Initialize LLM interface
+            self.llm_interface = LLMInterface(
+                logger=self.logger, 
+                vision_processor=self.vision_processor
+            )
+            self.app.llm = self.llm_interface
+            
+            # Initialize action executor with required dependencies
+            self.action_executor = ActionExecutor(
+                logger=self.logger,
+                coordinate_system=self.coordinate_system,
+                state_manager=self.state_manager
+            )
+            self.app.executor = self.action_executor
+            
+            # Initialize agent with all components
+            self.agent = AgentCore(
+                llm=self.llm_interface,
+                executor=self.action_executor,
+                logger=self.logger,
+                state_manager=self.state_manager,
+                vision_processor=self.vision_processor
+            )
+            self.app.agent = self.agent
+            
+            # Verify all components
+            if not self.app.initialize_components():
+                raise Exception("Component verification failed")
+            
+            # Run startup tests
+            self.run_startup_tests()
+            
+            self.logger.info("Components initialized successfully")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to initialize components: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            raise  # Re-raise to prevent partial initialization
 
 def main():
     root = tk.Tk()

@@ -6,86 +6,57 @@ import traceback
 from datetime import datetime
 
 class AgentCore:
-    def __init__(self, llm, executor, logger, state_manager):
+    def __init__(self, llm, executor, logger, state_manager, vision_processor):
         self.llm = llm
         self.executor = executor
         self.logger = logger
         self.state_manager = state_manager
+        self.vision_processor = vision_processor
         self.running = False
         self.last_screenshot = None
         self.screenshot_interval = 0.5  # Time between auto-screenshots
         self.action_delay = 0.5  # Time between actions
 
     def run(self, goal: str):
-        """Run agent with specified goal"""
-        try:
-            self.running = True
-            self.logger.info(f"Starting agent execution with goal: {goal}")
-            
-            while self.running:
-                try:
-                    # 1. Capture current state including screen
-                    state = self.state_manager.capture_state()
-                    if state.get('error'):
-                        self.logger.error(f"State capture failed: {state['error']}")
-                        time.sleep(1)
-                        continue
+        """Run agent with given goal"""
+        self.goal = goal
+        self.running = True
+        consecutive_failures = 0
+        max_failures = 3
+        
+        while self.running:
+            try:
+                # Take screenshot
+                screenshot = self.vision_processor.capture_screen()
+                if not screenshot:
+                    raise Exception("Failed to capture screen")
                     
-                    self.logger.debug(f"Current state: Active window={state.get('active_window', {}).get('title')}, Mouse={state.get('mouse_position')}")
+                # Analyze screen
+                analysis = self.vision_processor.analyze_screen(screenshot)
+                if not analysis.get("success"):
+                    raise Exception(f"Vision analysis failed: {analysis.get('error')}")
                     
-                    # 2. Get screen analysis
-                    screen_info = self.capture_screen()
-                    if not screen_info.get('success'):
-                        self.logger.error(f"Screen capture failed: {screen_info.get('error')}")
-                        time.sleep(1)
-                        continue
-                    
-                    self.logger.info("Getting next action based on screen analysis...")
-                    
-                    # 3. Get next action from LLM
-                    action = self.llm.get_next_action(
-                        goal=goal,
-                        state=state,
-                        vision_info=screen_info
-                    )
-                    
-                    if not action:
-                        self.logger.warning("No action returned from LLM")
+                # Execute next action
+                success = self.execute_next_action(analysis.get("description", ""))
+                
+                if success:
+                    consecutive_failures = 0
+                else:
+                    consecutive_failures += 1
+                    if consecutive_failures >= max_failures:
+                        self.logger.error("Too many consecutive failures, stopping agent")
                         break
                     
-                    if action.get("error"):
-                        self.logger.error(f"Failed to get next action: {action.get('error')}")
-                        break
-                    
-                    self.logger.info(f"Planned action: {action.get('function_name')} with params: {action.get('parameters', {})}")
-                    
-                    # 4. Execute action
-                    result = self.executor.execute_action(action)
-                    self.logger.info(f"Action result: {result.get('success', False)}")
-                    if not result.get('success'):
-                        self.logger.error(f"Action failed: {result.get('error')}")
-                    
-                    # 5. Update state with result
-                    self.state_manager.update_state({
-                        "last_action": action,
-                        "last_result": result,
-                        "timestamp": datetime.now().isoformat()
-                    })
-                    
-                    # 6. Small delay to prevent overwhelming system
-                    time.sleep(self.action_delay)
-                    
-                except Exception as e:
-                    self.logger.error(f"Error in agent loop: {str(e)}")
-                    self.logger.error(traceback.format_exc())
-                    time.sleep(1)
-                    
-        except Exception as e:
-            self.logger.error(f"Agent execution failed: {str(e)}")
-            self.logger.error(traceback.format_exc())
-        finally:
-            self.running = False
-            self.logger.info("Agent completed goal")
+                # Small delay between actions
+                time.sleep(0.5)
+                
+            except Exception as e:
+                self.logger.error(f"Agent execution error: {str(e)}")
+                consecutive_failures += 1
+                if consecutive_failures >= max_failures:
+                    self.logger.error("Too many consecutive failures, stopping agent")
+                    break
+                time.sleep(1)  # Longer delay after error
 
     def stop(self):
         """Stop agent execution"""
