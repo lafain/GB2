@@ -24,23 +24,7 @@ class AgentGUI(ctk.CTk):
         # Set appearance mode before creating widgets
         ctk.set_appearance_mode("dark")
         self._default_theme = "dark"
-        self._running_theme = "light"  # Brighter when running
-        
-        # Define color schemes
-        self.color_schemes = {
-            "dark": {
-                "frame_color": "#2B2B2B",
-                "button_color": "#404040",
-                "button_hover_color": "#4A4A4A",
-                "text_color": "#FFFFFF"
-            },
-            "light": {
-                "frame_color": "#F0F0F0",
-                "button_color": "#E0E0E0",
-                "button_hover_color": "#D0D0D0",
-                "text_color": "#000000"
-            }
-        }
+        self._running_theme = "light"
         
         # Initialize state variables
         self._running = False
@@ -48,23 +32,67 @@ class AgentGUI(ctk.CTk):
         self._agent_thread = None
         self._active_threads = []
         
-        # Set up window management and position
+        # Initialize GUI variables before creating widgets
+        self.auto_scroll = ctk.BooleanVar(value=True)
+        
+        # Define color schemes
+        self.color_schemes = {
+            "dark": {
+                "frame_color": "#2B2B2B",
+                "button_color": "#404040",
+                "button_hover_color": "#4A4A4A",
+                "text_color": "#FFFFFF",
+                "text_bg": "#1E1E1E"
+            },
+            "light": {
+                "frame_color": "#F0F0F0",
+                "button_color": "#E0E0E0",
+                "button_hover_color": "#D0D0D0",
+                "text_color": "#000000",
+                "text_bg": "#FFFFFF"
+            }
+        }
+        
+        # Create main containers
         self._setup_window()
+        self._create_main_layout()
+        
+        # Create goal input frame
+        goal_frame = ctk.CTkFrame(self.tab_main)
+        goal_frame.pack(fill="x", padx=10, pady=5)
+        
+        self.goal_label = ctk.CTkLabel(
+            goal_frame,
+            text="Goal:",
+            font=("Arial", 12, "bold")
+        )
+        self.goal_label.pack(side="left", padx=5)
+        
+        self.goal_entry = ctk.CTkEntry(
+            goal_frame,
+            width=400,
+            font=("Arial", 12)
+        )
+        self.goal_entry.pack(side="left", padx=5)
+        
+        # Create status label
+        self.status_label = ctk.CTkLabel(
+            self.tab_main,
+            text="Status: Ready",
+            font=("Arial", 12)
+        )
+        self.status_label.pack(anchor="w", padx=15, pady=5)
+        
+        # Create tabs after labels are initialized
+        self._create_tabs()
         
         # Initialize core components
         self.logger = DebugLogger("gui", gui=self)
-        self.auto_scroll = ctk.BooleanVar(value=True)
         self.state_manager = StateManager()
-        
-        # Create main containers
-        self._create_main_layout()
-        
-        # Initialize GUI components
-        self._create_tabs()
         
         # Set default goal
         self.goal_entry.insert(0, "draw a house in paint")
-        
+
     def _setup_window(self):
         """Configure window size and position"""
         # Get screen dimensions
@@ -215,8 +243,9 @@ class AgentGUI(ctk.CTk):
             
             # Initialize agent if needed
             if not self._agent:
+                llm = LLMInterface(logger=self.logger)  # Pass logger to LLM
                 self._agent = AgentCore(
-                    LLMInterface(),
+                    llm,
                     ActionExecutor(self.logger),
                     self.logger
                 )
@@ -244,41 +273,47 @@ class AgentGUI(ctk.CTk):
     def _update_gui_state(self):
         """Update GUI elements based on running state"""
         if self._running:
-            # Switch to running theme
             ctk.set_appearance_mode(self._running_theme)
-            
-            # Update button states
             self.start_button.configure(state="disabled")
             self.stop_button.configure(state="normal")
-            
-            # Keep text elements readable
-            self._keep_text_readable()
         else:
-            # Switch back to default theme
             ctk.set_appearance_mode(self._default_theme)
-            
-            # Update button states
             self.start_button.configure(state="normal")
             self.stop_button.configure(state="disabled")
             
-            # Keep text elements readable
-            self._keep_text_readable()
+        self._keep_text_readable()
 
     def _keep_text_readable(self):
         """Ensure text elements remain readable regardless of theme"""
-        # Define text colors that work well in both light and dark modes
-        text_color = "#FFFFFF" if self._running else "#CCCCCC"
+        theme = "light" if self._running else "dark"
+        colors = self.color_schemes[theme]
         
-        # Update text colors for key elements
-        self.goal_entry.configure(text_color=text_color)
-        self.agent_log.configure(text_color=text_color)
-        self.debug_text.configure(text_color=text_color)
-        self.test_input.configure(text_color=text_color)
-        self.test_output.configure(text_color=text_color)
+        # Update text colors for input/display widgets
+        text_widgets = [
+            (self.goal_entry, "entry"),
+            (self.debug_text, "textbox"),
+            (self.test_input, "textbox"),
+            (self.test_output, "textbox")
+        ]
         
-        # Keep labels readable
-        for widget in [self.goal_label, self.status_label]:
-            widget.configure(text_color=text_color)
+        for widget, widget_type in text_widgets:
+            if hasattr(self, widget.__str__()):
+                if widget_type == "entry":
+                    widget.configure(
+                        text_color=colors["text_color"],
+                        fg_color=colors["text_bg"]
+                    )
+                elif widget_type == "textbox":
+                    widget.configure(
+                        text_color=colors["text_color"],
+                        fg_color=colors["text_bg"]
+                    )
+        
+        # Update labels
+        labels = [self.goal_label, self.status_label]
+        for label in labels:
+            if hasattr(self, label.__str__()):
+                label.configure(text_color=colors["text_color"])
 
     def log_message(self, message: str):
         """Add message to status text"""
@@ -345,14 +380,17 @@ class AgentGUI(ctk.CTk):
     def _create_debug_tab(self):
         """Create debug output tab"""
         # Debug output
-        self.debug_text = ctk.CTkTextbox(
-            self.tab_debug,
-            wrap="none",
-            font=("Courier", 12)
-        )
-        self.debug_text.pack(fill="both", expand=True, padx=10, pady=5)
+        debug_frame = ctk.CTkFrame(self.tab_debug)
+        debug_frame.pack(fill="both", expand=True, padx=10, pady=5)
         
-        # Auto-scroll toggle
+        self.debug_text = ctk.CTkTextbox(
+            debug_frame,
+            wrap="word",
+            font=("Arial", 12)
+        )
+        self.debug_text.pack(fill="both", expand=True, padx=5, pady=5)
+        
+        # Auto-scroll control
         scroll_frame = ctk.CTkFrame(self.tab_debug)
         scroll_frame.pack(fill="x", padx=10, pady=5)
         
