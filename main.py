@@ -8,7 +8,11 @@ Agent Overview:
   - Chat interface for agent communication
 
 - Core Components:
-  - Vision System: Ollama's llama3.2-vision model for screen analysis and agent control
+  - Vision System: 
+    - Uses Ollama's llama3.2-vision model via official Python client
+    - Image preprocessing and resizing
+    - Text recognition and scene analysis
+    - Automatic model verification
   - LLM Interface: Uses same llama3.2-vision model for decision making
   - Action Executor: Performs system actions
   - State Manager: Tracks system state
@@ -25,11 +29,14 @@ Agent Overview:
   - System testing
   - Settings configuration
   - Chat interface
-    - Progress tracking
+  - Progress tracking
   - Resource cleanup
 
 - Dependencies:
   - Ollama API (llama3.2-vision model) for vision and LLM
+    - Uses official ollama Python client
+    - Supports both chat and generate endpoints
+    - Handles image encoding and model responses
   - PyAutoGUI for actions
   - Win32 API for system interaction
   - Tkinter for GUI
@@ -87,7 +94,21 @@ class AgentGUI:
         try:
             self.logger.info("\n=== Running Startup Tests ===")
             
-            # Test vision system
+            # First run system tests that don't require initialized components
+            results = self.app.run_system_tests()
+            
+            # Initialize components if basic tests pass
+            if all(results.values()):
+                self.logger.info("Basic tests passed, initializing components...")
+                if not self.app.initialize_components():
+                    self.logger.error("Failed to initialize components")
+                    return
+            else:
+                failed = [k for k, v in results.items() if not v]
+                self.logger.error(f"Basic tests failed: {failed}")
+                return
+            
+            # Now run vision test since components are initialized
             vision_test = VisionTestWindow(self.app.vision_processor, self.logger)
             vision_result = vision_test.run_test()
             
@@ -96,13 +117,9 @@ class AgentGUI:
             else:
                 self.logger.info("Vision test passed")
                 
-            # Run other tests
-            results = self.app.run_system_tests()
-            
-            # Check results
+            # Final status
             if all(results.values()) and vision_result:
                 self.logger.info("All startup tests passed")
-                self.app.initialize_components()
             else:
                 failed = [k for k, v in results.items() if not v]
                 if not vision_result:

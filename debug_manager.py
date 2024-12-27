@@ -24,12 +24,16 @@ class DebugManager:
             try:
                 message = self.message_queue.get(timeout=0.1)
                 if self.debug_text:
-                    timestamp = datetime.now().strftime("%H:%M:%S")
-                    self.debug_text.insert(tk.END, f"[{timestamp}] {message}\n")
-                    self.debug_text.see(tk.END)
+                    self.debug_text.after(0, self._update_debug_text, message)
             except queue.Empty:
                 continue
                 
+    def _update_debug_text(self, message: str):
+        """Thread-safe update of debug text"""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        self.debug_text.insert(tk.END, f"[{timestamp}] {message}\n")
+        self.debug_text.see(tk.END)
+        
     def log(self, message: str, level: str = "INFO"):
         """Add message to debug log"""
         self.message_queue.put(f"[{level}] {message}")

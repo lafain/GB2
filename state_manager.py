@@ -131,7 +131,7 @@ class StateManager:
             self.logger.error(f"Failed to get active window: {str(e)}")
             return None 
 
-    def update_state(self, new_state: Dict[str, Any]):
+    def update_state(self, new_state: Dict[str, Any]) -> bool:
         """Update current state with new information"""
         try:
             if self.current_state is None:
@@ -155,4 +155,9 @@ class StateManager:
                 
         except Exception as e:
             self.logger.error(f"Failed to update state: {str(e)}")
-            self.logger.error(traceback.format_exc()) 
+            self.logger.error(traceback.format_exc())
+            try:
+                self._restore_last_valid_state()
+            except:
+                self.logger.error("Failed to restore last valid state")
+            return False 
