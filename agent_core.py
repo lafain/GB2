@@ -41,7 +41,22 @@ class AgentCore:
                 # Reset failure counter on success
                 failures = 0
                 
-                # Rest of the agent logic...
+                # Plan next action based on vision analysis
+                action = self.llm.plan_action(goal, analysis["description"])
+                
+                # Execute planned action
+                if not action or action.get("error"):
+                    self.logger.error(f"Action planning failed: {action.get('error')}")
+                    failures += 1
+                elif not self.executor.execute_action(action["function_name"], action.get("parameters", {})):
+                    failures += 1
+                    
+                if failures >= MAX_FAILURES:
+                    self.logger.error("Too many consecutive failures, stopping agent")
+                    break
+                
+                # Small delay between actions
+                time.sleep(self.action_delay)
                 
         except Exception as e:
             self.logger.error(f"Agent execution error: {str(e)}")

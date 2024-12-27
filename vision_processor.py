@@ -137,11 +137,21 @@ class VisionProcessor:
 2. List all characters you can see, maintaining their exact case.
 Just provide the text string and characters, no other description.'''
                 else:
-                    prompt = '''Look at this screenshot carefully and describe:
-1. What windows and applications are open?
-2. What is the title of each window?
-3. What UI elements (buttons, menus, etc) are visible?
-Focus on window titles and interactive elements, not the text content.'''
+                    prompt = '''You are an AI agent's vision system. Your job is to identify what can be interacted with RIGHT NOW.
+Do not make plans or suggestions. Only describe what is currently visible and clickable.
+
+List ONLY:
+1. Currently visible windows and their locations
+2. Clickable UI elements and their exact coordinates
+3. Text fields that can be typed into
+
+Format:
+- Window "name" at (x,y)
+- Button "label" at (x,y)
+- Menu "name" at (x,y)
+- Text field at (x,y)
+
+Be precise and only list what is actually visible and interactive.'''
 
                 response = self.client.chat(
                     model=self.model,
@@ -205,7 +215,7 @@ Focus on window titles and interactive elements, not the text content.'''
                 }
                 
                 self.logger.info("Screen analysis completed")
-                self.logger.info(f"Vision analysis: {description[:200]}...")
+                self.logger.info(f"Vision analysis:\n{description}")
                 
                 return analysis
                 

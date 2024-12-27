@@ -1,46 +1,39 @@
 """
-Agent Overview:
-- GUI Components:
-  - Main tab with goal configuration and agent controls
-  - Debug tab with logging
-  - Test tab for system tests
-  - Settings tab for configuration
-  - Chat interface for agent communication
+AI Agent Overview
 
-- Core Components:
-  - Vision System: 
-    - Uses Ollama's llama3.2-vision model via official Python client
-    - Image preprocessing and resizing
-    - Text recognition and scene analysis
-    - Automatic model verification
-  - LLM Interface: Uses same llama3.2-vision model for decision making
-  - Action Executor: Performs system actions
-  - State Manager: Tracks system state
-  - Coordinate System: Handles window/screen coordinates
-  - Debug Manager: Logging and debugging
-  - Test Manager: System testing
+This agent is designed to be task-agnostic and program-agnostic. Key principles:
 
-- Features:
-  - Continuous vision monitoring
-  - Dynamic action planning
-  - Error recovery
-  - State tracking
-  - Debug logging
-  - System testing
-  - Settings configuration
-  - Chat interface
-  - Progress tracking
-  - Resource cleanup
+1. No hardcoded programs or actions
+- The agent dynamically determines what programs it needs based on the goal
+- Programs are launched through general system commands (e.g., Win+R, search)
+- No program-specific logic is embedded in the code
 
-- Dependencies:
-  - Ollama API (llama3.2-vision model) for vision and LLM
-    - Uses official ollama Python client
-    - Supports both chat and generate endpoints
-    - Handles image encoding and model responses
-  - PyAutoGUI for actions
-  - Win32 API for system interaction
-  - Tkinter for GUI
-  - PIL for image processing
+2. Vision-based interaction
+- Uses computer vision to understand screen state
+- Identifies UI elements and their locations
+- Makes decisions based on what it sees
+
+3. Goal-oriented planning
+- Breaks down high-level goals into actionable steps
+- Adapts to different programs and workflows
+- Learns from action results
+
+4. Modular architecture
+- Vision processing
+- LLM for decision making
+- Action execution
+- State management
+
+The agent should be able to accomplish any GUI-based task by:
+1. Understanding the goal
+2. Identifying needed programs
+3. Finding/launching those programs
+4. Interacting with UI elements
+5. Verifying progress
+6. Adapting to feedback
+
+No task-specific or program-specific code should be added. Instead, improve the
+agent's ability to understand and interact with any program it encounters.
 """
 
 import tkinter as tk

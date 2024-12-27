@@ -6,6 +6,8 @@ from PIL import Image
 import io
 import logging
 from io import BytesIO
+import traceback
+import ollama
 
 class LLMInterface:
     """Handles all LLM interactions with Ollama's Llama 3.2 Vision API"""
@@ -16,6 +18,7 @@ class LLMInterface:
         self.conversation_history = []
         self.api_url = "http://localhost:11434/api/generate"
         self.model = "llama3.2-vision"
+        self.client = ollama.Client(host='http://localhost:11434')  # Initialize client
 
     def get_next_action(self, goal: str, state: Dict[str, Any], vision_info: Dict[str, Any]) -> Dict[str, Any]:
         """Get next action based on current state and vision info"""
@@ -93,44 +96,43 @@ Your response:"""
             self.logger.error(f"Failed to get next action: {str(e)}")
             return {"error": str(e), "success": False}
 
-    def _parse_action(self, content: str) -> Dict[str, Any]:
-        """Parse LLM response into action dictionary"""
+    def _parse_action(self, action_text: str) -> Dict[str, Any]:
+        """Parse action text into structured format"""
         try:
-            if not content or "ERROR" in content.upper() or "FAIL" in content.upper():
-                return {"function_name": "stop", "error": content or "Empty response"}
-                
-            # Split into lines and remove empty lines
-            lines = [line.strip() for line in content.split("\n") if line.strip()]
+            lines = action_text.strip().split('\n')
             if not lines:
-                return {"function_name": "stop", "error": "No action specified"}
-                
-            # First non-empty line is the action name
-            action = {
-                "function_name": lines[0].strip(),
-                "parameters": {}
-            }
+                return {"error": "Empty action text"}
             
-            # Parse parameters from remaining lines
+            # First line is the function name
+            function_name = lines[0].strip().lower()
+            
+            # Parse parameters
+            parameters = {}
             for line in lines[1:]:
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    # Convert numeric values
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    key = key.strip().lower()
                     value = value.strip()
+                    # Convert numeric values
                     try:
-                        if "." in value:
+                        if '.' in value:
                             value = float(value)
                         else:
                             value = int(value)
                     except ValueError:
-                        pass  # Keep as string if not numeric
-                    action["parameters"][key.strip()] = value
+                        pass
+                    parameters[key] = value
                     
-            self.logger.debug(f"Parsed action: {action}")
-            return action
+            self.logger.debug(f"Parsed action: {function_name} with params: {parameters}")
+            
+            return {
+                "function_name": function_name,
+                "parameters": parameters
+            }
             
         except Exception as e:
-            self.logger.error(f"Failed to parse action: {str(e)}")
-            return {"function_name": "stop", "error": f"Failed to parse action: {str(e)}"}
+            self.logger.error(f"Action parsing failed: {str(e)}")
+            return {"error": f"Failed to parse action: {str(e)}"}
 
     def add_action_result(self, result: dict):
         """Add action result to conversation history"""
@@ -245,3 +247,88 @@ Return a JSON response with:
         except Exception as e:
             self.logger.error(f"Planning failed: {str(e)}")
             return None
+
+    def plan_action(self, goal: str, vision_description: str) -> Dict[str, Any]:
+        """Plan next action based on goal and current screen state"""
+        try:
+            prompt = f"""You are an AI agent controlling a computer to achieve a goal.
+Current goal: {goal}
+
+Current screen state:
+{vision_description}
+
+Think through this step by step:
+1. What program(s) do you need for this task?
+2. Are those programs open (visible in the screen analysis)?
+3. If not, you need to launch them first using launch_program
+4. What SINGLE action will make the most progress toward the goal?
+
+Available actions:
+1. click (x: int, y: int) - Click at coordinates
+2. type (text: str) - Type text
+3. press (key: str) - Press a keyboard key (e.g., "win+r" to open Run dialog)
+4. move (x: int, y: int) - Move mouse
+5. drag (start_x: int, start_y: int, end_x: int, end_y: int) - Drag mouse
+6. wait (seconds: int) - Wait
+7. focus_window (title: str) - Focus window
+8. launch_program (name: str) - Launch program
+9. stop - Stop if goal complete
+
+Respond with ONLY the action in this format:
+<action_name>
+param1: value1
+param2: value2
+
+Example responses:
+launch_program
+name: paint
+
+press
+key: win+r
+
+type
+text: paint
+
+click
+x: 100
+y: 200"""
+
+            self.logger.debug(f"Sending action planning request to LLM at {self.api_url}")
+            
+            # Fixed URL construction - using self.api_url directly since it already contains /api/generate
+            response = requests.post(
+                self.api_url,  # Already contains /api/generate
+                json={
+                    "model": self.model,
+                    "prompt": prompt,
+                    "stream": False
+                }
+            )
+            
+            self.logger.debug(f"Got response with status code: {response.status_code}")
+            response.raise_for_status()
+            
+            result = response.json()
+            self.logger.debug(f"Raw response: {result}")
+            
+            action_text = result.get("response", "").strip()
+            if not action_text:
+                self.logger.error("Empty response from LLM")
+                return {"error": "Empty response from LLM"}
+            
+            self.logger.debug(f"Raw action response:\n{action_text}")
+            action = self._parse_action(action_text)
+            self.logger.debug(f"Parsed action: {action}")
+            
+            # Add to conversation history
+            self.conversation_history.append({
+                "role": "assistant",
+                "content": action_text
+            })
+            
+            return action
+
+        except Exception as e:
+            self.logger.error(f"Action planning failed: {str(e)}")
+            self.logger.error(traceback.format_exc())
+            return {"error": str(e)}
